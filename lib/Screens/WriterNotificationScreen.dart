@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:finalsemproject/API.dart';
+import 'package:finalsemproject/Screens/AcceptedToRewriteScreen3.dart';
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,9 @@ class WriterNotificationScreen extends StatefulWidget {
 
 class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   List<Map<String, dynamic>> notifications = [];
+  List<Map<String,dynamic>>notifications1=[];
+  List<String>MovieName=[];
+  List<String>EditorComments=[];
   final Color mateBlack = Color(0xFF242424);
   String? userId;
 
@@ -86,9 +90,82 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
     });
     if (userId != null) {
       fetchProposals();
+      getRewriteData();
+      print('Getrewrtedata:${getRewriteData}');
+      viewRewriteProject();
       print('ghjk:${userId}');
     }
   }
+
+  Future<Map<String, dynamic>> getRewriteData() async {
+    final String baseurl2 = APIHandler.baseUrl1;
+
+    try {
+      final response = await http.get(Uri.parse('$baseurl2/Writer/GetRewriteData?Writer_ID=${userId}'));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+
+        // Check if 'EditorsComment' key exists in the response
+        if (data.containsKey('SentProjects')) {
+          final List<dynamic> sentProjects = data['SentProjects'];
+          for (var project in sentProjects) {
+            EditorComments.add(project['EditorComment']);
+            print('EditorCoomm:${EditorComments}');
+          }
+        } else {
+          // Handle the case where 'SentProjects' key is not present
+          print('SentProjects key is not present in the response');
+        }
+
+
+
+        return data;
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print('Error: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> viewRewriteProject() async {
+    final String baseurl2 = APIHandler.baseUrl1;
+    final String baseurl3 = APIHandler.baseUrl2;
+    try {
+      final response = await http.get(Uri.parse('$baseurl2/Writer/ViewRewriteProject'));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body); // Parse response as Map
+        // Check if the response contains the expected key
+        if (data.containsKey('Project')) {
+          // Access the 'Project' key to get the list of projects
+          final List<dynamic> projects = data['Project'];
+          setState(() {
+            notifications1 = projects.map((project) {
+              MovieName.add(project['SentProposalData']['Movie_Name']);
+              return {
+                'id': project['SentProposalData']['SentProposal_ID'],
+                'title': project['SentProposalData']['Movie_Name'],
+                'director': project['SentProposalData']['Director'],
+                'type': project['SentProposalData']['Type'],
+                'imagePath': '$baseurl3/Images/${project['SentProposalData']['Image']}',
+                'genre': project['SentProposalData']['Genre'],
+              };
+            }).toList();
+          });
+        } else {
+          throw Exception('Response does not contain the expected key');
+        }
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print('Failed To View Rewrite Project: $error');
+      rethrow;
+    }
+  }
+
 
   Future<void> fetchProposals() async {
     const String baseurl2=APIHandler.baseUrl1;
@@ -280,9 +357,20 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: notifications.map((notification) {
-              return buildNotificationCard(notification);
-            }).toList(),
+            children: [
+              // Display proposals
+              Column(
+                children: notifications.map((notification) {
+                  return buildNotificationCard(notification);
+                }).toList(),
+              ),
+              // Display rewrite projects
+              Column(
+                children: notifications1.map((notification1) {
+                  return buildNotificationCard1(notification1);
+                }).toList(),
+              ),
+            ],
           ),
         ),
       ),
@@ -330,10 +418,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                     Text(
                       title,
                       style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontFamily: 'BigshotOne'
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'BigshotOne'
                       ),
                     ),
                     SizedBox(height: 10),
@@ -342,19 +430,19 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         Text(
                           'Writer Name:',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                         Text(
                           writerName,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                       ],
@@ -365,20 +453,20 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         Text(
                           'Director:',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                         SizedBox(width: 10),
                         Text(
                           director,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                       ],
@@ -389,10 +477,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         Text(
                           'Rating:',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                         SizedBox(width: 6),
@@ -415,18 +503,18 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
                             onTap: (){
-                             setState(() {
-                               String myString = id.toString();
-                               if(myString.isNotEmpty){
-                                 acceptProposal(myString);
-                                 fetchProposals();
-                                 print(myString);
-                               }
-                               else{
-                                 print("Empty ID");
-                               }
+                              setState(() {
+                                String myString = id.toString();
+                                if(myString.isNotEmpty){
+                                  acceptProposal(myString);
+                                  fetchProposals();
+                                  print(myString);
+                                }
+                                else{
+                                  print("Empty ID");
+                                }
 
-                             });
+                              });
                             },
                             child: Container(
                               height: 25,
@@ -439,9 +527,9 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                                 child: Text(
                                   'Accept',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    fontFamily: 'BigshotOne'
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      fontFamily: 'BigshotOne'
                                   ),
                                 ),
                               ),
@@ -476,9 +564,9 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                                 child: Text(
                                   'Reject',
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    fontFamily: 'BigshotOne'
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      fontFamily: 'BigshotOne'
                                   ),
                                 ),
                               ),
@@ -496,625 +584,167 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       ),
     );
   }
-}
+  Widget buildNotificationCard1(Map<String, dynamic> notification1) {
+    final int id = notification1['id'] ?? '';
+    final String title = notification1['title'] ?? '';
 
-// import 'package:finalsemproject/Screens/WriterAccountSettingScreen.dart';
-// import 'package:finalsemproject/Screens/WriterWriteSummaryScreen.dart';
-// import 'package:flutter/material.dart';
-//
-// class WriterNotificationScreen extends StatefulWidget {
-//   const WriterNotificationScreen({super.key});
-//
-//   @override
-//   State<WriterNotificationScreen> createState() =>
-//       _WriterNotificationScreenState();
-// }
-//
-// class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       drawer: Drawer(
-//         backgroundColor: Colors.grey,
-//         child: ListView(
-//           padding: EdgeInsets.zero,
-//           children: <Widget>[
-//             DrawerHeader(
-//                 decoration: BoxDecoration(
-//                   color: Colors.black,
-//                 ),
-//                 child: Row(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     CircleAvatar(
-//                       radius: 30,
-//                       backgroundImage: AssetImage('Images/man2.webp'),
-//
-//                     ),
-//                     SizedBox(width: 10,),
-//                     Column(children: [
-//                       Text('Ahmed Zubair',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
-//                       ),
-//                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
-//                     ],),
-//                     SizedBox(width: 5,),
-//                     GestureDetector(
-//                       onTap: () {
-//                         Navigator.pop(context); // Close the drawer
-//                       },
-//                       child: Icon(
-//                         Icons.close,
-//                         color: Colors.white,
-//                         size: 30,
-//                       ),
-//                     ),
-//                   ],)
-//             ),
-//
-//             ListTile(
-//               title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
-//               onTap: () {
-//                 // Add your action when the item is tapped
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//             ),
-//             ListTile(
-//
-//               title: Row(
-//                 children: [
-//                   Text(
-//                     'Rating:',
-//                     style: TextStyle(
-//                         fontSize: 30,
-//                         fontWeight: FontWeight.bold,
-//                         color: Colors.black),
-//                   ),
-//                   SizedBox(
-//                     width: 6,
-//                   ),
-//                   Row(
-//                     //mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                     children: [
-//                       Icon(
-//                         Icons.star,
-//                         color: Colors.yellow,
-//                         size: 18,
-//                       ),
-//                       Icon(
-//                         Icons.star,
-//                         color: Colors.yellow,
-//                         size: 18,
-//                       ),
-//                       Icon(
-//                         Icons.star,
-//                         color: Colors.yellow,
-//                         size: 18,
-//                       ),
-//                       Icon(
-//                         Icons.star,
-//                         color: Colors.yellow,
-//                         size: 18,
-//                       ),
-//                       Icon(
-//                         Icons.star,
-//                         color: Colors.yellow,
-//                         size: 18,
-//                       ),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//               onTap: () {
-//                 // Add your action when the item is tapped
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//
-//             ),
-//             ListTile(
-//               title: Text('Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
-//               onTap: () {
-//                 // Add your action when the item is tapped
-//                 Navigator.pop(context); // Close the drawer
-//               },
-//             ),
-//
-//             ListTile(
-//               title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
-//               onTap: () {
-//                 // Add your action when the item is tapped
-//                 Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen())); // Close the drawer
-//               },
-//             ),
-//             ListTile(
-//               title: Container(height: 40,
-//                 width: 50,
-//                 decoration: BoxDecoration(
-//                   color: Colors.black,
-//                   border: Border.all(
-//                       color: Colors.red,
-//                       width: 2
-//                   ),
-//
-//                 ),
-//                 child: Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
-//               ),
-//             ),
-//             // Add more ListTiles for additional items in the drawer
-//           ],
-//         ),
-//       ),
-//       appBar: AppBar(title: Text('Notification',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-//         backgroundColor: Colors.grey,
-//       ),
-//       body: SafeArea(
-//         child: SingleChildScrollView(
-//           child: Column(
-//             children: [
-//               Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: Row(
-//
-//                   mainAxisAlignment: MainAxisAlignment.end,
-//                   children: [
-//
-//                     Card(
-//                       elevation: 10,
-//                       color: Colors.black,
-//                       child: InkWell(
-//                           onTap: (){
-//                             Navigator.pop(context);
-//                           },
-//                           child: Icon(Icons.notifications,color: Colors.yellow,)),
-//                     )
-//                   ],),
-//               ),
-//               SizedBox(height: 10,),
-//               Container(
-//                 height: 200,
-//                 width: 320,
-//                 decoration: BoxDecoration(
-//                     color: Colors.black,
-//                     borderRadius: BorderRadius.circular(10)
-//                 ),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//
-//                     Container(
-//                       height: 150,
-//                       width: 100,
-//                       decoration: BoxDecoration(color: Colors.black,
-//                           borderRadius: BorderRadius.circular(10)
-//                       ),
-//                       child: Image.asset('Images/parwaz1.jpg'),
-//                     ),
-//                     SizedBox(width: 10,),
-//                     Container(
-//                       height: 200,
-//                       width: 200,
-//                       decoration: BoxDecoration(color: Colors.black),
-//                       child: Padding(
-//                         padding: const EdgeInsets.symmetric(vertical: 30),
-//                         child: Column(children: [
-//                           Text('Parwaz Hai Janoon',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
-//                           ),
-//                           SizedBox(height: 10,),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Writer Name:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               Text(
-//                                 'Ali Hamza',
-//                                 style: TextStyle(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: 10,
-//                                     color: Colors.white),
-//                               )
-//                             ],
-//                           ),
-//                           SizedBox(
-//                             height: 10,
-//                           ),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Director:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               SizedBox(
-//                                 width: 10,
-//                               ),
-//                               Text(
-//                                 'Haseeb Hassan',
-//                                 style: TextStyle(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: 10,
-//                                     color: Colors.white),
-//                               )
-//                             ],
-//                           ),
-//                           SizedBox(
-//                             height: 10,
-//                           ),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Rating:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               SizedBox(
-//                                 width: 6,
-//                               ),
-//                               Row(
-//                                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                                 children: [
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                 ],
-//                               ),
-//                             ],
-//                           ),
-//                           Row(children: [
-//                             Padding(
-//                               padding: const EdgeInsets.all(8.0),
-//                               child: InkWell(
-//                                 onTap: (){
-//                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectScreen()));
-//                                 },
-//                                 child: Container(height: 25,
-//                                   width: 70,
-//                                   decoration: BoxDecoration(
-//                                     color: Colors.green,
-//                                     borderRadius: BorderRadius.circular(10),
-//
-//                                   ),child: Center(child: Text('Accept',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
-//                                 ),
-//                               ),
-//                             ),
-//                             Container(height: 25,
-//                               width: 70,
-//                               decoration: BoxDecoration(
-//                                 color: Colors.red,
-//                                 borderRadius: BorderRadius.circular(10),
-//
-//                               ),child: Center(child: Text('Reject',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
-//                             ),
-//                           ],)
-//
-//                         ],),
-//                       ),
-//
-//                     )
-//                   ],),
-//               ),
-//               SizedBox(height: 10,),
-//               Container(
-//                 height: 200,
-//                 width: 320,
-//                 decoration: BoxDecoration(
-//                     color: Colors.black,
-//                     borderRadius: BorderRadius.circular(10)
-//                 ),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//
-//                     Container(
-//                       height: 150,
-//                       width: 100,
-//                       decoration: BoxDecoration(color: Colors.black,
-//                           borderRadius: BorderRadius.circular(10)
-//                       ),
-//                       child: Image.asset('Images/waar1.jpg'),
-//                     ),
-//                     SizedBox(width: 10,),
-//                     Container(
-//                       height: 200,
-//                       width: 200,
-//                       decoration: BoxDecoration(color: Colors.black),
-//                       child: Padding(
-//                         padding: const EdgeInsets.symmetric(vertical: 30),
-//                         child: Column(children: [
-//                           Text('Parwaz Hai Janoon',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
-//                           ),
-//                           SizedBox(height: 10,),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Writer Name:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               Text(
-//                                 'Ali Hamza',
-//                                 style: TextStyle(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: 10,
-//                                     color: Colors.white),
-//                               )
-//                             ],
-//                           ),
-//                           SizedBox(
-//                             height: 10,
-//                           ),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Director:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               SizedBox(
-//                                 width: 10,
-//                               ),
-//                               Text(
-//                                 'Haseeb Hassan',
-//                                 style: TextStyle(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: 10,
-//                                     color: Colors.white),
-//                               )
-//                             ],
-//                           ),
-//                           SizedBox(
-//                             height: 10,
-//                           ),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Rating:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               SizedBox(
-//                                 width: 6,
-//                               ),
-//                               Row(
-//                                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                                 children: [
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                 ],
-//                               ),
-//                             ],
-//                           ),
-//                           Row(children: [
-//                             Padding(
-//                               padding: const EdgeInsets.all(8.0),
-//                               child: Container(height: 25,
-//                                 width: 70,
-//                                 decoration: BoxDecoration(
-//                                   color: Colors.green,
-//                                   borderRadius: BorderRadius.circular(10),
-//
-//                                 ),child: Center(child: Text('Accept',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
-//                               ),
-//                             ),
-//                             Container(height: 25,
-//                               width: 70,
-//                               decoration: BoxDecoration(
-//                                 color: Colors.red,
-//                                 borderRadius: BorderRadius.circular(10),
-//
-//                               ),child: Center(child: Text('Reject',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
-//                             ),
-//                           ],)
-//
-//                         ],),
-//                       ),
-//
-//                     )
-//                   ],),
-//               ),
-//               SizedBox(height: 10,),
-//               Container(
-//                 height: 200,
-//                 width: 320,
-//                 decoration: BoxDecoration(
-//                     color: Colors.black,
-//                     borderRadius: BorderRadius.circular(10)
-//                 ),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//
-//                     Container(
-//                       height: 150,
-//                       width: 100,
-//                       decoration: BoxDecoration(color: Colors.black,
-//                           borderRadius: BorderRadius.circular(10)
-//                       ),
-//                       child: Image.asset('Images/actorinlaw1.jpg'),
-//                     ),
-//                     SizedBox(width: 10,),
-//                     Container(
-//                       height: 200,
-//                       width: 200,
-//                       decoration: BoxDecoration(color: Colors.black),
-//                       child: Padding(
-//                         padding: const EdgeInsets.symmetric(vertical: 30),
-//                         child: Column(children: [
-//                           Text('Parwaz Hai Janoon',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
-//                           ),
-//                           SizedBox(height: 10,),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Writer Name:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               Text(
-//                                 'Ali Hamza',
-//                                 style: TextStyle(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: 10,
-//                                     color: Colors.white),
-//                               )
-//                             ],
-//                           ),
-//                           SizedBox(
-//                             height: 10,
-//                           ),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Director:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               SizedBox(
-//                                 width: 10,
-//                               ),
-//                               Text(
-//                                 'Haseeb Hassan',
-//                                 style: TextStyle(
-//                                     fontWeight: FontWeight.bold,
-//                                     fontSize: 10,
-//                                     color: Colors.white),
-//                               )
-//                             ],
-//                           ),
-//                           SizedBox(
-//                             height: 10,
-//                           ),
-//                           Row(
-//                             children: [
-//                               Text(
-//                                 'Rating:',
-//                                 style: TextStyle(
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.bold,
-//                                     color: Colors.white),
-//                               ),
-//                               SizedBox(
-//                                 width: 6,
-//                               ),
-//                               Row(
-//                                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                                 children: [
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                   Icon(
-//                                     Icons.star,
-//                                     color: Colors.yellow,
-//                                     size: 11,
-//                                   ),
-//                                 ],
-//                               ),
-//                             ],
-//                           ),
-//                           Row(children: [
-//                             Padding(
-//                               padding: const EdgeInsets.all(8.0),
-//                               child: Container(height: 25,
-//                                 width: 170,
-//                                 decoration: BoxDecoration(
-//                                   color: Colors.yellow,
-//                                   borderRadius: BorderRadius.circular(10),
-//
-//                                 ),child: Center(child: Text('Status:Accepted',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
-//                               ),
-//                             ),
-//
-//                           ],)
-//
-//                         ],),
-//                       ),
-//
-//                     )
-//                   ],),
-//               ),
-//
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+    final String director = notification1['director'] ?? '';
+    final String type = notification1['type'] ?? '';
+    final String genre = notification1['genre'] ?? '';
+    final String imagePath = notification1['imagePath'] ?? '';
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 200,
+        width: 320,
+        decoration: BoxDecoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 200,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.network(imagePath), // Use Image.network for remote images
+            ),
+            SizedBox(width: 10),
+            Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(color: mateBlack),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Column(
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'BigshotOne'
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          'Movie Name:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        Text(
+                          title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          'Director:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          director,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          'Type:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          type,
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: (){
+                            setState(() {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AcceptedToRewriteScreen3(MovieName: title,Editorcomments:EditorComments.isNotEmpty ? EditorComments[0] : "",)));
+
+                            });
+                          },
+                          child: Center(
+                            child: Container(
+                              height: 25,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'View Comments',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      fontFamily: 'BigshotOne'
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+}

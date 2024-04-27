@@ -4,8 +4,12 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:http/http.dart'as http;
 class EditorAddCommentsFroWriterScreen extends StatefulWidget {
   final String ?MovieID;
+  final String ?sentProjectID;
+
   const EditorAddCommentsFroWriterScreen({super.key,
-    this.MovieID,});
+    this.MovieID,
+    this.sentProjectID,
+  });
 
   @override
   State<EditorAddCommentsFroWriterScreen> createState() => _EditorAddCommentsFroWriterScreenState();
@@ -21,11 +25,11 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
     // int wId=int.parse(widget.Writer_ID!);
     // updateWriterNotifications(wId);
   }
-  Future<void>SendComments(String MovieID,String Comments)async
+  Future<void>SendComments(String SentproID,String Comments)async
   {
    try{
      const String baseurl2=APIHandler.baseUrl1;
-     final responce=await http.post(Uri.parse('$baseurl2/Editor/RewriteSentProject?Movie_ID='+MovieID+'&editorsComment='+Comments),);
+     final responce=await http.post(Uri.parse('$baseurl2/Editor/RewriteSentProject?SentProject_ID='+SentproID+'&editorsComment='+Comments),);
      if(responce.statusCode==200)
      {
        print('Editor Add Comments Succesfully');
@@ -220,7 +224,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
             SizedBox(height: 20,),
             Center(
               child: ElevatedButton(onPressed: () {
-              SendComments(widget.MovieID!, _controller.document.toPlainText());
+              SendComments(widget.sentProjectID!, _controller.document.toPlainText());
               },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(

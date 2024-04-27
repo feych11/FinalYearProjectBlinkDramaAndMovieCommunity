@@ -533,7 +533,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.yellow),
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorAddCommentsFroWriterScreen(MovieID: widget.MovieID,)));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorAddCommentsFroWriterScreen(MovieID: widget.MovieID,sentProjectID: widget.sentProjectID,)));
                           },
                           child: Text(
                             'Rewrite',

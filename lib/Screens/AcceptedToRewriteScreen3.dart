@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 class AcceptedToRewriteScreen3 extends StatefulWidget {
-  const AcceptedToRewriteScreen3({super.key});
+  String?MovieName;
+  String?Editorcomments;
+  AcceptedToRewriteScreen3({super.key,
+  this.MovieName,
+    this.Editorcomments
+  });
 
   @override
   State<AcceptedToRewriteScreen3> createState() => _AcceptedToRewriteScreen3State();
 }
 
 class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
+
   @override
+  void initState() {
+    super.initState();
+    print('Movie name: ${widget.MovieName}');
+    print("Editors comments: ${widget.Editorcomments}");
+
+  }
+
+
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -101,7 +117,8 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
           ],
         ),
       ),
-      appBar: AppBar(title: Text('Rewrite Summary',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black),),),
+      appBar: AppBar(title: Text('Rewrite Summary',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'Rye'),),
+      backgroundColor: Colors.black,),
       body: Column(children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -125,7 +142,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
           elevation: 10,
           color: Colors.amber,
 
-          child: Center(child: Text('WAAR',style: TextStyle(fontSize: 30,),)),
+          child: Center(child: Text(widget.MovieName.toString(),style: TextStyle(fontSize: 30,fontFamily: 'BigshotOne'),)),
         ),
         SizedBox(height: 10,),
         Padding(
@@ -134,17 +151,13 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
             height: 300,
             width: 350,
             decoration: BoxDecoration(
-                color: Colors.grey
+                color: Colors.black
             ),
-            child: Text('It seems like there might be a slight misunderstanding in your question.'
-                ' Waar is a Pakistani action thriller film directed by Bilal Lashari,'
-                ' released in 2013. The movie revolves around the theme of terrorism '
-                'and militancy in Pakistan. It depicts the efforts of Pakistani security'
-                ' forces to combat terrorism and explores the challenges they face.'
-                ' The film gained attention for its high production values, action sequences,'
-                ' and its portrayal of real-life events. Waar was a commercial success and marked'
-                ' a significant milestone in the Pakistani film industry, contributing to the revival'
-                ' of cinema in the country'),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(widget.Editorcomments.toString(),style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),
+              ),
+            ),
           ),
         ),
         SizedBox(height: 10,),
@@ -159,7 +172,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
             ),
 
           ),
-          child: Center(child: Text('Resene',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.yellow),)),
+          child: Center(child: Text('REWRITE',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.yellow,fontFamily: 'BigshotOne'),)),
         )
 
 
