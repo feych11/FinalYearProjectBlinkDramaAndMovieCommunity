@@ -157,7 +157,7 @@ class _WriterMakingClipsScreenState extends State<WriterMakingClipsScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => VideoPlayerScreen( videoId: videoIdAsString,thumbnailUrl: video.thumbnailUrl,title: video.title,id: widget.id,Movie_ID: widget.Movie_ID,Editor_ID: widget.Editor_ID,Writer_ID: widget.Writer_ID,title1: widget.title,summary: widget.summary,),
+                            builder: (context) => VideoPlayerScreen( videoId: videoIdAsString,thumbnailUrl: video.thumbnailUrl,title: video.title,id: widget.id,Movie_ID: widget.Movie_ID,Editor_ID: widget.Editor_ID,Writer_ID: widget.Writer_ID,title1: widget.title,Type: widget.Type,summary: widget.summary,),
                           ),
                         );
                       },

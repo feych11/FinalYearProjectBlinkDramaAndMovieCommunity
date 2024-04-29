@@ -41,6 +41,14 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
   void initState() {
     super.initState();
     _controller = QuillController.basic();
+    print('');
+    print('ID: ${widget.id}');
+    print('Writer ID: ${widget.Writer_ID}');
+    print('Movie ID: ${widget.Movie_ID}');
+   // print('Summary: ${widget.summary}');
+    print('Title: ${widget.title}');
+    print('Editor ID: ${widget.Editor_ID}');
+    print('Type: ${widget.Type}');
     // int wId=int.parse(widget.Writer_ID!);
     // updateWriterNotifications(wId);
   }

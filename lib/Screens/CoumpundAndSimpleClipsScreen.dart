@@ -129,6 +129,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     print('URL: ${widget.videoId}');
     print('Writer ID: ${widget.Writer_ID}');
     print('Movie ID: ${widget.Movie_ID}');
+    print('Type: ${widget.Type}');
     print('Summary: ${widget.summary}');
     print('Title: ${widget.title1}');
     print('Editor ID: ${widget.Editor_ID}');
@@ -140,6 +141,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     required int? movieId,
      String? title1,
     required String? summary,
+    required String? type,
     required int? editorId,
     required List<Map<String, dynamic>> clips, // Directly accept the list of clips
   }) async {
@@ -152,7 +154,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
         'SentProposal_ID': sentProposalId,
         'Writer_ID': writerId,
         'Movie_ID': movieId,
-
+        'Type':type,
         'Summary': summary,
         'Editor_ID': editorId,
         'Clips': clips, // Pass the clips directly
@@ -464,7 +466,7 @@ print('DataAAAAAA: $data');
                       sentProposalId: widget.id,
                       writerId: widget.Writer_ID,
                       movieId: widget.Movie_ID,
-
+                      type: widget.Type,
                       summary: widget.summary,
                       editorId: widget.Editor_ID,
                       clips: clipsData,

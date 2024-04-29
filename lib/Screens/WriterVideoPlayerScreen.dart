@@ -17,12 +17,15 @@ class VideoPlayerScreen extends StatefulWidget {
   final String ?Writer_ID;
   final String ?title1;
   final String ?summary;
+  final String ?Type;
 
   const VideoPlayerScreen({Key? key, required this.videoId,required this.thumbnailUrl,required this.title,this.id,
     this.Movie_ID,
     this.Editor_ID,
     this.Writer_ID,
-    this.title1,this.summary}) : super(key: key);
+    this.title1,
+    this.Type,
+    this.summary}) : super(key: key);
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -49,6 +52,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     print('Writer ID: ${widget.Writer_ID}');
     print('Title: ${widget.title1}');
     print('Summary: ${widget.summary}');
+    print('Type: ${widget.Type}');
     String videoIdAsString = widget.videoId.toString();
 
     _controller = YoutubePlayerController(
@@ -254,7 +258,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   print('Title: ${widget.title1}');
                   print('Summary: ${widget.summary}');
 
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CoumpundAndSimpleClipsScreen(ClipsInfoList:clipsInfoList,videoId: widget.videoId,videoClips: videoClips,id: widget.id,Movie_ID: widget.Movie_ID,Writer_ID: widget.Writer_ID,Editor_ID: widget.Editor_ID,title1: widget.title1,summary: widget.summary,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CoumpundAndSimpleClipsScreen(ClipsInfoList:clipsInfoList,videoId: widget.videoId,videoClips: videoClips,id: widget.id,Movie_ID: widget.Movie_ID,Writer_ID: widget.Writer_ID,Editor_ID: widget.Editor_ID,title1: widget.title1,Type: widget.Type,summary: widget.summary,)));
                 },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.black)),
                     child: Text('Clips Screen',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.white),))

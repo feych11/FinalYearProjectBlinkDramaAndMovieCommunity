@@ -1,79 +1,59 @@
-import 'package:finalsemproject/API.dart';
-import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
+import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
+import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
-import 'package:finalsemproject/Screens/WriterWriteSummaryScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:finalsemproject/API.dart';
 import 'dart:convert';
-
-class WriterAcceptedProjectsScreen1 extends StatefulWidget {
-  const WriterAcceptedProjectsScreen1({super.key});
+class EditorAcceptedProjectHistoryScreen extends StatefulWidget {
+  const EditorAcceptedProjectHistoryScreen({super.key});
 
   @override
-  State<WriterAcceptedProjectsScreen1> createState() => _WriterAcceptedProjectsScreen1State();
+  State<EditorAcceptedProjectHistoryScreen> createState() => _EditorAcceptedProjectHistoryScreenState();
 }
 
-class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsScreen1> {
+class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProjectHistoryScreen> {
   List<Map<String, dynamic>> notifications = [];
   final Color mateBlack = Color(0xFF242424);
-  String? userId;
 
-  @override
-  void initState() {
-    super.initState();
-    getUserIdFromSharedPreferences();
-  }
-
-
-  Future<void> getUserIdFromSharedPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final user = prefs.getString('userId');
-    setState(() {
-      userId = user;
-    });
-    if (userId != null) {
-      fetchProposals();
-    }
-  }
-
-  Future<void> fetchProposals() async {
-    const String baseurl2=APIHandler.baseUrl1;
-    const String baseurl3=APIHandler.baseUrl2;
-    final url = Uri.parse('$baseurl2/Writer/AcceptedProposals?Writer_ID=${userId}');
+  Future<void> fetchAcceptedProject(int editorID) async {
+    final String baseUrl2 = APIHandler.baseUrl1;
+    final String baseUrl3 = APIHandler.baseUrl2;
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse('$baseUrl2/Editor/HistoryAcceptedprojectByEditor?Editor_ID=$editorID'));
       if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
+        final Map<String, dynamic> data = json.decode(response.body);
+        // Assuming 'Project' contains the list of accepted projects
+        final List<dynamic> projects = data['Project'];
         setState(() {
-          notifications = data.map((proposal) {
+          notifications = projects.map((project) {
             return {
-              'id': proposal['ID'],
-              'title': proposal['Movie_Name'],
-              'writerName': proposal['Write_ID'],
-              'director': proposal['Director'],
-              'Editor_ID': proposal['Editor_ID'],
-              'Movie_ID': proposal['Movie_ID'],
+              'id': project['SentProject_ID'],
+              'title': project['ProposalData']['Movie_Name'],
+              'writerName': project['Writer_ID'],
+              'director': project['ProposalData']['Director'],
+              'type': project['ProposalData']['Type'],
               'rating': 4,
-              'Type':proposal['Type'],
-              'imagePath': '$baseurl3/Images/${proposal['Image']}',
-              'status': proposal['Status'],
+              'imagePath': '$baseUrl3/Images/${project['ProposalData']['Image']}',
+              'status': project['Status'],
             };
           }).toList();
         });
       } else {
-        throw Exception('Failed to load proposals');
+        throw Exception('Failed to load accepted projects');
       }
     } catch (error) {
-      print('Error fetching proposals: $error');
+      print('Failed to load accepted projects: $error');
     }
   }
 
 
+  @override
+  void initState() {
+    super.initState();
+   fetchAcceptedProject(2);
 
-
-
-
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,7 +116,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
                 // Add your action when the item is tapped
-               // Navigator.pop(context); // Close the drawer
+                // Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
@@ -168,7 +148,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
 
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
                   },
                   child: Text
                     ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
@@ -179,10 +159,15 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
           ],
         ),
       ),
-      appBar: AppBar(title: Text('ACCEPTED PROPOSALS',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white,fontFamily: 'BigshotOne'),),
-      backgroundColor: Colors.black,
+      appBar: AppBar(
+
+
+        iconTheme: IconThemeData(color: Colors.white),
+        centerTitle: true,
+        title: Text('History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
+        backgroundColor: Colors.black,
       ),
-      body:SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: notifications.map((notification) {
@@ -193,17 +178,12 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
       ),
     );
   }
-
   Widget buildNotificationCard(Map<String, dynamic> notification) {
     final int id = notification['id'] ?? '';
     final String title = notification['title'] ?? '';
-    final String Writer_ID = userId ?? '';
-    final String writerName = notification['writerName'] ?? '';
+    final String type = notification['type'] ?? '';
     final String director = notification['director'] ?? '';
-    final int Movie_ID = notification['Movie_ID'] ?? '';
-    final String Type = notification['Type'] ?? '';
     final String status = notification['status'] ?? '';
-    final int Editor_ID = notification['Editor_ID'] ?? '';
     final int rating = notification['rating'] ?? 0;
     final String imagePath = notification['imagePath'] ?? '';
 
@@ -214,7 +194,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
         width: 320,
         decoration: BoxDecoration(
           color: Colors.amber,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -224,7 +204,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
               width: 100,
               decoration: BoxDecoration(
                 color: Colors.amber,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(30),
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
@@ -232,7 +212,12 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
             Container(
               height: 200,
               width: 200,
-              decoration: BoxDecoration(color: mateBlack),
+
+              decoration: BoxDecoration(
+
+                  color:mateBlack,
+                  borderRadius: BorderRadius.circular(5)
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Column(
@@ -240,31 +225,31 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                     Text(
                       title,
                       style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontFamily: 'BigshotOne'
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'Rye'
                       ),
                     ),
                     SizedBox(height: 10),
                     Row(
                       children: [
                         Text(
-                          'Writer Name:',
+                          '  Type:   ',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                         Text(
-                          writerName,
+                          type,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                       ],
@@ -273,21 +258,21 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                     Row(
                       children: [
                         Text(
-                          'Director:',
+                          '  Director:',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                         SizedBox(width: 10),
                         Text(
                           director,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
                               fontFamily: 'Rye'
                           ),
                         ),
@@ -297,64 +282,28 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                     Row(
                       children: [
                         Text(
-                          'Rating:',
+                          '  Status:',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 6),
-                        Row(
-                          children: List.generate(
-                            rating,
-                                (index) => Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                              size: 11,
-                            ),
+                        SizedBox(width: 10),
+                        Text(
+                          status,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
-                    Row(children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: (){
-                            setState(() {
-                              var data={id:id,
-                                title: title,
-                                Writer_ID:userId,
-                                imagePath:imagePath,
-                                Editor_ID:Editor_ID,
-                              Type:Type
-                              };
 
-                              print(data);
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectScreen(id:id,
-                                  title: title,
-                                  Writer_ID:userId,
-                                  Movie_ID:Movie_ID,
-                                  imagePath:imagePath,
-                                  Editor_ID:Editor_ID,
-                              Type: Type,)));
-                            });
-                          },
-                          child: Container(height: 25,
-                            width: 180,
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(10),
 
-                            ),child: Center(child: Text(' Write Summary',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'BigshotOne'),)),
-                          ),
-                        ),
-                      ),
-
-                    ],)
                   ],
                 ),
               ),

@@ -20,8 +20,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   List<Map<String,dynamic>>notifications1=[];
   List<String>MovieName=[];
   List<String>EditorComments=[];
+  List<String>Summary=[];
   final Color mateBlack = Color(0xFF242424);
   String? userId;
+
 
   @override
   void initState() {
@@ -106,19 +108,48 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
 
-        // Check if 'EditorsComment' key exists in the response
+        // Check if 'SentProjects' key exists in the response
         if (data.containsKey('SentProjects')) {
           final List<dynamic> sentProjects = data['SentProjects'];
           for (var project in sentProjects) {
             EditorComments.add(project['EditorComment']);
-            print('EditorCoomm:${EditorComments}');
+            // Check if 'Summaries' key exists in the project
+
+            print('EditorComments: $EditorComments');
           }
         } else {
           // Handle the case where 'SentProjects' key is not present
           print('SentProjects key is not present in the response');
         }
+        if(data.containsKey('Summaries'))
+        {
+          final List<dynamic>summaries=data['Summaries'];
 
+          for(var project1 in summaries)
+          {
 
+              Summary.add(project1['Summary1']);
+              print('Summary: $Summary');
+            // Summary.add(project1['Summary1']);
+            // print('Summary: $Summary');
+          }
+        }
+        else
+        {
+          print('Summaries key is not present in the responce');
+        }
+
+        // if (data.containsKey('Summaries')) {
+        //   final List<dynamic> summaries = data['Summaries'];
+        //   if (summaries.isNotEmpty) {
+        //     Summary = summaries[0]['Summary1'];
+        //     print('Summary: $Summary');
+        //   } else {
+        //     print('No summaries found in the project');
+        //   }
+        // } else {
+        //   print('Summaries key is not present in the project');
+        // }
 
         return data;
       } else {
@@ -129,6 +160,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       rethrow;
     }
   }
+
 
   Future<void> viewRewriteProject() async {
     final String baseurl2 = APIHandler.baseUrl1;
@@ -366,8 +398,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
               ),
               // Display rewrite projects
               Column(
-                children: notifications1.map((notification1) {
-                  return buildNotificationCard1(notification1);
+                children: notifications1.asMap().entries.map((entry) {
+                  final int index = entry.key;
+                  final Map<String, dynamic> notification1 = entry.value;
+                  return buildNotificationCard1(notification1, index);
                 }).toList(),
               ),
             ],
@@ -584,7 +618,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       ),
     );
   }
-  Widget buildNotificationCard1(Map<String, dynamic> notification1) {
+  Widget buildNotificationCard1(Map<String, dynamic> notification1, index) {
     final int id = notification1['id'] ?? '';
     final String title = notification1['title'] ?? '';
 
@@ -710,7 +744,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         child: InkWell(
                           onTap: (){
                             setState(() {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AcceptedToRewriteScreen3(MovieName: title,Editorcomments:EditorComments.isNotEmpty ? EditorComments[0] : "",)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AcceptedToRewriteScreen3(MovieName: MovieName.isNotEmpty?MovieName[index]:"",Editorcomments:EditorComments.isNotEmpty ? EditorComments[index] : "",Summary: Summary.isNotEmpty ? Summary[index] : "",)));
 
                             });
                           },

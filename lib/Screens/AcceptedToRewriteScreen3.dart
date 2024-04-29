@@ -1,10 +1,13 @@
+import 'package:finalsemproject/Screens/WriterRewriteSummaryScreen.dart';
 import 'package:flutter/material.dart';
 class AcceptedToRewriteScreen3 extends StatefulWidget {
   String?MovieName;
   String?Editorcomments;
+  String?Summary;
   AcceptedToRewriteScreen3({super.key,
   this.MovieName,
-    this.Editorcomments
+    this.Editorcomments,
+    this.Summary
   });
 
   @override
@@ -18,6 +21,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
     super.initState();
     print('Movie name: ${widget.MovieName}');
     print("Editors comments: ${widget.Editorcomments}");
+    print('Summary: ${widget.Summary}');
 
   }
 
@@ -117,7 +121,9 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
           ],
         ),
       ),
-      appBar: AppBar(title: Text('Rewrite Summary',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'Rye'),),
+      appBar: AppBar(
+        centerTitle: false,
+        title: Text('Rewrite Summary',textAlign: TextAlign.start,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'Rye'),),
       backgroundColor: Colors.black,),
       body: Column(children: [
         Padding(
@@ -161,18 +167,23 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
           ),
         ),
         SizedBox(height: 10,),
-        Container(height: 40,
-          width: 100,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: Colors.yellow, // Set your desired border color here
-              width: 2.0, // Set the border width
-            ),
+        InkWell(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterRewriteSummaryScreen(Summary: widget.Summary,Title: widget.MovieName,)));
+          },
+          child: Container(height: 40,
+            width: 100,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.yellow, // Set your desired border color here
+                width: 2.0, // Set the border width
+              ),
 
+            ),
+            child: Center(child: Text('REWRITE',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.yellow,fontFamily: 'BigshotOne'),)),
           ),
-          child: Center(child: Text('REWRITE',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.yellow,fontFamily: 'BigshotOne'),)),
         )
 
 

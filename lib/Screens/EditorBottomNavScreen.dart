@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:finalsemproject/API.dart';
+import 'package:finalsemproject/Screens/EditorAcceptedProjectHistoryScreen.dart';
 import 'package:finalsemproject/Screens/EditorNotificationScreen.dart';
 import 'package:finalsemproject/Screens/EditorPerposalHistoryScreen.dart';
 import 'package:finalsemproject/Screens/EditorReadingScreen.dart';
@@ -90,6 +91,7 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
     SendPerposal(),
     EditorNotificationScreen(),
     EditorPerposalHistoryScreen(),
+    EditorAcceptedProjectHistoryScreen()
 
 
   ];
@@ -162,15 +164,20 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
 
           ),
           BottomNavigationBarItem(
-            icon: InkWell(
-                onTap: (){
-                  setState(() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
-                  });
-                },
-                child: Icon(Icons.logout,color: Colors.white,)),
-            label: 'Logout',
+            icon: Icon(Icons.note_add,color: Colors.white,),
+            label: 'Acc Projects',
+
           ),
+          // BottomNavigationBarItem(
+          //   icon: InkWell(
+          //       onTap: (){
+          //         setState(() {
+          //           Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+          //         });
+          //       },
+          //       child: Icon(Icons.logout,color: Colors.white,)),
+          //   label: 'Logout',
+          // ),
 
         ],
       ),
