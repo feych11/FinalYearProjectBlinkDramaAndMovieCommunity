@@ -177,6 +177,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
             notifications1 = projects.map((project) {
               MovieName.add(project['SentProposalData']['Movie_Name']);
               return {
+                'Sentid':project['SentProject_ID'],
                 'id': project['SentProposalData']['SentProposal_ID'],
                 'title': project['SentProposalData']['Movie_Name'],
                 'director': project['SentProposalData']['Director'],
@@ -619,6 +620,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
     );
   }
   Widget buildNotificationCard1(Map<String, dynamic> notification1, index) {
+    final int Sentid=notification1['Sentid']??'';
     final int id = notification1['id'] ?? '';
     final String title = notification1['title'] ?? '';
 
@@ -744,7 +746,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         child: InkWell(
                           onTap: (){
                             setState(() {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AcceptedToRewriteScreen3(MovieName: MovieName.isNotEmpty?MovieName[index]:"",Editorcomments:EditorComments.isNotEmpty ? EditorComments[index] : "",Summary: Summary.isNotEmpty ? Summary[index] : "",)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AcceptedToRewriteScreen3(SentprojectID: Sentid,MovieName: MovieName.isNotEmpty?MovieName[index]:"",Editorcomments:EditorComments.isNotEmpty ? EditorComments[index] : "",Summary: Summary.isNotEmpty ? Summary[index] : "",)));
 
                             });
                           },
@@ -758,7 +760,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'View Comments',
+                                  'Comments',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,

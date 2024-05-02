@@ -148,7 +148,8 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
   }
   void refreshPage () {
     setState(() {
-      summaryText = summariesData.isNotEmpty ? summariesData[0]['Summary1'].toString() : '';
+      summaryText = summariesData.isNotEmpty ? summariesData.last['Summary1'].toString() : '';
+
     });
   }
 //   void refreshPage () {

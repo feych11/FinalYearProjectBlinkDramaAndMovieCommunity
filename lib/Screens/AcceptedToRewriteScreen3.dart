@@ -4,10 +4,12 @@ class AcceptedToRewriteScreen3 extends StatefulWidget {
   String?MovieName;
   String?Editorcomments;
   String?Summary;
+  int?SentprojectID;
   AcceptedToRewriteScreen3({super.key,
   this.MovieName,
     this.Editorcomments,
-    this.Summary
+    this.Summary,
+    this.SentprojectID
   });
 
   @override
@@ -22,6 +24,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
     print('Movie name: ${widget.MovieName}');
     print("Editors comments: ${widget.Editorcomments}");
     print('Summary: ${widget.Summary}');
+    print('Sent project id:: ${widget.SentprojectID}');
 
   }
 
@@ -169,7 +172,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
         SizedBox(height: 10,),
         InkWell(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterRewriteSummaryScreen(Summary: widget.Summary,Title: widget.MovieName,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterRewriteSummaryScreen(SentprojectID: widget.SentprojectID,Summary: widget.Summary,Title: widget.MovieName,)));
           },
           child: Container(height: 40,
             width: 100,

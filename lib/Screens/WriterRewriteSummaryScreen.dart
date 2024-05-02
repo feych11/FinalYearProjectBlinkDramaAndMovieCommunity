@@ -1,12 +1,17 @@
+import 'package:finalsemproject/API.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:http/http.dart'as http;
+
 import 'dart:convert';
 class WriterRewriteSummaryScreen extends StatefulWidget {
   String?Summary;
   String?Title;
+  int?SentprojectID;
   WriterRewriteSummaryScreen({super.key,
   this.Summary,
-  this.Title
+  this.Title,
+    this.SentprojectID
   });
 
   @override
@@ -15,11 +20,32 @@ class WriterRewriteSummaryScreen extends StatefulWidget {
 
 class _WriterRewriteSummaryScreenState extends State<WriterRewriteSummaryScreen> {
   QuillController _controller = QuillController.basic();
+  Future<void> SendUpdateSummry(String sentId, String updatedSummary) async {
+    final String baseUrl = APIHandler.baseUrl1;
+    final String updateSummaryUrl = '$baseUrl/Writer/UpdateRewriteSummary';
+
+    try {
+      final response = await http.post(
+        Uri.parse('$updateSummaryUrl?SentProject_ID=$sentId&updatedSummary=$updatedSummary'),
+      );
+
+      if (response.statusCode == 200) {
+        print('Summary updated successfully');
+      } else {
+        throw Exception('Failed to update summary');
+      }
+    } catch (error) {
+      print('Failed to update summary: $error');
+    }
+  }
+
 
   @override
   void initState() {
     super.initState();
     print('Summary: ${widget.Summary}');
+    print('SEntProject ID::: ${widget.SentprojectID}');
+
     _controller = QuillController.basic();
     if (widget.Summary != null) {
       _controller.document.insert(0, widget.Summary!);
@@ -91,49 +117,28 @@ class _WriterRewriteSummaryScreenState extends State<WriterRewriteSummaryScreen>
               ],),
             ),
             SizedBox(height: 20,),
-            Row(
+            ElevatedButton(onPressed: () {
+              print('Sumary updated:'+_controller.document.toPlainText());
+              // Assuming widget.SentprojectID is of type int?
+               // Use 0 as default value if it's null
 
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+              SendUpdateSummry(widget.SentprojectID.toString(), _controller.document.toPlainText());
 
-                ElevatedButton(onPressed: () {
-
-
-
-                },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.black), // Change button color
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(10, 50)), // Adjust button size
-                    // You can also customize other aspects of the button's appearance here
-                  ),
-                  child: Center(child: Text('Save', style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontFamily: 'BigshotOne'),)
-                  ),
-                ),
-                ElevatedButton(onPressed: () {
-
-                },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.black), // Change button color
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(10, 50)), // Adjust button size
-                    // You can also customize other aspects of the button's appearance here
-                  ),
-                  child: Center(child: Text('Make Clips', style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontFamily: 'BigshotOne'),)
-                  ),
-                ),
-
-              ],),
+            },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Colors.black), // Change button color
+                minimumSize: MaterialStateProperty.all<Size>(
+                    Size(10, 50)), // Adjust button size
+                // You can also customize other aspects of the button's appearance here
+              ),
+              child: Center(child: Text('RESEND', style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontFamily: 'BigshotOne'),)
+              ),
+            ),
             SizedBox(height: 20,)
 
 
