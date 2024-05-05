@@ -9,7 +9,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class WriterNotificationScreen extends StatefulWidget {
-  const WriterNotificationScreen({Key? key}) : super(key: key);
+  // final String? WriterName;
+  // final String? WriterBalance;
+  // final String? WriterImage;
+  const WriterNotificationScreen({Key? key
+    // this.WriterName,
+    // this.WriterBalance,
+    // this.WriterImage
+
+
+  }) : super(key: key);
 
   @override
   State<WriterNotificationScreen> createState() => _WriterNotificationScreenState();
@@ -23,6 +32,9 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   List<String>Summary=[];
   final Color mateBlack = Color(0xFF242424);
   String? userId;
+   String? WriterName;
+   String? WriterBalance;
+   String? WriterImage;
 
 
   @override
@@ -86,16 +98,28 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   Future<void> getUserIdFromSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString('userId');
+    final username=prefs.getString('UserName');
+    final userbalance=prefs.getString('Balance');
+    final userImage=prefs.getString('Image');
     setState(() {
       userId = user;
+      WriterName=username;
+      WriterBalance=userbalance;
+      WriterImage=userImage;
       print('jskksd: ${userId}');
+      print('WriterName: ${WriterName}');
+      print('Writer Balance: ${WriterBalance}');
+      print('WriterImageL ${WriterImage}');
     });
     if (userId != null) {
       fetchProposals();
       getRewriteData();
-      print('Getrewrtedata:${getRewriteData}');
+      // print('Getrewrtedata:${getRewriteData}');
       viewRewriteProject();
       print('ghjk:${userId}');
+      print('WriterName: ${WriterName}');
+      print('Writer Balance: ${WriterBalance}');
+      print('WriterImageL ${WriterImage}');
     }
   }
 
@@ -289,18 +313,22 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                   color: Colors.black,
                 ),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('Images/man2.webp'),
+                      backgroundImage: NetworkImage(WriterImage.toString()),
 
                     ),
                     SizedBox(width: 10,),
-                    Column(children: [
-                      Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
+
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      Text(WriterName.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white,fontFamily: 'BigShotone'),
                       ),
-                      Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
+                      SizedBox(height: 20,),
+                      Text(WriterBalance.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigShotone'),)
                     ],),
                     SizedBox(width: 5,),
                     GestureDetector(
@@ -317,7 +345,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -325,7 +353,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
             ),
             ListTile(
 
-              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: 'BigShotone'),),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
                 // Add your action when the item is tapped
@@ -334,7 +362,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
 
             ),
             ListTile(
-              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
                 // Add your action when the item is tapped
@@ -342,14 +370,14 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -360,6 +388,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                 width: 50,
                 decoration: BoxDecoration(
                   color: Colors.black,
+                  borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                       color: Colors.red,
                       width: 2
@@ -372,8 +401,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
                   },
-                  child: Text
-                    ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
+                  child: Center(
+                    child: Text
+                      ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red,fontFamily: 'BigShotone'),),
+                  ),
                 ),
               ),
             ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/FavouriteScreen.dart';
+import 'package:finalsemproject/Screens/HistoryOfWriterSentProject.dart';
 import 'package:finalsemproject/Screens/HistoryScreen.dart';
 import 'package:finalsemproject/Screens/MoviesandDarama.dart';
 import 'package:finalsemproject/Screens/ReaderHomePageScreen.dart';
@@ -47,7 +48,7 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
     // Replace these with your actual content widgets for each tab
     WriterNotificationScreen(),
     WriterAcceptedProjectsScreen1(),
-    WriterAcceptedProjectScreen(),
+    HistoryOfWriterSentProject(),
 
   ];
   @override

@@ -280,7 +280,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                         onTap: (){
                           print('MovieID: $id');
                           print('SENTPROJECT ID: $sentProjectID');
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorReadingScreen(MovieID: id,sentProjectID: sentProjectID,)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorReadingScreen(moviename: title,MovieID: id,sentProjectID: sentProjectID,)));
                         },
                         child: Container(
                           height: 30,

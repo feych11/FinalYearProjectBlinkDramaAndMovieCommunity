@@ -20,13 +20,17 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
   TextEditingController reaemailcon = TextEditingController();
   TextEditingController reapasscount = TextEditingController();
   bool islogin=false;
-  Future<void> saveUserId(String ?userId) async {
+  Future<void> saveUserId(String ?userId,String? UserName, String? Image, String? Balance, ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userId', userId ?? '');
+    await prefs.setString('UserName', UserName ?? '');
+    await prefs.setString('Image', Image ?? '');
+    await prefs.setString('Balance',Balance  ?? '');
   }
 
   Future<void> loginUser(String email, String password) async {
     const String baseurl2 = APIHandler.baseUrl1;
+    const String baseurl3=APIHandler.baseUrl2;
     final Uri apiUrl =
     Uri.parse('$baseurl2/User/Login?password=' + password + '&email=' + email);
 
@@ -43,17 +47,30 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
 
         // Extract the user ID based on the role
         String ?userId;
+        String ?UserName;
+        String ?Image;
+        String ?Balance;
         if (role == 'Editor') {
           userId = '2';
         } else if (role == 'Writer') {
 
           userId = userData['Writer_ID']?.toString();
+          UserName = userData['UserName']?.toString();
+           Image ='$baseurl3/Images/${ userData['Image']}';
+          Balance = userData['Balance']?.toString();
+          // Now you have the writer's name, image, and balance
+          print('Writer Name: $UserName');
+          print('Writer Image: $Image');
+          print('Writer Balance: $Balance');
         }
 
 
         // Save the user ID to shared preferences
-        await saveUserId(userId);
+        await saveUserId(userId,UserName,Image,Balance);
         print('Userid:${userId}');
+        print('Writer Name: $UserName');
+        print('Writer Image: $Image');
+        print('Writer Balance: $Balance');
 
         // Navigate to the appropriate screen based on the role
         if (role == 'Writer') {

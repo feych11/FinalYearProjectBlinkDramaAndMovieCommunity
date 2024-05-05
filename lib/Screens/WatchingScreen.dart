@@ -17,11 +17,14 @@ class VideoClip {
 }
 
 class WatchingScreen extends StatefulWidget {
+  String?moviename;
   final List<Map<String,dynamic>> ?clipsData;
   final List<Map<String,dynamic>>?ClipsInfoList;
-  const WatchingScreen({super.key,
+
+   WatchingScreen({super.key,
      this.clipsData,
-    this.ClipsInfoList
+    this.ClipsInfoList,
+    this.moviename
 
   });
 
@@ -40,6 +43,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
   void initState() {
     super.initState();
     print('ISCompoundCLips Info:${widget.ClipsInfoList}');
+    print('MovieName::: ${widget.moviename}');
     nonCompoundVideoWidgets = _buildNonCompoundVideos();
     //refreshPage();
     print('INFO  CLIPSSSSS:'+widget.clipsData.toString());
@@ -94,59 +98,12 @@ class _WatchingScreenState extends State<WatchingScreen> {
 
 
   }
-//     void refreshPage () {
-//     setState(()  {
-//
-//
-//       if (widget.clipsData != null && widget.clipsData!.isNotEmpty) {
-//         bool isCompoundClip = widget.clipsData![currentClipIndex]['isCompoundClip'];
-//         if (isCompoundClip) {
-//
-//           String startTimeStr = widget.clipsData![currentClipIndex]['Start_time'].trim();
-//           String endTimeStr = widget.clipsData![currentClipIndex]['End_time'].trim();
-//
-//           double startTimeDouble = double.parse(startTimeStr);
-//           double endTimeDouble = double.parse(endTimeStr);
-//
-// // Convert the double values to integers
-//           int startTimeInSeconds = startTimeDouble.toInt();
-//           int endTimeInSeconds = endTimeDouble.toInt();
-//
-// // Create Duration objects
-//           Duration startTime = Duration(seconds: startTimeInSeconds);
-//           Duration endTime = Duration(seconds: endTimeInSeconds);
-//
-//
-//           // Future.delayed(Duration(milliseconds: startTime)); // Delay start
-//           // Initialize YoutubePlayerController for each clip
-//           controller = YoutubePlayerController(
-//             initialVideoId: YoutubePlayer.convertUrlToId(widget.clipsData![currentClipIndex]['Url']) ?? '',
-//             flags: YoutubePlayerFlags(
-//
-//
-//                 autoPlay: true,
-//                 startAt: startTime.inSeconds
-//
-//               // End at the clip's end time
-//             ),
-//           )..addListener(_onControllerStateChanged);
-//           //
-//
-//         }
-//
-//
-//          isPlayerReady = true;
-//       }
-//
-//
-//     });
-//   }
-
 
   List<Widget> _buildNonCompoundVideos() {
     List<Widget> widgets = [];
 
-    for (var clip in widget.clipsData!) {
+    for (var i = 0; i < widget.clipsData!.length; i++) {
+      var clip = widget.clipsData![i];
       bool isCompound = clip['isCompoundClip'] ?? false;
 
       if (!isCompound) {
@@ -157,18 +114,38 @@ class _WatchingScreenState extends State<WatchingScreen> {
           initialVideoId: YoutubePlayer.convertUrlToId(videoUrl) ?? '',
           flags: YoutubePlayerFlags(
             autoPlay:false,
-
             startAt: startAt.toInt(),
             endAt: endAt.toInt(),
           ),
         );
 
-        widgets.add(YoutubePlayer(controller: controllerr));
+        // Add padding around each video widget and add a text widget after each clip
+        widgets.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Column(
+              children: [
+                YoutubePlayer(controller: controllerr),
+                SizedBox(height: 10), // Add gap between video and text
+                Text(
+                  '${widget.moviename} - Part ${i + 1}', // Display movie name
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'BigshotOne'
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       }
     }
 
     return widgets;
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -453,7 +430,9 @@ class _WatchingScreenState extends State<WatchingScreen> {
               padding: EdgeInsets.all(20), // Adjust padding as needed
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: nonCompoundVideoWidgets,
+                children:
+
+                nonCompoundVideoWidgets,
               ),
             ),
           ),

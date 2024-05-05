@@ -9,11 +9,13 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class EditorReadingScreen extends StatefulWidget {
   final String ?MovieID;
   final String ?sentProjectID;
+  final String?moviename;
 
 
   const EditorReadingScreen({Key? key ,
     this.MovieID,
-    this.sentProjectID
+    this.sentProjectID,
+    this.moviename
   }) : super(key: key);
 
   @override
@@ -145,6 +147,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
     super.initState();
     fetchSummary(widget.sentProjectID.toString());
     viewSentProject(widget.MovieID.toString());
+    print('Title::${widget.moviename}');
   }
   void refreshPage () {
     setState(() {
@@ -475,7 +478,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            WatchingScreen(clipsData: clipsData,ClipsInfoList: clipsInfoList,
+                                            WatchingScreen(moviename: widget.moviename,clipsData: clipsData,ClipsInfoList: clipsInfoList,
 
                                             )));
                               });
