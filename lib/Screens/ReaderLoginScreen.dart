@@ -1,4 +1,5 @@
 import 'package:finalsemproject/Screens/EditorBottomNavScreen.dart';
+import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSignUpScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
 import 'package:finalsemproject/Screens/SendPerposal.dart';
@@ -79,6 +80,10 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
         } else if (role == 'Editor') {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => EditorBottomNavScreen()));
+        }
+        else if(role=='Reader')
+        {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
         }
 
         print('Login successful, Role: $role, UserID: $userId');

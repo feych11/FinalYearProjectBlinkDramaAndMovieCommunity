@@ -1,3 +1,4 @@
+import 'package:finalsemproject/Screens/EditorViewAcceptedSummary.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
@@ -28,6 +29,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
         setState(() {
           notifications = projects.map((project) {
             return {
+              'Movieid':project['Movie_ID'],
               'id': project['SentProject_ID'],
               'title': project['ProposalData']['Movie_Name'],
               'writerName': project['Writer_ID'],
@@ -179,7 +181,8 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
     );
   }
   Widget buildNotificationCard(Map<String, dynamic> notification) {
-    final int id = notification['id'] ?? '';
+    final int Movieid = notification['Movieid'] ?? '';
+    final int Sentperposalid = notification['id'] ?? '';
     final String title = notification['title'] ?? '';
     final String type = notification['type'] ?? '';
     final String director = notification['director'] ?? '';
@@ -200,7 +203,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 200,
+              height: 150,
               width: 100,
               decoration: BoxDecoration(
                 color: Colors.amber,
@@ -210,7 +213,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
             ),
             SizedBox(width: 10),
             Container(
-              height: 200,
+              height: 210,
               width: 200,
 
               decoration: BoxDecoration(
@@ -254,7 +257,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -278,7 +281,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -302,6 +305,25 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                         ),
                       ],
                     ),
+                    SizedBox(height: 5),
+                    Center(
+                      child: GestureDetector(
+                        onTap: (){
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorViewAcceptedSummary(MovieID: Movieid,sentProjectID: Sentperposalid,moviename: title,)));
+
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 90,
+                          decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
+                        ),
+                      ),
+                    )
 
 
                   ],

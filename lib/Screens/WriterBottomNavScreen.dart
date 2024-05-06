@@ -6,6 +6,7 @@ import 'package:finalsemproject/Screens/HistoryOfWriterSentProject.dart';
 import 'package:finalsemproject/Screens/HistoryScreen.dart';
 import 'package:finalsemproject/Screens/MoviesandDarama.dart';
 import 'package:finalsemproject/Screens/ReaderHomePageScreen.dart';
+import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
@@ -116,7 +117,7 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
             icon: InkWell(
                 onTap: (){
                   setState(() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
                   });
                 },
                 child: Icon(Icons.logout)),

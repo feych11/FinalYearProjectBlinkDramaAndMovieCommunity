@@ -16,6 +16,7 @@ class EditorAddCommentsFroWriterScreen extends StatefulWidget {
 }
 class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroWriterScreen> {
   QuillController _controller = QuillController.basic();
+  final Color Green  = Color(0xFF4FAA6D);
 
   @override
   void initState() {
@@ -33,6 +34,33 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
      if(responce.statusCode==200)
      {
        print('Editor Add Comments Succesfully');
+       showDialog(
+         context: context,
+         builder: (BuildContext context) {
+           return AlertDialog(
+             backgroundColor: Green,
+             shape: RoundedRectangleBorder(
+               borderRadius: BorderRadius.circular(10),
+             ),
+             title: Text('ADD COMMENTS',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+             content: Row(
+               children: [
+                 Icon(Icons.check, color: Colors.black,size: 30,),
+                 SizedBox(width: 8),
+                 Text('ADD\nCOMMENT',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+               ],
+             ),
+             actions: <Widget>[
+               TextButton(
+                 onPressed: () {
+                   Navigator.of(context).pop();
+                 },
+                 child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+               ),
+             ],
+           );
+         },
+       );
      }
      else if(responce.statusCode==404)
      {

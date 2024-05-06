@@ -27,6 +27,7 @@ class WriterNotificationScreen extends StatefulWidget {
 class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   List<Map<String, dynamic>> notifications = [];
   List<Map<String,dynamic>>notifications1=[];
+  final Color Green  = Color(0xFF4FAA6D);
   List<String>MovieName=[];
   List<String>EditorComments=[];
   List<String>Summary=[];
@@ -264,6 +265,33 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       if (response.statusCode == 200) {
         // Proposal accepted successfully
         print('Proposal Accepted');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: Text('Accepted Proposal',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+              content: Row(
+                children: [
+                  Icon(Icons.check, color: Colors.black,size: 30,),
+                  SizedBox(width: 8),
+                  Text('ACCEPTED',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                ),
+              ],
+            );
+          },
+        );
       } else if (response.statusCode == 404) {
         // Proposal not found
         print('Proposal not found');
@@ -288,6 +316,34 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       if (response.statusCode == 200) {
         // Proposal accepted successfully
         print('Proposal Rejected');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: Text('PROPOSAL REJECTED ',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+              content: Row(
+                children: [
+                  Icon(Icons.cancel, color: Colors.black,size: 30,),
+                  SizedBox(width: 8),
+                  Text('REJECTED',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                ),
+              ],
+            );
+          },
+        );
+
       } else if (response.statusCode == 404) {
         // Proposal not found
         print('Proposal not found');

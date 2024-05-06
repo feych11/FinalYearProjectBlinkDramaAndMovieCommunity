@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/EditorAddCommentsFroWriterScreen.dart';
 import 'package:finalsemproject/Screens/WatchingScreen.dart';
@@ -6,23 +7,23 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class EditorReadingScreen extends StatefulWidget {
-  final String ?MovieID;
-  final String ?sentProjectID;
+class EditorViewAcceptedSummary extends StatefulWidget {
+  final int ?MovieID;
+  final int ?sentProjectID;
   final String?moviename;
 
 
-  const EditorReadingScreen({Key? key ,
+  const EditorViewAcceptedSummary({Key? key ,
     this.MovieID,
     this.sentProjectID,
     this.moviename
   }) : super(key: key);
 
   @override
-  State<EditorReadingScreen> createState() => _EditorReadingScreenState();
+  State<EditorViewAcceptedSummary> createState() => _EditorViewAcceptedSummaryState();
 }
 
-class _EditorReadingScreenState extends State<EditorReadingScreen> {
+class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
   String? summaryText;
   String? writerName = '';
   Duration? endtime;
@@ -34,12 +35,12 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
   List<Map<String, String>> clipsInfoList = [];
   List<Map<String, dynamic>> summariesData = [];
   late YoutubePlayerController controller;
-   bool isPlayerReady = false;
+  bool isPlayerReady = false;
   // int index=0;
   //bool assigned=false;
   int currentClipIndex = 0;
   bool init=false;
-  Future<void> fetchSummary(String sentProjectID) async {
+  Future<void> fetchSummary(int sentProjectID) async {
     const String baseUrl =  APIHandler.baseUrl1;
     final String apiUrl =
         '$baseUrl/Editor/FetchSummary?sentProjectId=$sentProjectID';
@@ -55,10 +56,10 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
         //     ? summaryList[0]['Summary1'] // Assuming the summary is in the first item of the list
         //     : null;
         //print('Summary Data: '+data['SummaryData']['Summary1'].toString());
-       // summaryText = data['SummaryData']['Summary1'].toString();
+        // summaryText = data['SummaryData']['Summary1'].toString();
 
         //clipsData = data['ClipsData'];
-       // print('clipDataList = '+ clipsData.toString());
+        // print('clipDataList = '+ clipsData.toString());
 
 
         //print('Writer Name: $writerName');
@@ -72,7 +73,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
     }
   }
 
-  Future<void>AcceptSentProject(String SentprojectID)async
+  Future<void>AcceptSentProject(int SentprojectID)async
   {
     try
     {
@@ -125,7 +126,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
     }
 
   }
-  Future<void> viewSentProject(String movieId) async {
+  Future<void> viewSentProject(int movieId) async {
     const String baseUrl = APIHandler.baseUrl1; // Update with your API base URL
     final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId';
 
@@ -140,7 +141,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
 
         // Extract clips data
         List<dynamic> clipsListt = data['Clips'];
-         clipsData = List<Map<String, dynamic>>.from(clipsListt);
+        clipsData = List<Map<String, dynamic>>.from(clipsListt);
 
 
         for (var clip in clipsData) {
@@ -174,8 +175,8 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
   @override
   void initState() {
     super.initState();
-    fetchSummary(widget.sentProjectID.toString());
-    viewSentProject(widget.MovieID.toString());
+    fetchSummary(widget.sentProjectID!);
+    viewSentProject(widget.MovieID!);
     print('Title::${widget.moviename}');
   }
   void refreshPage () {
@@ -483,10 +484,10 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditorReadingScreen()));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => EditorReadingScreen()));
                         },
                         child: Text(
                           'Read',
@@ -545,39 +546,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.yellow),
-                          onPressed: () {
-                            AcceptSentProject(widget.sentProjectID.toString());
-                          },
-                          child: Text(
-                            'Upload',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.black,fontFamily: 'BigshotOne'),
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.yellow),
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorAddCommentsFroWriterScreen(MovieID: widget.MovieID,sentProjectID: widget.sentProjectID,)));
-                          },
-                          child: Text(
-                            'Rewrite',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.black,fontFamily: 'BigshotOne'),
-                          ),
-                        ),
-                      ],
-                    ),
+
                     SizedBox(
                       height: 10,
                     ),

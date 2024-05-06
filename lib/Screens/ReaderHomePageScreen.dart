@@ -144,7 +144,8 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     //     ],
     //   ),
     // );
-    return Scaffold(drawer: Drawer(
+    return Scaffold(
+      drawer: Drawer(
       backgroundColor: Colors.grey,
       child: ListView(
         padding: EdgeInsets.zero,

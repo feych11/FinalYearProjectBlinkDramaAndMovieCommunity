@@ -24,7 +24,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
   TextEditingController EpiCon=TextEditingController();
 
   File? _image;
-
+  final Color Green  = Color(0xFF4FAA6D);
   List<dynamic> _writers = [];
   String? _selectedWriter;
   List<dynamic> _movies = [];
@@ -281,6 +281,33 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
         var responseData = await response.stream.bytesToString();
         print('Sent Proposal Successful');
         print(responseData);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: Text('Send Proposal',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+              content: Row(
+                children: [
+                  Icon(Icons.check, color: Colors.black,size: 30,),
+                  SizedBox(width: 8),
+                  Text('SENT\nSUCCESSFULLY',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                ),
+              ],
+            );
+          },
+        );
       } else {
         var responseData = await response.stream.bytesToString();
         print('Failed to send proposal. Error: ${response.reasonPhrase}');

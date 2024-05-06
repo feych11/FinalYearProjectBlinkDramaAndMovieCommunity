@@ -59,6 +59,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
   bool init=false;
   List<VideoClip1> clips = [];
   late YoutubePlayerController controller;
+  final Color Green  = Color(0xFF4FAA6D);
 
 
   @override
@@ -169,6 +170,33 @@ print('DataAAAAAA: $data');
       if (response.statusCode == 200) {
         // Project sent successfully
         print(response.body);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              title: Text('Sent Project',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+              content: Row(
+                children: [
+                  Icon(Icons.check, color: Colors.black,size: 30,),
+                  SizedBox(width: 8),
+                  Text('SENT\nSUCCESSFULLY',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                ),
+              ],
+            );
+          },
+        );
         // Handle navigation or UI updates as needed
       } else {
         // Project sending failed
