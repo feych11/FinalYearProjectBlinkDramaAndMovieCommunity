@@ -18,6 +18,7 @@ class VideoPlayerScreen extends StatefulWidget {
   final String ?title1;
   final String ?summary;
   final String ?Type;
+  final int ?Episode;
 
   const VideoPlayerScreen({Key? key, required this.videoId,required this.thumbnailUrl,required this.title,this.id,
     this.Movie_ID,
@@ -25,6 +26,7 @@ class VideoPlayerScreen extends StatefulWidget {
     this.Writer_ID,
     this.title1,
     this.Type,
+    this.Episode,
     this.summary}) : super(key: key);
 
   @override
@@ -53,6 +55,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     print('Title: ${widget.title1}');
     print('Summary: ${widget.summary}');
     print('Type: ${widget.Type}');
+    print('Episode: ${widget.Episode}');
     String videoIdAsString = widget.videoId.toString();
 
     _controller = YoutubePlayerController(
@@ -258,7 +261,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   print('Title: ${widget.title1}');
                   print('Summary: ${widget.summary}');
 
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CoumpundAndSimpleClipsScreen(ClipsInfoList:clipsInfoList,videoId: widget.videoId,videoClips: videoClips,id: widget.id,Movie_ID: widget.Movie_ID,Writer_ID: widget.Writer_ID,Editor_ID: widget.Editor_ID,title1: widget.title1,Type: widget.Type,summary: widget.summary,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CoumpundAndSimpleClipsScreen(Episode: widget.Episode,ClipsInfoList:clipsInfoList,videoId: widget.videoId,videoClips: videoClips,id: widget.id,Movie_ID: widget.Movie_ID,Writer_ID: widget.Writer_ID,Editor_ID: widget.Editor_ID,title1: widget.title1,Type: widget.Type,summary: widget.summary,)));
                 },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.black)),
                     child: Text('Clips Screen',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.white),))

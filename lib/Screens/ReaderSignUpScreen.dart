@@ -253,14 +253,15 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
     signUp(_selectedRole.toString().split('.').last, reaemailcont.text, reanamecon.text, reapasscount.text,_imageFile);
 
     // Implement sign up logic here
-    if(_selectedRole.toString().split('.').last=='Reader')
-    {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
-    }
-    else if(_selectedRole.toString().split('.').last=='Writer')
-      {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
-      }
+    // if(_selectedRole.toString().split('.').last=='Reader')
+    // {
+    //   Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+    // }
+    // else if(_selectedRole.toString().split('.').last=='Writer')
+    //   {
+    //     Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
+    //   }
+    Navigator.push(context, MaterialPageRoute(builder: (cintext)=>ReaderLoginScreen()));
     print('Signing up...');
   }
   @override

@@ -29,6 +29,7 @@ class CoumpundAndSimpleClipsScreen extends StatefulWidget {
   // final String ?status;
   // final String ?imagePath;
   final String ?summary;
+  final int ?Episode;
   final int ? VideoIDAsString;
 
 
@@ -46,6 +47,7 @@ class CoumpundAndSimpleClipsScreen extends StatefulWidget {
     this.ClipsInfoList,
     //this.status,
     this.summary,
+    this.Episode,
     //this.imagePath,
   }) : super(key: key);
 
@@ -134,6 +136,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     print('Summary: ${widget.summary}');
     print('Title: ${widget.title1}');
     print('Editor ID: ${widget.Editor_ID}');
+    print('Episode No: ${widget.Episode}');
 
   }
   Future<void> sendProject({
@@ -144,6 +147,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     required String? summary,
     required String? type,
     required int? editorId,
+    required int?Episode,
     required List<Map<String, dynamic>> clips, // Directly accept the list of clips
   }) async {
     final String baseUrl2 = APIHandler.baseUrl1; // Replace with your API base URL
@@ -158,6 +162,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
         'Type':type,
         'Summary': summary,
         'Editor_ID': editorId,
+        'Episode':Episode,
         'Clips': clips, // Pass the clips directly
       };
 print('DataAAAAAA: $data');
@@ -189,7 +194,9 @@ print('DataAAAAAA: $data');
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    setState(() {
+                      Navigator.of(context).pop();
+                    });
                   },
                   child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
                 ),
@@ -497,6 +504,8 @@ print('DataAAAAAA: $data');
                       type: widget.Type,
                       summary: widget.summary,
                       editorId: widget.Editor_ID,
+                      Episode:widget.Episode,
+
                       clips: clipsData,
                     );
                   },

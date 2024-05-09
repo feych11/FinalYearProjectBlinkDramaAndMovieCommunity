@@ -43,7 +43,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
     const String baseUrl =  APIHandler.baseUrl1;
     final String apiUrl =
         '$baseUrl/Editor/FetchSummary?sentProjectId=$sentProjectID';
-    print('data');
+    print('dataaa');
     try {
       final response = await http.get(Uri.parse(apiUrl));
 
@@ -174,9 +174,10 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
   @override
   void initState() {
     super.initState();
+    print('Title::${widget.moviename}');
     fetchSummary(widget.sentProjectID.toString());
     viewSentProject(widget.MovieID.toString());
-    print('Title::${widget.moviename}');
+
   }
   void refreshPage () {
     setState(() {

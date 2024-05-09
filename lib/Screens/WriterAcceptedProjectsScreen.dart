@@ -76,6 +76,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
               'Movie_ID': proposal['Movie_ID'],
               'rating': 4,
               'Type':proposal['Type'],
+              'Episode':proposal['Episode'],
               'imagePath': '$baseurl3/Images/${proposal['Image']}',
               'status': proposal['Status'],
             };
@@ -229,6 +230,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
     final String director = notification['director'] ?? '';
     final int Movie_ID = notification['Movie_ID'] ?? '';
     final String Type = notification['Type'] ?? '';
+    final int episode = notification['Episode'] ?? '';
     final String status = notification['status'] ?? '';
     final int Editor_ID = notification['Editor_ID'] ?? '';
     final int rating = notification['rating'] ?? 0;
@@ -367,6 +369,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                                   Movie_ID:Movie_ID,
                                   imagePath:imagePath,
                                   Editor_ID:Editor_ID,
+                                  Episode:episode,
                               Type: Type,)));
                             });
                           },

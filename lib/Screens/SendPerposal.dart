@@ -297,7 +297,9 @@ print('IDJSJSSN:'+userId.toString());
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    setState(() {
+                      Navigator.of(context).pop();
+                    });
                   },
                   child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
                 ),

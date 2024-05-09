@@ -239,6 +239,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
               'id': proposal['ID'],
               'title': proposal['Movie_Name'],
               'writerName': proposal['Write_ID'],
+              'episode':proposal['Episode'],
               'director': proposal['Director'],
               'rating': 4,
               'imagePath': '$baseurl3/Images/${proposal['Image']}',
@@ -504,6 +505,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
     final String writerName = notification['writerName'] ?? '';
     final String director = notification['director'] ?? '';
     final String status = notification['status'] ?? '';
+    final int episode = notification['episode'] ?? '';
     final int rating = notification['rating'] ?? 0;
     final String imagePath = notification['imagePath'] ?? '';
 

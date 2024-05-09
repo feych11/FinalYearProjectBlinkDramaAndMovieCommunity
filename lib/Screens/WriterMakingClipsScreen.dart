@@ -45,6 +45,7 @@ class WriterMakingClipsScreen extends StatefulWidget {
   final String ?status;
   final String ?imagePath;
   final String ?summary;
+  final int?Episode;
 
   const WriterMakingClipsScreen({Key? key,
     this.id,
@@ -56,6 +57,7 @@ class WriterMakingClipsScreen extends StatefulWidget {
     this.Type,
     this.status,
     this.summary,
+    this.Episode,
     this.imagePath,}) : super(key: key);
 
   @override
@@ -79,6 +81,7 @@ class _WriterMakingClipsScreenState extends State<WriterMakingClipsScreen> {
       print('Title: ${widget.title}');
       print('Editor ID: ${widget.Editor_ID}');
       print('Type: ${widget.Type}');
+    print('Episode: ${widget.Episode}');
 
   }
 
@@ -157,7 +160,7 @@ class _WriterMakingClipsScreenState extends State<WriterMakingClipsScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => VideoPlayerScreen( videoId: videoIdAsString,thumbnailUrl: video.thumbnailUrl,title: video.title,id: widget.id,Movie_ID: widget.Movie_ID,Editor_ID: widget.Editor_ID,Writer_ID: widget.Writer_ID,title1: widget.title,Type: widget.Type,summary: widget.summary,),
+                            builder: (context) => VideoPlayerScreen( Episode: widget.Episode,videoId: videoIdAsString,thumbnailUrl: video.thumbnailUrl,title: video.title,id: widget.id,Movie_ID: widget.Movie_ID,Editor_ID: widget.Editor_ID,Writer_ID: widget.Writer_ID,title1: widget.title,Type: widget.Type,summary: widget.summary,),
                           ),
                         );
                       },

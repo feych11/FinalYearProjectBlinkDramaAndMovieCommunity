@@ -16,6 +16,7 @@ class WriterAcceptedProjectScreen extends StatefulWidget {
   final String ?Type;
   final String ?status;
   final String ?imagePath;
+  final int?Episode;
   final List<VideoClip> ? videoClips;
   const WriterAcceptedProjectScreen({Key? key,
     this.id,
@@ -27,6 +28,7 @@ class WriterAcceptedProjectScreen extends StatefulWidget {
     this.Type,
     this.status,
     this.imagePath,
+    this.Episode,
     this.videoClips})
       : super(key: key);
 
@@ -49,6 +51,7 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
     print('Title: ${widget.title}');
     print('Editor ID: ${widget.Editor_ID}');
     print('Type: ${widget.Type}');
+    print('Episode: ${widget.Episode}');
     // int wId=int.parse(widget.Writer_ID!);
     // updateWriterNotifications(wId);
   }
@@ -280,7 +283,7 @@ print(data);
                 ),
               ),
               ElevatedButton(onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen(id: widget.id,Writer_ID: widget.Writer_ID,Movie_ID: widget.Movie_ID,summary: _controller.document.toPlainText(),title: widget.title,Editor_ID: widget.Editor_ID,Type: widget.Type,)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen(Episode: widget.Episode,id: widget.id,Writer_ID: widget.Writer_ID,Movie_ID: widget.Movie_ID,summary: _controller.document.toPlainText(),title: widget.title,Editor_ID: widget.Editor_ID,Type: widget.Type,)));
               },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
