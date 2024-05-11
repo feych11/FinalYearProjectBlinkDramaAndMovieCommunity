@@ -34,7 +34,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
   List<Map<String, String>> clipsInfoList = [];
   List<Map<String, dynamic>> summariesData = [];
   late YoutubePlayerController controller;
-   bool isPlayerReady = false;
+  bool isPlayerReady = false;
   // int index=0;
   //bool assigned=false;
   int currentClipIndex = 0;
@@ -49,16 +49,17 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
 
       if (response.statusCode == 200) {
         data = json.decode(response.body);
+        print('DataFechSummry:$data');
         // Extract summary data from the response
         // final List<dynamic>? summaryList = data['SummaryData']['Summary1'];
         // final String? summaryText = summaryList != null && summaryList.isNotEmpty
         //     ? summaryList[0]['Summary1'] // Assuming the summary is in the first item of the list
         //     : null;
         //print('Summary Data: '+data['SummaryData']['Summary1'].toString());
-       // summaryText = data['SummaryData']['Summary1'].toString();
+        // summaryText = data['SummaryData']['Summary1'].toString();
 
         //clipsData = data['ClipsData'];
-       // print('clipDataList = '+ clipsData.toString());
+        // print('clipDataList = '+ clipsData.toString());
 
 
         //print('Writer Name: $writerName');
@@ -140,7 +141,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
 
         // Extract clips data
         List<dynamic> clipsListt = data['Clips'];
-         clipsData = List<Map<String, dynamic>>.from(clipsListt);
+        clipsData = List<Map<String, dynamic>>.from(clipsListt);
 
 
         for (var clip in clipsData) {

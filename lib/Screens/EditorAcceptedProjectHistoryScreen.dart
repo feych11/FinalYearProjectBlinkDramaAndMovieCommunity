@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:finalsemproject/API.dart';
 import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 class EditorAcceptedProjectHistoryScreen extends StatefulWidget {
   const EditorAcceptedProjectHistoryScreen({super.key});
 
@@ -16,8 +18,43 @@ class EditorAcceptedProjectHistoryScreen extends StatefulWidget {
 class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProjectHistoryScreen> {
   List<Map<String, dynamic>> notifications = [];
   final Color mateBlack = Color(0xFF242424);
+  String ?userId;
 
-  Future<void> fetchAcceptedProject(int editorID) async {
+
+
+
+
+  Future<void> getEditorId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString('Editor_ID');
+    setState(() {
+      userId = user;
+      print('EditorIDDDDDD: ${userId}');
+    });
+    if(userId!=null)
+    {
+      fetchAcceptedProject(userId.toString());
+    }
+  }
+
+
+  //
+  // Future<void>GetmoviesByEditorID(int editorID, String type)async
+  // {
+  //   final String Baseurl=APIHandler.baseUrl1;
+  //   final Responce=await http.get(Uri.parse(('$Baseurl/Editor/GetMoviesByEditorId?editorId=$editorID&type=$type')));
+  //   try
+  //       {
+  //         if(Responce.statusCode==200)
+  //           {
+  //             final Map<String ,dynamic>data=json.decode(Responce.body);
+  //             final List<dynamic> projects = data['Project'];
+  //
+  //           }
+  //       }
+  // }
+
+  Future<void> fetchAcceptedProject(String editorID) async {
     final String baseUrl2 = APIHandler.baseUrl1;
     final String baseUrl3 = APIHandler.baseUrl2;
     try {
@@ -53,7 +90,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
   @override
   void initState() {
     super.initState();
-   fetchAcceptedProject(2);
+    getEditorId();
 
   }
   @override

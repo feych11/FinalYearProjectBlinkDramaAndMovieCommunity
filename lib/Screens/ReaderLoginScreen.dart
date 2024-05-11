@@ -28,6 +28,17 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
     await prefs.setString('Image', Image ?? '');
     await prefs.setString('Balance',Balance  ?? '');
   }
+  Future<void>saveReaderId(String ? Reader_ID,String ?Username1,String ?UserImage1)async{
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    await prefs.setString('Reader_ID', Reader_ID ?? '');
+     await prefs.setString('Username1',Username1 ?? '');
+     await prefs.setString('UserImage1', UserImage1 ?? '');
+  }
+  Future<void>saveEditorId(String ?Editor_ID)async
+  {
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    await prefs.setString('Editor_ID', Editor_ID ?? '');
+  }
 
   Future<void> loginUser(String email, String password) async {
     const String baseurl2 = APIHandler.baseUrl1;
@@ -51,32 +62,56 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
         String ?UserName;
         String ?Image;
         String ?Balance;
+
+        String? Reader_ID;
+        String? Username1;
+        String ? UserImage1;
+
+        String ? Editor_ID;
+
         if (role == 'Editor') {
-          userId = '2';
+          Editor_ID=userData['Editor_ID']?.toString();
+          await saveEditorId(Editor_ID);
         } else if (role == 'Writer') {
 
           userId = userData['Writer_ID']?.toString();
           UserName = userData['UserName']?.toString();
-           Image ='$baseurl3/Images/${ userData['Image']}';
+          Image ='$baseurl3/Images/${ userData['Image']}';
           Balance = userData['Balance']?.toString();
           // Now you have the writer's name, image, and balance
           print('Writer Name: $UserName');
           print('Writer Image: $Image');
           print('Writer Balance: $Balance');
+          await saveUserId(userId,UserName,Image,Balance);
+          print('Userid:${userId}');
+          print('User Name: $UserName');
+          print('User Image: $Image');
+          print('User Balance: $Balance');
+        }else if (role == 'Reader') {
+
+          Reader_ID = userData['Reader_ID'].toString();
+           Username1 = userData['UserName']?.toString();
+           UserImage1 ='$baseurl3/Images/${ userData['Image']}';
+          //Balance = userData['Balance']?.toString();
+          // Now you have the writer's name, image, and balance
+          print('Reader Name: $Username1');
+          print('Writer Image: $UserImage1');
+          await saveReaderId(Reader_ID,Username1,UserImage1);
+          print('ReaderID: $Reader_ID');
+          print('Reader Name: $Username1');
+          print('Writer Image: $UserImage1');
+          //print('Writer Balance: $Balance');
         }
 
 
         // Save the user ID to shared preferences
-        await saveUserId(userId,UserName,Image,Balance);
-        print('Userid:${userId}');
-        print('Writer Name: $UserName');
-        print('Writer Image: $Image');
-        print('Writer Balance: $Balance');
+
 
         // Navigate to the appropriate screen based on the role
         if (role == 'Writer') {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => ReaderBottomNavScreen11()));
+          print('Login successful, Role: $role, UserID: $userId');
         } else if (role == 'Editor') {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => EditorBottomNavScreen()));
@@ -84,9 +119,10 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
         else if(role=='Reader')
         {
           Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+          print('Login successful, Role: $role, UserID: $Reader_ID');
         }
 
-        print('Login successful, Role: $role, UserID: $userId');
+
         islogin=true;
       } else if (response.statusCode == 404) {
         // Invalid email or password
@@ -186,9 +222,9 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
           children: [
             Center(
                 child: Text(
-              'LOGIN',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Rye'),
-            )),
+                  'LOGIN',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Rye'),
+                )),
             TextFormField(
               controller: reaemailcon,
               keyboardType: TextInputType.emailAddress,
@@ -224,8 +260,8 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
                   height: 40,
                   width: 100,
                   decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(10)
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10)
                   ),
                   child: Center(child: InkWell(
                       onTap: ()async{
@@ -257,8 +293,8 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
   {
     loginUser( reaemailcon.text,reapasscount.text);
     if(islogin)
-      {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorBottomNavScreen()));
-      }
+    {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorBottomNavScreen()));
+    }
   }
 }

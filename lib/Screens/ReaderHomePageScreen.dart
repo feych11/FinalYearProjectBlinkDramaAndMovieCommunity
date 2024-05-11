@@ -68,6 +68,9 @@
 //     );
 //   }
 // }
+import 'dart:convert';
+
+import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
@@ -75,6 +78,8 @@ import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
 import 'package:finalsemproject/Screens/ReadingScreen.dart';
 import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart'as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReaderHomePageScreen extends StatefulWidget {
   const ReaderHomePageScreen({super.key});
@@ -84,6 +89,75 @@ class ReaderHomePageScreen extends StatefulWidget {
 }
 
 class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
+  String ?userId;
+  String? WriterName;
+  String? WriterBalance;
+  String? WriterImage;
+
+  Future<void> issueFreeMovie() async {
+    final String baseUrl = APIHandler.baseUrl1; // Replace with your API base URL
+    final response = await http.get(Uri.parse('$baseUrl/Reader/IssueFreeMovie?readerId=${userId.toString()}'));
+    try {
+
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+
+        final movie = jsonData['Movie'];
+        final writer = jsonData['Writer'];
+        final issueDate = jsonData['issueDate'];
+        final issuedMovie=jsonData['IssuedMovie'];
+
+        // Now you can use the movie, writer, and issuedMovie data as needed
+        // For example, you can display the information in your UI
+        print('Movie: $movie');
+        print('Writer: $writer');
+        print('issueDate:${issueDate}');
+        print('Issued Movie: $issuedMovie');
+      } else {
+        // Handle other status codes here
+        print('Failed to issue free movie: ${response.reasonPhrase}');
+
+      }
+    } catch (e) {
+      print('Error issuing free movie: $e');
+
+    }
+  }
+  Future<void> getUserIdFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString('Reader_ID');
+    final username=prefs.getString('Username1');
+   // final userbalance=prefs.getString('Balance');
+    final userImage=prefs.getString('UserImage1');
+    setState(() {
+      userId = user;
+      WriterName=username;
+     // WriterBalance=userbalance;
+      WriterImage=userImage;
+      print('jskksd: ${userId}');
+      print('WriterName: ${WriterName}');
+      //print('Writer Balance: ${WriterBalance}');
+      print('WriterImageL ${WriterImage}');
+    });
+    if (userId != null) {
+      issueFreeMovie();
+      // print('Getrewrtedata:${getRewriteData}');
+
+      print('ghjk:${userId}');
+      print('WriterName: ${WriterName}');
+      print('Writer Balance: ${WriterBalance}');
+      print('WriterImageL ${WriterImage}');
+    }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    getUserIdFromSharedPreferences();
+
+  }
+  
   @override
   Widget build(BuildContext context) {
     // return Scaffold(

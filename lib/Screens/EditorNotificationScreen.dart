@@ -4,6 +4,7 @@ import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/EditorReadingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
+import 'package:shared_preferences/shared_preferences.dart';
 class EditorNotificationScreen extends StatefulWidget {
   const EditorNotificationScreen({super.key});
 
@@ -14,8 +15,21 @@ class EditorNotificationScreen extends StatefulWidget {
 class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
   List<dynamic> projects = [];
   final Color mateBlack = Color(0xFF242424);
+  String ?userId;
 
 
+  Future<void> getEditorId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString('Editor_ID');
+    setState(() {
+      userId = user;
+      print('EditorIDDDDDD: ${userId}');
+    });
+    if(userId!=null)
+      {
+        fetchProjects(userId.toString());
+      }
+  }
 
   Future<void> fetchProjects(String editorid) async {
     const String baseurl2 = APIHandler.baseUrl1;
@@ -35,6 +49,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
             'sentProposalId': project['SentProposal_ID'],
             'editorId': project['Editor_ID'],
             'writerId': project['Writer_ID'],
+            'Status':project['Status'],
             'title': proposalData != null ? proposalData['Movie_Name'] : '',
             'genre': proposalData != null ? proposalData['Genre'] : '',
             'director': proposalData != null ? proposalData['Director'] : '',
@@ -68,7 +83,9 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
   @override
   void initState() {
     super.initState();
-    fetchProjects('2');
+
+    getEditorId();
+    print('Userid::: $userId');
     //updateAllEditorNotificationsToFalseSentProject(2);
 
   }
@@ -197,6 +214,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
     final String writerName = notification['writerId'].toString() ?? 'Unknown';
     final String director = notification['director'] ?? 'Unknown';
     final String type = notification['type'] ?? 'Unknown';
+    final String Status = notification['Status'] ?? 'Unknown';
     final String imagePath = notification['imagePath'] ?? '';
 
     return Padding(
@@ -246,7 +264,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      '  Writer Name: $writerName',
+                      '  Director: $director',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
@@ -256,7 +274,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      '  Director: $director',
+                      '  Status: $Status',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
