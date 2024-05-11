@@ -515,6 +515,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
         height: 200,
         width: 320,
         decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
           color: Colors.amber,
           borderRadius: BorderRadius.circular(10),
         ),
@@ -571,7 +575,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -595,7 +599,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(

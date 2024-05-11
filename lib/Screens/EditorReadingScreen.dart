@@ -379,7 +379,8 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 30,
-              color: Colors.black),
+              color: Colors.black,
+          fontFamily: 'BigShotone'),
         ),
         centerTitle: true,
         backgroundColor: Colors.grey,
@@ -461,10 +462,15 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
             SizedBox(
               height: 10,
             ),
-            Container(
+            AnimatedContainer(
+              duration: Duration(milliseconds: 500),
               height: 50,
               width: 200,
               decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white,
+                  width: 4,
+                ),
                 gradient: LinearGradient(
                   begin: Alignment.centerRight,
                   end: Alignment.centerLeft,
@@ -534,6 +540,10 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
                 width: 300,
                 decoration: BoxDecoration(
                     color: Colors.black,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 4,
+                    ),
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   children: [
@@ -552,7 +562,8 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.yellow),
+                              backgroundColor: Colors.yellow,),
+
                           onPressed: () {
                             AcceptSentProject(widget.sentProjectID.toString());
                           },

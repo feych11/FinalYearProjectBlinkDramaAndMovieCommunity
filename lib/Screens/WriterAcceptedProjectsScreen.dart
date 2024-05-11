@@ -242,6 +242,10 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
         height: 200,
         width: 320,
         decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
           color: Colors.amber,
           borderRadius: BorderRadius.circular(10),
         ),
@@ -275,7 +279,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                         fontFamily: 'BigshotOne'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -298,7 +302,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -322,7 +326,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(

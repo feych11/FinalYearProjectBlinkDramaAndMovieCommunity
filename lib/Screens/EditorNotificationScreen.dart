@@ -26,9 +26,9 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
       print('EditorIDDDDDD: ${userId}');
     });
     if(userId!=null)
-      {
-        fetchProjects(userId.toString());
-      }
+    {
+      fetchProjects(userId.toString());
+    }
   }
 
   Future<void> fetchProjects(String editorid) async {
@@ -193,7 +193,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
         // ],
         centerTitle: true,
         title: Text('Notification',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigshotOne',color: Colors.white),),
-      backgroundColor: Colors.black,
+        backgroundColor: Colors.black,
 
       ),
       body: SafeArea(
@@ -219,17 +219,23 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
+      child:AnimatedContainer(
+        duration: Duration(milliseconds: 500),
         height: 200,
         width: 320,
         decoration: BoxDecoration(
           color: Colors.amber,
           borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            AnimatedContainer(
+              duration: Duration(milliseconds: 500),
               height: 150,
               width: 100,
               decoration: BoxDecoration(
@@ -255,10 +261,10 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                       child: Text(
                         title,
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontFamily: 'BigshotOne'
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'BigshotOne'
                         ),
                       ),
                     ),
@@ -266,30 +272,30 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                     Text(
                       '  Director: $director',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontFamily: 'Rye'
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontFamily: 'Rye'
                       ),
                     ),
                     SizedBox(height: 5),
                     Text(
                       '  Status: $Status',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontFamily: 'Rye'
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontFamily: 'Rye'
                       ),
                     ),
                     SizedBox(height: 5),
                     Text(
                       '  Type: $type',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontFamily: 'Rye'
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontFamily: 'Rye'
                       ),
                     ),
                     SizedBox(height: 10),
@@ -304,8 +310,8 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                           height: 30,
                           width: 90,
                           decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(20)
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(20)
                           ),
                           child: Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
                         ),
@@ -316,8 +322,10 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
               ),
             ),
           ],
+
         ),
       ),
     );
   }
 }
+

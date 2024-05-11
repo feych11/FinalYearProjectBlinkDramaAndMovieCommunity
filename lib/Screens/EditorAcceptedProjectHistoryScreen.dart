@@ -234,7 +234,12 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
         width: 320,
         decoration: BoxDecoration(
           color: Colors.amber,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+         // borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -244,9 +249,9 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
               width: 100,
               decoration: BoxDecoration(
                 color: Colors.amber,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: Image.network(imagePath), // Use Image.network for remote images
+              child: Image.network(imagePath,fit: BoxFit.cover,), // Use Image.network for remote images
             ),
             SizedBox(width: 10),
             Container(
@@ -256,7 +261,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
               decoration: BoxDecoration(
 
                   color:mateBlack,
-                  borderRadius: BorderRadius.circular(5)
+
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),

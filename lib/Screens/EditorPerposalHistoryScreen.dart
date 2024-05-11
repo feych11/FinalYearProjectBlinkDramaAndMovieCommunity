@@ -224,34 +224,40 @@ String userId='2';
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
+      child: AnimatedContainer(
+        duration:Duration(milliseconds: 500),
         height: 200,
         width: 320,
         decoration: BoxDecoration(
           color: Colors.amber,
-          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+          //borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 200,
+            AnimatedContainer(
+              duration:Duration(milliseconds: 500),
+              height: 150,
               width: 100,
               decoration: BoxDecoration(
                 color: Colors.amber,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
             SizedBox(width: 10),
             Container(
-              height: 200,
+              height: 210,
               width: 200,
               
               decoration: BoxDecoration(
                   
                   color:mateBlack,
-                borderRadius: BorderRadius.circular(5)
+
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),

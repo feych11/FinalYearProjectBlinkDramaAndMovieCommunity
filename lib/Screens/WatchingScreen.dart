@@ -311,7 +311,11 @@ class _WatchingScreenState extends State<WatchingScreen> {
           ],
         ),
       ),
-      appBar: AppBar(title: Text('Watching',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),),
+      appBar: AppBar(title: Text('Watching',style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 30,
+          color: Colors.black,
+      fontFamily: 'BigShotone'),),
       centerTitle: true,
         backgroundColor: Colors.grey,
       ),
@@ -328,6 +332,10 @@ class _WatchingScreenState extends State<WatchingScreen> {
                 height: 200,
                 decoration: BoxDecoration(
                     color: Colors.black,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 4,
+                    ),
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -393,6 +401,10 @@ class _WatchingScreenState extends State<WatchingScreen> {
             height: 50,
             width: 200,
             decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white,
+                width: 4,
+              ),
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
