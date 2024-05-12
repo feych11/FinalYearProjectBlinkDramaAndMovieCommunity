@@ -6,6 +6,7 @@ import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
 import 'package:finalsemproject/Screens/ReadingScreen.dart';
+import 'package:finalsemproject/Screens/ViewFreeMovieSummary.dart';
 import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
@@ -29,7 +30,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   String?movieType;
   List<dynamic> movieDetails = [];
   Future<void> issueFreeMovie() async {
-    final String baseUrl = APIHandler.baseUrl1; // Replace with your API base URL
+    final String baseUrl = APIHandler.baseUrl1;
+
+    const String baseurl3=APIHandler.baseUrl2;// Replace with your API base URL
     final response = await http.get(Uri.parse('$baseUrl/Reader/IssueFreeMovie?readerId=${userId.toString()}'));
     try {
 
@@ -38,12 +41,19 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         final jsonData = json.decode(response.body);
         final moviedata = jsonData['Movie'];
         setState(() {
-          movieDetails = [
-            jsonData['Movie']['Image'],
-            jsonData['Movie']['Name'],
-            jsonData['Movie']['Type']
-          ];
+          // Assign data to class-level variables
+          movieID=jsonData['Movie']['Movie_ID'];
+          movieName = jsonData['Movie']['Name'];
+          movieImage = '$baseurl3/Images/${jsonData['Movie']['Image']}';
+          movieType = jsonData['Movie']['Type'];
+
         });
+        // Print or use the movie details here
+        print('Movie _ID: $movieID');
+        print('Movie Name: $movieName');
+        print('Movie Image: $movieImage');
+        print('Movie Type: $movieType');
+
         final writer = jsonData['Writer'];
         final issueDate = jsonData['issueDate'];
         final issuedMovie=jsonData['IssuedMovie'];
@@ -51,7 +61,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         // Now you can use the movie, writer, and issuedMovie data as needed
         // For example, you can display the information in your UI
         print('Movie Data: $moviedata');
-        print('Movie ID: $movieDetails');
+        print('Movie _ID: $movieID');
         print('Movie Name: $movieName');
         print('Movie Image: $movieImage');
         print('Movie Type: $movieType');
@@ -72,12 +82,12 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString('Reader_ID');
     final username=prefs.getString('Username1');
-   // final userbalance=prefs.getString('Balance');
+    // final userbalance=prefs.getString('Balance');
     final userImage=prefs.getString('UserImage1');
     setState(() {
       userId = user;
       WriterName=username;
-     // WriterBalance=userbalance;
+      // WriterBalance=userbalance;
       WriterImage=userImage;
       print('jskksd: ${userId}');
       print('WriterName: ${WriterName}');
@@ -102,160 +112,160 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     getUserIdFromSharedPreferences();
 
   }
-  
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       drawer: Drawer(
-      backgroundColor: Colors.grey,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.black,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage('Images/man2.webp'),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        'Faizan Mustafa',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white),
-                      ),
-                      Text(
-                        'Balance:2000',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context); // Close the drawer
-                    },
-                    child: Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              )),
-
-          ListTile(
-            title: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
-              },
-              child: Text(
-                'Home',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              ),
-            ),
-            onTap: () {
-              // Add your action when the item is tapped
-              Navigator.pop(context); // Close the drawer
-            },
-          ),
-          ListTile(
-            title: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
-              },
-              child: Text(
-                'Subscription:Free',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-            ),
-            onTap: () {
-              // Add your action when the item is tapped
-              Navigator.pop(context); // Close the drawer
-            },
-          ),
-          ListTile(
-            title: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
-              },
-              child: Text(
-                'Update Interest',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              ),
-            ),
-            onTap: () {
-              // Add your action when the item is tapped
-              Navigator.pop(context); // Close the drawer
-            },
-          ),
-          ListTile(
-            title: Text(
-              'Recharge Balance',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            ),
-            onTap: () {
-              // Add your action when the item is tapped
-              Navigator.pop(context); // Close the drawer
-            },
-          ),
-          ListTile(
-            title: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
-              },
-              child: Text(
-                'Account Setting',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              ),
-            ),
-            onTap: () {
-              // Add your action when the item is tapped
-              Navigator.pop(context); // Close the drawer
-            },
-          ),
-          InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
-            },
-            child: ListTile(
-              title: Container(
-                height: 40,
-                width: 50,
+        backgroundColor: Colors.grey,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.black,
-                  border: Border.all(color: Colors.red, width: 2),
                 ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage('Images/man2.webp'),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          'Faizan Mustafa',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
+                        ),
+                        Text(
+                          'Balance:2000',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context); // Close the drawer
+                      },
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                  ],
+                )),
+
+            ListTile(
+              title: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+                },
                 child: Text(
-                  'LOGOUT',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.red),
+                  'Home',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
+              ),
+              onTap: () {
+                // Add your action when the item is tapped
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
+                },
+                child: Text(
+                  'Subscription:Free',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+              ),
+              onTap: () {
+                // Add your action when the item is tapped
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
+                },
+                child: Text(
+                  'Update Interest',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
+              ),
+              onTap: () {
+                // Add your action when the item is tapped
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Recharge Balance',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              ),
+              onTap: () {
+                // Add your action when the item is tapped
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
+                },
+                child: Text(
+                  'Account Setting',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
+              ),
+              onTap: () {
+                // Add your action when the item is tapped
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+              },
+              child: ListTile(
+                title: Container(
+                  height: 40,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    border: Border.all(color: Colors.red, width: 2),
+                  ),
+                  child: Text(
+                    'LOGOUT',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.red),
+                  ),
                 ),
               ),
             ),
-          ),
-          // Add more ListTiles for additional items in the drawer
-        ],
+            // Add more ListTiles for additional items in the drawer
+          ],
+        ),
       ),
-    ),
       appBar: AppBar(
         title: Text(
           'Home Page',
@@ -269,89 +279,104 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          Card(
-            elevation: 5,
-            color: Colors.white,
-            child: Text('Discover',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-          ),
+          // Card(
+          //   elevation: 5,
+          //   color: Colors.white,
+          //   child: Text('Discover',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+          // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
-              child: Container(
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(MovieID:movieID,moviename: movieName,)));
+                },
+                child: Container(
 
-                height: 270,
-                width: 300,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'FREE DAILY',
-                            style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadingScreen()));
-                            },
-                            child: Container(
-                              height: 150,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  color: Colors.white),
-                              child: Image.network(movieDetails.isNotEmpty
-                                  ? movieDetails[0].toString()
-                                  : 'defaultImageURL')
-                            ),
-                          ),
-                        ),
-                      ],
+                  height: 270,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 4,
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(color: Colors.white),
-                        padding: EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Haseeb Hassan',
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'FREE DAILY',
+                              style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontFamily: 'Rye'),
                             ),
-                            Text(
-                              'Parwaz Hai Janoon',
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(MovieID:movieID,moviename: movieName,)));
+                              },
+                              child: Container(
+                                  height: 150,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      color: Colors.white),
+                                  child:movieImage != null
+                                      ? Image.network(movieImage!,fit: BoxFit.cover)
+
+                                      : Container(),
+
+
+                              ),
                             ),
-                            Row(
-                              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                              ],
-                            ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10),border: Border.all(
+                            color: Colors.black,
+                            width: 4,
+                          ),),
+                          padding: EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                movieName.toString(),
+                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                movieType.toString(),
+                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
+                              ),
+                              Row(
+                                //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Icon(Icons.star, color: Colors.yellow),
+                                  Icon(Icons.star, color: Colors.yellow),
+                                  Icon(Icons.star, color: Colors.yellow),
+                                  Icon(Icons.star, color: Colors.yellow),
+                                  Icon(Icons.star, color: Colors.yellow),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -382,126 +407,207 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              InkWell(
-                onTap:(){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadingScreen()));
-                },
-                child: Container(
-                    height: 150,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Colors.white),
-                    child: Column(children: [
-                      Image.asset(
+                InkWell(
+                  onTap: () {
+                    // Show alert dialog here
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Theme(
+                            data: ThemeData( // Define custom theme data
+                            dialogBackgroundColor: Colors.grey, // Background color
+                            dialogTheme: DialogTheme( // Define dialog theme
+                            shape: RoundedRectangleBorder( // Define border shape
+                            side: BorderSide(color: Colors.black,width: 4), // Border color
+                        borderRadius: BorderRadius.circular(20.0), // Border radius
+                        ),
+                        ),
+                        ),
+                        child: AlertDialog(
+                          title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                          content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                            ),
+                          ],
+                        ));
+                      },
+                    );
+                  },
+                  child: Container(
+                      height: 150,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.white),
+                      child: Column(children: [
+                        Image.asset(
 
                           'Images/parwaz2.jpg',
-                      height: 100,
-                      width: 70,
-                      fit: BoxFit.cover,),
-                      Container(
-                        height: 50,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
+                          height: 100,
+                          width: 70,
+                          fit: BoxFit.cover,),
+                        Container(
+                          height: 50,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
 
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                          Text(
-                          'Maula Jutt',
-                          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Paid',
-                          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
-                        ),]),
-                      )
-                    ],)
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Maula Jutt',
+                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Paid',
+                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
+                                ),]),
+                        )
+                      ],)
+                  ),
                 ),
-              ),
-              SizedBox(width: 10,),
-              InkWell(
-                onTap:(){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadingScreen()));
-                },
-                child: Container(
-                    height: 150,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Colors.white),
-                    child: Column(children: [
-                      Image.asset(
-
-                        'Images/Dukhtar1.png',
-                        height: 100,
-                        width: 70,
-                        fit: BoxFit.cover,),
-                      Container(
-                        height: 50,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-
-                        ),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Dukhtar',
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                SizedBox(width: 10,),
+                InkWell(
+                  onTap: () {
+                    // Show alert dialog here
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Theme(
+                            data: ThemeData( // Define custom theme data
+                              dialogBackgroundColor: Colors.grey, // Background color
+                              dialogTheme: DialogTheme( // Define dialog theme
+                                shape: RoundedRectangleBorder( // Define border shape
+                                  side: BorderSide(color: Colors.black,width: 4), // Border color
+                                  borderRadius: BorderRadius.circular(20.0), // Border radius
+                                ),
                               ),
-                              Text(
-                                'Paid',
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
-                              ),]),
-                      )
-                    ],)
+                            ),
+                            child: AlertDialog(
+                              title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                              content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                ),
+                              ],
+                            ));
+                      },
+                    );
+                  },
+                  child: Container(
+                      height: 150,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.white),
+                      child: Column(children: [
+                        Image.asset(
+
+                          'Images/Dukhtar1.png',
+                          height: 100,
+                          width: 70,
+                          fit: BoxFit.cover,),
+                        Container(
+                          height: 50,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Dukhtar',
+                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Paid',
+                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
+                                ),]),
+                        )
+                      ],)
+                  ),
                 ),
-              ),
-              SizedBox(width: 10,),
-              InkWell(
-                onTap:(){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadingScreen()));
-                },
-                child: Container(
-                    height: 150,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Colors.white),
-                    child: Column(children: [
-                      Image.asset(
-
-                        'Images/waar1.jpg',
-                        height: 100,
-                        width: 70,
-                        fit: BoxFit.cover,),
-                      Container(
-                        height: 50,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-
-                        ),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Waar',
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                SizedBox(width: 10,),
+                InkWell(
+                  onTap: () {
+                    // Show alert dialog here
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Theme(
+                            data: ThemeData( // Define custom theme data
+                              dialogBackgroundColor: Colors.grey, // Background color
+                              dialogTheme: DialogTheme( // Define dialog theme
+                                shape: RoundedRectangleBorder( // Define border shape
+                                  side: BorderSide(color: Colors.black,width: 4), // Border color
+                                  borderRadius: BorderRadius.circular(20.0), // Border radius
+                                ),
                               ),
-                              Text(
-                                'Paid',
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
-                              ),]),
-                      )
-                    ],)
+                            ),
+                            child: AlertDialog(
+                              title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                              content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                ),
+                              ],
+                            ));
+                      },
+                    );
+                  },
+                  child: Container(
+                      height: 150,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.white),
+                      child: Column(children: [
+                        Image.asset(
+
+                          'Images/waar1.jpg',
+                          height: 100,
+                          width: 70,
+                          fit: BoxFit.cover,),
+                        Container(
+                          height: 50,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Waar',
+                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Paid',
+                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
+                                ),]),
+                        )
+                      ],)
+                  ),
                 ),
-              ),
-            ],),
+              ],),
           )
 
         ],
