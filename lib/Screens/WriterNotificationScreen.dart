@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/AcceptedToRewriteScreen3.dart';
+import 'package:finalsemproject/Screens/EditorViewAcceptedSummary.dart';
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class WriterNotificationScreen extends StatefulWidget {
 class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   List<Map<String, dynamic>> notifications = [];
   List<Map<String,dynamic>>notifications1=[];
+  List<Map<String,dynamic>>notifications2=[];
   final Color Green  = Color(0xFF4FAA6D);
   List<String>MovieName=[];
   List<String>EditorComments=[];
@@ -114,6 +116,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
     });
     if (userId != null) {
       fetchProposals();
+      fetchAcceptedProject();
       getRewriteData();
       // print('Getrewrtedata:${getRewriteData}');
       viewRewriteProject();
@@ -252,6 +255,37 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       }
     } catch (error) {
       print('Error fetching proposals: $error');
+    }
+  }
+  Future<void> fetchAcceptedProject() async {
+    final String baseUrl2 = APIHandler.baseUrl1;
+    final String baseUrl3 = APIHandler.baseUrl2;
+    try {
+      final response = await http.get(Uri.parse('$baseUrl2/Writer/HistoryAcceptedProject?Writer_ID=$userId'));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        // Assuming 'Project' contains the list of accepted projects
+        final List<dynamic> projects = data['Project'];
+        setState(() {
+          notifications2 = projects.map((project) {
+            return {
+              'Movieid':project['Movie_ID'],
+              'id': project['SentProject_ID'],
+              'title': project['ProposalData']['Movie_Name'],
+              'writerName': project['Writer_ID'],
+              'director': project['ProposalData']['Director'],
+              'type': project['ProposalData']['Type'],
+              'rating': 4,
+              'imagePath': '$baseUrl3/Images/${project['ProposalData']['Image']}',
+              'status': project['Status'],
+            };
+          }).toList();
+        });
+      } else {
+        throw Exception('Failed to load accepted projects');
+      }
+    } catch (error) {
+      print('Failed to load accepted projects: $error');
     }
   }
   Future<void> acceptProposal(String sentProposalId) async {
@@ -491,6 +525,11 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                   final int index = entry.key;
                   final Map<String, dynamic> notification1 = entry.value;
                   return buildNotificationCard1(notification1, index);
+                }).toList(),
+              ),
+              Column(
+                children: notifications2.map((notification2) {
+                  return buildNotificationCard2(notification2);
                 }).toList(),
               ),
             ],
@@ -866,6 +905,166 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget buildNotificationCard2(Map<String, dynamic> notification2) {
+    final int id = notification2['id'] ?? '';
+
+    final int Movieid = notification2['Movieid'] ?? '';
+    final String title = notification2['title'] ?? '';
+
+    final String director = notification2['director'] ?? '';
+    final String status = notification2['status'] ?? '';
+    final String type = notification2['type'] ?? '';
+
+
+    final String imagePath = notification2['imagePath'] ?? '';
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 200,
+        width: 320,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+          color: Colors.amber,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 200,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.network(imagePath), // Use Image.network for remote images
+            ),
+            SizedBox(width: 10),
+            Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(color: mateBlack),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Column(
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'BigshotOne'
+                      ),
+                    ),
+                    SizedBox(height: 10),
+
+                    SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          'Director:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          director,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          'Type:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          type,
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    //SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          'Status:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          status,
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5),
+                    Center(
+                      child: GestureDetector(
+                        onTap: (){
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorViewAcceptedSummary(MovieID: Movieid,moviename: title,)));
+
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 90,
+                          decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
+                        ),
+                      ),
+                    )
+
                   ],
                 ),
               ),

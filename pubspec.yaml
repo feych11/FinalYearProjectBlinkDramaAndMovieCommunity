@@ -92,7 +92,7 @@ flutter:
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
-  # example:
+  # example:Jaro-Regular-VariableFont_opsz
   fonts:
      - family: SpicyRice
        fonts:
@@ -107,6 +107,9 @@ flutter:
        fonts:
 
          - asset: fonts/Rye-Regular.ttf
+     - family: Jaro
+       fonts:
+         - asset: fonts/Jaro-Regular-VariableFont_opsz.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

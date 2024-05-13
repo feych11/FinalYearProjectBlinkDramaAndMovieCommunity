@@ -5,7 +5,6 @@ import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
-import 'package:finalsemproject/Screens/ReadingScreen.dart';
 import 'package:finalsemproject/Screens/ViewFreeMovieSummary.dart';
 import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +20,9 @@ class ReaderHomePageScreen extends StatefulWidget {
 
 class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   String ?userId;
-  String? WriterName;
-  String? WriterBalance;
-  String? WriterImage;
+  String? ReaderName;
+  String? ReaderBalance;
+  String? ReaderImage;
   int? movieID;
   String?movieName;
   String ?movieImage;
@@ -86,13 +85,13 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     final userImage=prefs.getString('UserImage1');
     setState(() {
       userId = user;
-      WriterName=username;
+      ReaderName=username;
       // WriterBalance=userbalance;
-      WriterImage=userImage;
+      ReaderImage=userImage;
       print('jskksd: ${userId}');
-      print('WriterName: ${WriterName}');
+      print('ReaderName: ${ReaderName}');
       //print('Writer Balance: ${WriterBalance}');
-      print('WriterImageL ${WriterImage}');
+      print('ReaderImageL ${ReaderImage}');
     });
     if (userId != null) {
       issueFreeMovie();
@@ -100,9 +99,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
       // print('Getrewrtedata:${getRewriteData}');
 
       print('ghjk:${userId}');
-      print('WriterName: ${WriterName}');
-      print('Writer Balance: ${WriterBalance}');
-      print('WriterImageL ${WriterImage}');
+      print('ReaderName: ${ReaderName}');
+      print('Reader Balance: ${ReaderBalance}');
+      print('ReaderImageL ${ReaderImage}');
     }
   }
 
@@ -131,7 +130,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('Images/man2.webp'),
+                      backgroundImage: NetworkImage(ReaderImage.toString()),
                     ),
                     SizedBox(
                       width: 10,
@@ -139,11 +138,12 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                     Column(
                       children: [
                         Text(
-                          'Faizan Mustafa',
+                          ReaderName.toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                              color: Colors.white),
+                              color: Colors.white,
+                          fontFamily: 'Jura'),
                         ),
                         Text(
                           'Balance:2000',
@@ -269,7 +269,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
       appBar: AppBar(
         title: Text(
           'Home Page',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.white),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'Jaro'),
         ),
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -355,11 +355,11 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                             children: [
                               Text(
                                 movieName.toString(),
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily:'BigshotOne'),
                               ),
                               Text(
                                 movieType.toString(),
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
+                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'BigshotOne'),
                               ),
                               Row(
                                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -387,227 +387,489 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
               Card(
                 elevation: 5,
                 color: Colors.white,
+                shape: RoundedRectangleBorder( // Define border shape
+                  side: BorderSide(color: Colors.black,width: 4), // Border color
+                  borderRadius: BorderRadius.circular(20.0), // Border radius
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Top Pick',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  child: Text(
+                    'TOP PICK',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro'),
+                  ),
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Card(
                   elevation: 5,
-                  color: Colors.black,
-                  child: ElevatedButton(onPressed: (){},child: Text('See All',style: TextStyle(fontWeight: FontWeight.bold),),),
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder( // Define border shape
+                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                    borderRadius: BorderRadius.circular(20.0), // Border radius
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'SEE ALL',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro'),
+                    ),
+                  ),
                 ),
+
               ),
             ],),
           SizedBox(height: 10,),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    // Show alert dialog here
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Theme(
-                            data: ThemeData( // Define custom theme data
-                            dialogBackgroundColor: Colors.grey, // Background color
-                            dialogTheme: DialogTheme( // Define dialog theme
-                            shape: RoundedRectangleBorder( // Define border shape
-                            side: BorderSide(color: Colors.black,width: 4), // Border color
-                        borderRadius: BorderRadius.circular(20.0), // Border radius
-                        ),
-                        ),
-                        ),
-                        child: AlertDialog(
-                          title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                          content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
-                            ),
-                          ],
-                        ));
-                      },
-                    );
-                  },
-                  child: Container(
-                      height: 150,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.white),
-                      child: Column(children: [
-                        Image.asset(
-
-                          'Images/parwaz2.jpg',
-                          height: 100,
-                          width: 70,
-                          fit: BoxFit.cover,),
-                        Container(
-                          height: 50,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-
-                          ),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Maula Jutt',
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Paid',
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
-                                ),]),
-                        )
-                      ],)
-                  ),
-                ),
-                SizedBox(width: 10,),
-                InkWell(
-                  onTap: () {
-                    // Show alert dialog here
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Theme(
-                            data: ThemeData( // Define custom theme data
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      // Show alert dialog here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Theme(
+                              data: ThemeData( // Define custom theme data
                               dialogBackgroundColor: Colors.grey, // Background color
                               dialogTheme: DialogTheme( // Define dialog theme
-                                shape: RoundedRectangleBorder( // Define border shape
-                                  side: BorderSide(color: Colors.black,width: 4), // Border color
-                                  borderRadius: BorderRadius.circular(20.0), // Border radius
+                              shape: RoundedRectangleBorder( // Define border shape
+                              side: BorderSide(color: Colors.black,width: 4), // Border color
+                          borderRadius: BorderRadius.circular(20.0), // Border radius
+                          ),
+                          ),
+                          ),
+                          child: AlertDialog(
+                            title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                            content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                              ),
+                            ],
+                          ));
+                        },
+                      );
+                    },
+                    child: Container(
+                        height: 160,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2,
+                            ),
+                            color: Colors.black),
+                        child: Column(children: [
+                          Image.asset(
+
+                            'Images/parwaz2.jpg',
+                            height: 100,
+                            width: 70,
+                            fit: BoxFit.cover,),
+                          Container(
+                            height: 50,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+
+                            ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Maula Jutt',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                  ),
+                                  Text(
+                                    'Paid',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                  ),]),
+                          )
+                        ],)
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  InkWell(
+                    onTap: () {
+                      // Show alert dialog here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Theme(
+                              data: ThemeData( // Define custom theme data
+                                dialogBackgroundColor: Colors.grey, // Background color
+                                dialogTheme: DialogTheme( // Define dialog theme
+                                  shape: RoundedRectangleBorder( // Define border shape
+                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    borderRadius: BorderRadius.circular(20.0), // Border radius
+                                  ),
                                 ),
                               ),
+                              child: AlertDialog(
+                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                  ),
+                                ],
+                              ));
+                        },
+                      );
+                    },
+                    child: Container(
+                        height: 160,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.black,
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),),
+                        child: Column(children: [
+                          Image.asset(
+
+                            'Images/manm2.jpg',
+                            height: 100,
+                            width: 70,
+                            fit: BoxFit.cover,),
+                          Container(
+                            height: 50,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(10)
+
                             ),
-                            child: AlertDialog(
-                              title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                              content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
-                                ),
-                              ],
-                            ));
-                      },
-                    );
-                  },
-                  child: Container(
-                      height: 150,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.white),
-                      child: Column(children: [
-                        Image.asset(
-
-                          'Images/Dukhtar1.png',
-                          height: 100,
-                          width: 70,
-                          fit: BoxFit.cover,),
-                        Container(
-                          height: 50,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-
-                          ),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Dukhtar',
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Paid',
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
-                                ),]),
-                        )
-                      ],)
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Man Mayal',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                  ),
+                                  Text(
+                                    'Paid',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                  ),]),
+                          )
+                        ],)
+                    ),
                   ),
-                ),
-                SizedBox(width: 10,),
-                InkWell(
-                  onTap: () {
-                    // Show alert dialog here
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Theme(
-                            data: ThemeData( // Define custom theme data
-                              dialogBackgroundColor: Colors.grey, // Background color
-                              dialogTheme: DialogTheme( // Define dialog theme
-                                shape: RoundedRectangleBorder( // Define border shape
-                                  side: BorderSide(color: Colors.black,width: 4), // Border color
-                                  borderRadius: BorderRadius.circular(20.0), // Border radius
+                  SizedBox(width: 10,),
+                  InkWell(
+                    onTap: () {
+                      // Show alert dialog here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Theme(
+                              data: ThemeData( // Define custom theme data
+                                dialogBackgroundColor: Colors.grey, // Background color
+                                dialogTheme: DialogTheme( // Define dialog theme
+                                  shape: RoundedRectangleBorder( // Define border shape
+                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    borderRadius: BorderRadius.circular(20.0), // Border radius
+                                  ),
                                 ),
                               ),
+                              child: AlertDialog(
+                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                  ),
+                                ],
+                              ));
+                        },
+                      );
+                    },
+                    child: Container(
+                        height: 160,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.black,
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),),
+                        child: Column(children: [
+                          Image.asset(
+
+                            'Images/waar1.jpg',
+                            height: 100,
+                            width: 70,
+                            fit: BoxFit.cover,),
+                          Container(
+                            height: 50,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(10),
+                              // border: Border.all(
+                              //   color: Colors.black,
+                              //   width: 2,
+                              //
+                              // ),
+
                             ),
-                            child: AlertDialog(
-                              title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                              content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
-                                ),
-                              ],
-                            ));
-                      },
-                    );
-                  },
-                  child: Container(
-                      height: 150,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.white),
-                      child: Column(children: [
-                        Image.asset(
-
-                          'Images/waar1.jpg',
-                          height: 100,
-                          width: 70,
-                          fit: BoxFit.cover,),
-                        Container(
-                          height: 50,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-
-                          ),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Waar',
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Paid',
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
-                                ),]),
-                        )
-                      ],)
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Waar',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                  ),
+                                  Text(
+                                    'Paid',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                  ),]),
+                          )
+                        ],)
+                    ),
                   ),
-                ),
-              ],),
+                  SizedBox(width: 10,),
+                  InkWell(
+                    onTap: () {
+                      // Show alert dialog here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Theme(
+                              data: ThemeData( // Define custom theme data
+                                dialogBackgroundColor: Colors.grey, // Background color
+                                dialogTheme: DialogTheme( // Define dialog theme
+                                  shape: RoundedRectangleBorder( // Define border shape
+                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    borderRadius: BorderRadius.circular(20.0), // Border radius
+                                  ),
+                                ),
+                              ),
+                              child: AlertDialog(
+                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                  ),
+                                ],
+                              ));
+                        },
+                      );
+                    },
+                    child: Container(
+                        height: 160,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.black,
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),),
+                        child: Column(children: [
+                          Image.asset(
+
+                            'Images/Dukhtar1.png',
+                            height: 100,
+                            width: 70,
+                            fit: BoxFit.cover,),
+                          Container(
+                            height: 50,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10)
+
+                            ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Dukhtar',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                  ),
+                                  Text(
+                                    'Paid',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                  ),]),
+                          )
+                        ],)
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  InkWell(
+                    onTap: () {
+                      // Show alert dialog here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Theme(
+                              data: ThemeData( // Define custom theme data
+                                dialogBackgroundColor: Colors.grey, // Background color
+                                dialogTheme: DialogTheme( // Define dialog theme
+                                  shape: RoundedRectangleBorder( // Define border shape
+                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    borderRadius: BorderRadius.circular(20.0), // Border radius
+                                  ),
+                                ),
+                              ),
+                              child: AlertDialog(
+                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                  ),
+                                ],
+                              ));
+                        },
+                      );
+                    },
+                    child: Container(
+                        height: 160,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.black,
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),),
+                        child: Column(children: [
+                          Image.asset(
+
+                            'Images/snge2.jpg',
+                            height: 100,
+                            width: 70,
+                            fit: BoxFit.cover,),
+                          Container(
+                            height: 50,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10)
+
+                            ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Sangemarmar',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                  ),
+                                  Text(
+                                    'Paid',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                  ),]),
+                          )
+                        ],)
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  InkWell(
+                    onTap: () {
+                      // Show alert dialog here
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Theme(
+                              data: ThemeData( // Define custom theme data
+                                dialogBackgroundColor: Colors.grey, // Background color
+                                dialogTheme: DialogTheme( // Define dialog theme
+                                  shape: RoundedRectangleBorder( // Define border shape
+                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    borderRadius: BorderRadius.circular(20.0), // Border radius
+                                  ),
+                                ),
+                              ),
+                              child: AlertDialog(
+                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                  ),
+                                ],
+                              ));
+                        },
+                      );
+                    },
+                    child: Container(
+                        height: 160,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.black,
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),),
+                        child: Column(children: [
+                          Image.asset(
+
+                            'Images/actorinlaw1.jpg',
+                            height: 100,
+                            width: 70,
+                            fit: BoxFit.cover,),
+                          Container(
+                            height: 50,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10)
+
+                            ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Actor in Law',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                  ),
+                                  Text(
+                                    'Paid',
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                  ),]),
+                          )
+                        ],)
+                    ),
+                  ),
+                ],),
+            ),
           )
 
         ],

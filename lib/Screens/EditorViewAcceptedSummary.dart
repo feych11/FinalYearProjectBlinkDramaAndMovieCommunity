@@ -40,92 +40,8 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
   //bool assigned=false;
   int currentClipIndex = 0;
   bool init=false;
-  Future<void> fetchSummary(int sentProjectID) async {
-    const String baseUrl =  APIHandler.baseUrl1;
-    final String apiUrl =
-        '$baseUrl/Editor/FetchSummary?sentProjectId=$sentProjectID';
-    print('data');
-    try {
-      final response = await http.get(Uri.parse(apiUrl));
-
-      if (response.statusCode == 200) {
-        data = json.decode(response.body);
-        // Extract summary data from the response
-        // final List<dynamic>? summaryList = data['SummaryData']['Summary1'];
-        // final String? summaryText = summaryList != null && summaryList.isNotEmpty
-        //     ? summaryList[0]['Summary1'] // Assuming the summary is in the first item of the list
-        //     : null;
-        //print('Summary Data: '+data['SummaryData']['Summary1'].toString());
-        // summaryText = data['SummaryData']['Summary1'].toString();
-
-        //clipsData = data['ClipsData'];
-        // print('clipDataList = '+ clipsData.toString());
 
 
-        //print('Writer Name: $writerName');
-        // Process the data as needed
-        //print('data: $data');
-      } else {
-        print('Failed to fetch summary: ${response.reasonPhrase}');
-      }
-    } catch (e) {
-      print('Error fetching summary: $e');
-    }
-  }
-
-  Future<void>AcceptSentProject(int SentprojectID)async
-  {
-    try
-    {
-      const String baseurl2=APIHandler.baseUrl1;
-      final response=await http.post(Uri.parse('$baseurl2/Editor/AcceptSentProject?sProId=$SentprojectID'),);
-      if(response.statusCode==200)
-      {
-        print('Project Accept By Editor');
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Green,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: Text('Uploaded',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
-              content: Row(
-                children: [
-                  Icon(Icons.check, color: Colors.black,size: 30,),
-                  SizedBox(width: 8),
-                  Text('UPLOADED\nSUCCESSFULLY',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
-                ],
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
-                ),
-              ],
-            );
-          },
-        );
-
-      }
-      else if(response.statusCode==404)
-      {
-        print('Failed To Accept Project');
-      }
-      else
-      {
-        print('Something Went Wrong${response.reasonPhrase}');
-      }
-    }
-    catch(error)
-    {
-      print('Failed To Accept Project ${error}');
-    }
-
-  }
   Future<void> viewSentProject(int movieId) async {
     const String baseUrl = APIHandler.baseUrl1; // Update with your API base URL
     final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId';
@@ -175,7 +91,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
   @override
   void initState() {
     super.initState();
-    fetchSummary(widget.sentProjectID!);
+
     viewSentProject(widget.MovieID!);
     print('Title::${widget.moviename}');
   }
