@@ -28,11 +28,12 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
     await prefs.setString('Image', Image ?? '');
     await prefs.setString('Balance',Balance  ?? '');
   }
-  Future<void>saveReaderId(String ? Reader_ID,String ?Username1,String ?UserImage1)async{
+  Future<void>saveReaderId(String ? Reader_ID,String ?Username1,String ?UserImage1,String ? Subscription)async{
     SharedPreferences prefs=await SharedPreferences.getInstance();
     await prefs.setString('Reader_ID', Reader_ID ?? '');
      await prefs.setString('Username1',Username1 ?? '');
      await prefs.setString('UserImage1', UserImage1 ?? '');
+     await prefs.setString('Subscription', Subscription ?? '');
   }
   Future<void>saveEditorId(String ?Editor_ID)async
   {
@@ -66,6 +67,7 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
         String? Reader_ID;
         String? Username1;
         String ? UserImage1;
+        String ?Subscription;
 
         String ? Editor_ID;
 
@@ -92,14 +94,17 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
           Reader_ID = userData['Reader_ID'].toString();
            Username1 = userData['UserName']?.toString();
            UserImage1 ='$baseurl3/Images/${ userData['Image']}';
+           Subscription=userData['Subscription'].toString();
           //Balance = userData['Balance']?.toString();
           // Now you have the writer's name, image, and balance
           print('Reader Name: $Username1');
           print('Writer Image: $UserImage1');
-          await saveReaderId(Reader_ID,Username1,UserImage1);
+          print('Subscription: $Subscription');
+          await saveReaderId(Reader_ID,Username1,UserImage1,Subscription);
           print('ReaderID: $Reader_ID');
           print('Reader Name: $Username1');
           print('Writer Image: $UserImage1');
+          print('Subscription:: $Subscription');
           //print('Writer Balance: $Balance');
         }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:finalsemproject/API.dart';
+import 'package:finalsemproject/Screens/EditorViewAcceptedSummary.dart';
 import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
@@ -21,12 +22,17 @@ class ReaderHomePageScreen extends StatefulWidget {
 class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   String ?userId;
   String? ReaderName;
+  String ?Subscription;
   String? ReaderBalance;
   String? ReaderImage;
   int? movieID;
   String?movieName;
   String ?movieImage;
   String?movieType;
+  final Color mateBlack = Color(0xFF242424);
+  bool _isSearching = false;
+  String _searchQuery = "";
+  List<Map<String,dynamic>>notifications2=[];
   List<dynamic> movieDetails = [];
   Future<void> issueFreeMovie() async {
     final String baseUrl = APIHandler.baseUrl1;
@@ -77,24 +83,65 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
     }
   }
+  Future<void> issuePaidMovies() async {
+    final String baseUrl2 = APIHandler.baseUrl1;
+    final String baseUrl3 = APIHandler.baseUrl2;
+    try {
+      final response = await http.get(Uri.parse('$baseUrl2/Reader/IssuePaidMovie'));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        // Assuming 'Project' contains the list of accepted projects
+        final List<dynamic> projects = data['Project'];
+        setState(() {
+          notifications2 = projects.map((project) {
+            return {
+              'Movieid':project['Movie_ID'],
+              'id': project['SentProject_ID'],
+              'title': project['ProposalData']['Movie_Name'],
+              'writerName': project['Writer_ID'],
+              'director': project['ProposalData']['Director'],
+              'type': project['ProposalData']['Type'],
+              'rating': 4,
+              'imagePath': '$baseUrl3/Images/${project['ProposalData']['Image']}',
+              'status': project['Status'],
+            };
+          }).toList();
+        });
+      } else {
+        throw Exception('Failed to load accepted projects');
+      }
+    } catch (error) {
+      print('Failed to load accepted projects: $error');
+    }
+  }
   Future<void> getUserIdFromSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString('Reader_ID');
     final username=prefs.getString('Username1');
+    final Subscription1=prefs.getString('Subscription');
     // final userbalance=prefs.getString('Balance');
     final userImage=prefs.getString('UserImage1');
     setState(() {
       userId = user;
       ReaderName=username;
+      Subscription=Subscription1;
       // WriterBalance=userbalance;
       ReaderImage=userImage;
       print('jskksd: ${userId}');
       print('ReaderName: ${ReaderName}');
+      print('Subscription::: $Subscription');
       //print('Writer Balance: ${WriterBalance}');
       print('ReaderImageL ${ReaderImage}');
     });
     if (userId != null) {
-      issueFreeMovie();
+      if(Subscription=='Free'){
+        issueFreeMovie();
+      }
+      else if(Subscription=='Paid')
+        {
+          issuePaidMovies();
+        }
+
       print('Movie Image: $movieImage');
       // print('Getrewrtedata:${getRewriteData}');
 
@@ -114,7 +161,10 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    final filteredNotifications = notifications2
+        .where((notification) =>
+        notification['title']!.toLowerCase().startsWith(_searchQuery.toLowerCase()))
+        .toList();
     return Scaffold(
       drawer: Drawer(
         backgroundColor: Colors.grey,
@@ -143,7 +193,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                               color: Colors.white,
-                          fontFamily: 'Jura'),
+                              fontFamily: 'Jura'),
                         ),
                         Text(
                           'Balance:2000',
@@ -267,15 +317,38 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         ),
       ),
       appBar: AppBar(
-        title: Text(
-          'Home Page',
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'Jaro'),
-        ),
+        title: _isSearching
+            ? TextField(
+          onChanged: (query) {
+            setState(() {
+              _searchQuery = query;
+            });
+          },
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
+          decoration: InputDecoration(
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.white),
+          ),
+        )
+            : Text('Movies'),
+        actions: [
+          IconButton(
+            icon: Icon(_isSearching ? Icons.close : Icons.search),
+            onPressed: () {
+              setState(() {
+                _isSearching = !_isSearching;
+                if (!_isSearching) {
+                  _searchQuery = "";
+                }
+              });
+            },
+          ),
+        ],
         backgroundColor: Colors.black,
-        centerTitle: true,
       ),
       backgroundColor: Colors.grey,
-      body: Column(
+      body: Subscription == 'Free'
+          ?Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
@@ -326,15 +399,15 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(MovieID:movieID,moviename: movieName,)));
                               },
                               child: Container(
-                                  height: 150,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      color: Colors.white),
-                                  child:movieImage != null
-                                      ? Image.network(movieImage!,fit: BoxFit.cover)
+                                height: 150,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    color: Colors.white),
+                                child:movieImage != null
+                                    ? Image.network(movieImage!,fit: BoxFit.cover)
 
-                                      : Container(),
+                                    : Container(),
 
 
                               ),
@@ -436,26 +509,26 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         builder: (BuildContext context) {
                           return Theme(
                               data: ThemeData( // Define custom theme data
-                              dialogBackgroundColor: Colors.grey, // Background color
-                              dialogTheme: DialogTheme( // Define dialog theme
-                              shape: RoundedRectangleBorder( // Define border shape
-                              side: BorderSide(color: Colors.black,width: 4), // Border color
-                          borderRadius: BorderRadius.circular(20.0), // Border radius
-                          ),
-                          ),
-                          ),
-                          child: AlertDialog(
-                            title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                            content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                dialogBackgroundColor: Colors.grey, // Background color
+                                dialogTheme: DialogTheme( // Define dialog theme
+                                  shape: RoundedRectangleBorder( // Define border shape
+                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    borderRadius: BorderRadius.circular(20.0), // Border radius
+                                  ),
+                                ),
                               ),
-                            ],
-                          ));
+                              child: AlertDialog(
+                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                  ),
+                                ],
+                              ));
                         },
                       );
                     },
@@ -539,8 +612,8 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         height: 160,
                         width: 100,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Colors.black,
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.black,
                           border: Border.all(
                             color: Colors.black,
                             width: 2,
@@ -556,8 +629,8 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                             height: 50,
                             width: 150,
                             decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(10)
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10)
 
                             ),
                             child: Column(
@@ -611,8 +684,8 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         height: 160,
                         width: 100,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Colors.black,
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.black,
                           border: Border.all(
                             color: Colors.black,
                             width: 2,
@@ -873,6 +946,176 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
           )
 
         ],
+      )
+          :
+      SingleChildScrollView(child: SafeArea(child: Column(
+        children: [
+          Column(
+            children: filteredNotifications.map((notification) {
+              return buildNotificationCard2(notification);
+            }).toList(),
+          ),
+        ],
+      ))),
+    );
+  }
+  Widget buildNotificationCard2(Map<String, dynamic> notification2) {
+    final int id = notification2['id'] ?? '';
+
+    final int Movieid = notification2['Movieid'] ?? '';
+    final String title = notification2['title'] ?? '';
+
+    final String director = notification2['director'] ?? '';
+    final String status = notification2['status'] ?? '';
+    final String type = notification2['type'] ?? '';
+
+
+    final String imagePath = notification2['imagePath'] ?? '';
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 200,
+        width: 320,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+          color: Colors.amber,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 200,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.network(imagePath), // Use Image.network for remote images
+            ),
+            SizedBox(width: 10),
+            Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(color: mateBlack),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Column(
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'BigshotOne'
+                      ),
+                    ),
+                    SizedBox(height: 10),
+
+                    SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          'Director:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          director,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          'Type:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          type,
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    //SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          'Status:',
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          status,
+                          style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5),
+                    Center(
+                      child: GestureDetector(
+                        onTap: (){
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorViewAcceptedSummary(MovieID: Movieid,moviename: title,)));
+
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 90,
+                          decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
