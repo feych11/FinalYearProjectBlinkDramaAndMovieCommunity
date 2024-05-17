@@ -20,7 +20,9 @@ class ReaderHomePageScreen extends StatefulWidget {
 }
 
 class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
+  final TextEditingController _balanceController = TextEditingController();
   String ?userId;
+
   String? ReaderName;
   String ?Subscription;
   String? ReaderBalance;
@@ -34,6 +36,35 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   String _searchQuery = "";
   List<Map<String,dynamic>>notifications2=[];
   List<dynamic> movieDetails = [];
+  
+  
+  
+  Future<void>RechargeBalance(String newbalance)async
+  {
+    final String baseurl=APIHandler.baseUrl1;
+    final responce=await http.post(Uri.parse('$baseurl/Reader/RechargeBalance?Reader_ID=$userId&newBalance=$newbalance'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'Reader_ID': userId,
+        'newBalance': newbalance,
+      }),);
+    try{
+      if(responce.statusCode==200){
+          print('Balance Recharge Successfully');
+      }
+      else
+        {
+          print('Unable To  Recharge Balance ');
+        }
+    }
+    catch(error)
+    {
+      print('Unable To Recharge Your Balance ${error}');
+    }
+  } 
+  
   Future<void> issueFreeMovie() async {
     final String baseUrl = APIHandler.baseUrl1;
 
@@ -83,6 +114,49 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
     }
   }
+
+  void _showRechargeDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Theme(
+            data: ThemeData( // Define custom theme data
+            dialogBackgroundColor: Colors.grey, // Background color
+            dialogTheme: DialogTheme( // Define dialog theme
+            shape: RoundedRectangleBorder( // Define border shape
+            side: BorderSide(color: Colors.black,width: 4), // Border color
+        borderRadius: BorderRadius.circular(20.0), // Border radius
+        ),
+        ),
+        ),
+        child: AlertDialog(
+          title: Text('Recharge Balance',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+          content: TextField(
+            controller: _balanceController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(hintText: "Enter new balance"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text('Recharge',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
+              onPressed: (){
+                RechargeBalance(_balanceController.text);
+              }
+            ),
+          ],
+        )
+        );
+      },
+    );
+  }
+
+
   Future<void> issuePaidMovies() async {
     final String baseUrl2 = APIHandler.baseUrl1;
     final String baseUrl3 = APIHandler.baseUrl2;
@@ -119,18 +193,18 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     final user = prefs.getString('Reader_ID');
     final username=prefs.getString('Username1');
     final Subscription1=prefs.getString('Subscription');
-    // final userbalance=prefs.getString('Balance');
+    final userbalance=prefs.getString('Balance');
     final userImage=prefs.getString('UserImage1');
     setState(() {
       userId = user;
       ReaderName=username;
       Subscription=Subscription1;
-      // WriterBalance=userbalance;
+      ReaderBalance=userbalance;
       ReaderImage=userImage;
       print('jskksd: ${userId}');
       print('ReaderName: ${ReaderName}');
       print('Subscription::: $Subscription');
-      //print('Writer Balance: ${WriterBalance}');
+      print('Reader Balance: ${ReaderBalance}');
       print('ReaderImageL ${ReaderImage}');
     });
     if (userId != null) {
@@ -196,7 +270,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               fontFamily: 'Jura'),
                         ),
                         Text(
-                          'Balance:2000',
+                          'Balance:$ReaderBalance',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -270,10 +344,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
+              onTap: _showRechargeDialog, // Show the alert dialog on tap
             ),
             ListTile(
               title: InkWell(
@@ -330,7 +401,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             hintStyle: TextStyle(color: Colors.white),
           ),
         )
-            : Text('Movies'),
+            : Center(child: Text('Home Page',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
         actions: [
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
