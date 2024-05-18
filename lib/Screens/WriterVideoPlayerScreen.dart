@@ -40,7 +40,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   int maxValue = 20;
   bool _isPlayerReady = false;
   RangeValues _currentRangeValues = const RangeValues(0.0, 0.0);
-  TextEditingController titleCon = TextEditingController();
+  TextEditingController DesCon = TextEditingController();
   List<VideoClip> videoClips = [];
   bool isCompound = true;
   bool SimpleClip=true;
@@ -94,6 +94,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       SimpleClip:false,
       thumbnailUrl: widget.thumbnailUrl,
       title: widget.title,
+      Description: DesCon.text
 
 
     ));
@@ -102,17 +103,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void Addingclipinfo(){
 
     for(var clip in videoClips)
+    {
+      if(clip.isCompoundClip)
       {
-        if(clip.isCompoundClip)
-          {
-            clipsInfoList.add(
-                {
-                  'Start_time':clip.start_time.toString(),
-                  'End_time':clip.end_time.toString(),
-                  'Url':widget.videoId
-                });
-          }
+        clipsInfoList.add(
+            {
+              'Start_time':clip.start_time.toString(),
+              'End_time':clip.end_time.toString(),
+              'Url':widget.videoId
+            });
       }
+    }
   }
 
   void _onSimpleClip()  {
@@ -124,6 +125,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       SimpleClip:SimpleClip,
       thumbnailUrl: widget.thumbnailUrl,
       title: widget.title,
+      Description: DesCon.text
 
 
     ));
@@ -159,12 +161,23 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                YoutubePlayer(
-                  controller: _controller,
-                  showVideoProgressIndicator: true,
-                  onReady: () {
-                    print('Player is ready.');
-                  },
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 6,
+                    ),
+                  ),
+                  child: YoutubePlayer(
+
+                    controller: _controller,
+                    showVideoProgressIndicator: true,
+                    onReady: () {
+                      print('Player is ready.');
+                    },
+                  ),
                 ),
                 SizedBox(height: 20),
                 SliderTheme(
@@ -196,20 +209,30 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 ),
 
                 SizedBox(height: 20),
-                // Expanded(
-                //   child: TextField(
-                //     controller: titleCon,
-                //     decoration: InputDecoration(
-                //       border: OutlineInputBorder(
-                //         borderRadius: BorderRadius.circular(20),
-                //       ),
-                //       labelText: 'Title',
-                //       labelStyle: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.black),
-                //       hintText: 'Title',
-                //       hintStyle: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.black),
-                //     ),
-                //   ),
-                // ),
+                Container(
+                  width: 300,
+                  child: TextField(
+                    controller: DesCon,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.black)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      labelText: 'Description',
+                      labelStyle: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.black),
+                      hintText: 'Description',
+                      hintStyle: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 10),
                 Row(
                   children: [
@@ -233,7 +256,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         });
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black)
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.black)
                       ),
                       child: Text('Compound Clip', style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Rye',color: Colors.white)),
                     ),
@@ -249,6 +272,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     print('Is Compound Clip: ${clip.isCompoundClip}');
                     print('Is Simple Clip: ${clip.SimpleClip}');
                     print('Thumbnail url: ${clip.thumbnailUrl}');
+                    print('Thumbnail url: ${clip.Description}');
                     print('');
                     print('');
                   }

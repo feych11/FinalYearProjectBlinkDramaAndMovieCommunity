@@ -6,6 +6,7 @@ class VideoClip {
   bool SimpleClip=false;
   String thumbnailUrl;
   String title;
+  String ?Description;
  // final String thumbnailUrl;
 
   VideoClip({
@@ -16,5 +17,6 @@ class VideoClip {
     this.SimpleClip=false,
     required this.thumbnailUrl,
     required this.title,
+    this.Description,
   });
 }

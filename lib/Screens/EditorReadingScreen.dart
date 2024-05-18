@@ -150,6 +150,8 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
               'Start_time': clip['Start_time'],
               'End_time': clip['End_time'],
               'Url': clip['Url'],
+              'Description':clip['Description']??''
+
             });
           }
         }

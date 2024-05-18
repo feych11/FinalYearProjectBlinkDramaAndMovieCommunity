@@ -111,6 +111,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
       print('Is Simple Clip: ${clip.SimpleClip}');
       print('ThumbnailURL: ${clip.thumbnailUrl}');
       print('Title: ${clip.title}');
+      print('Description: ${clip.Description}');
       print('');
 
     }
@@ -148,6 +149,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     required String? type,
     required int? editorId,
     required int?Episode,
+
     required List<Map<String, dynamic>> clips, // Directly accept the list of clips
   }) async {
     final String baseUrl2 = APIHandler.baseUrl1; // Replace with your API base URL
@@ -430,6 +432,7 @@ print('DataAAAAAA: $data');
                                   print('CLIPS KI Zaida Info:  '+clip.end_time.toString());
                                   print('CLIPS KI URL Info:  '+clip.thumbnailUrl);
                                   print('CLIPS KI URL Infoooooo:  '+clip.title);
+                                  print('Clips Ki Description: ${clip.Description}');
                                   print('CLIPS KI URL Info:  '+widget.VideoIDAsString.toString());
                                   print('URL: ${widget.videoId}');
 
@@ -466,6 +469,17 @@ print('DataAAAAAA: $data');
                                       ),
                                       textAlign: TextAlign.start,
                                     ),
+                                    SizedBox(height: 13),
+                                    Text(
+                                      'Description: ${clip.Description}',
+                                      style: TextStyle(
+
+                                        fontFamily: 'BigshotOne',
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -493,6 +507,7 @@ print('DataAAAAAA: $data');
                       'Title': clip.title,
                       'Start_Time': clip.start_time,
                       'End_Time': clip.end_time,
+                      'Description':clip.Description
                     }).toList();
                     // Print clipsData before sending it to the API
                     print('Clips Data: $clipsData');

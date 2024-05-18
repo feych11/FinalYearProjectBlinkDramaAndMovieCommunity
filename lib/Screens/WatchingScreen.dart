@@ -21,8 +21,8 @@ class WatchingScreen extends StatefulWidget {
   final List<Map<String,dynamic>> ?clipsData;
   final List<Map<String,dynamic>>?ClipsInfoList;
 
-   WatchingScreen({super.key,
-     this.clipsData,
+  WatchingScreen({super.key,
+    this.clipsData,
     this.ClipsInfoList,
     this.moviename
 
@@ -48,40 +48,40 @@ class _WatchingScreenState extends State<WatchingScreen> {
     //refreshPage();
     print('INFO  CLIPSSSSS:'+widget.clipsData.toString());
     for(var clip in widget.clipsData!)
-      {
-     print('CLips isCompund:');
+    {
+      print('CLips isCompund:');
     }
 
     if (widget.ClipsInfoList != null) {
       for (var isCompoundclipData in widget.ClipsInfoList!) {
-       //bool isCompound = clipData['isCompoundClip'] ?? false;
+        //bool isCompound = clipData['isCompoundClip'] ?? false;
 
-          String videoUrl = "https://www.youtube.com/watch?v="+ isCompoundclipData['Url'] ?? '';
-          String startTimeStr = isCompoundclipData['Start_time'].trim();
-          String endTimeStr = isCompoundclipData['End_time'].trim();
+        String videoUrl = "https://www.youtube.com/watch?v="+ isCompoundclipData['Url'] ?? '';
+        String startTimeStr = isCompoundclipData['Start_time'].trim();
+        String endTimeStr = isCompoundclipData['End_time'].trim();
 
-          double startTimeDouble = double.parse(startTimeStr);
-          double endTimeDouble = double.parse(endTimeStr);
+        double startTimeDouble = double.parse(startTimeStr);
+        double endTimeDouble = double.parse(endTimeStr);
 
-          int startTimeInSeconds = startTimeDouble.toInt();
-          int endTimeInSeconds = endTimeDouble.toInt();
+        int startTimeInSeconds = startTimeDouble.toInt();
+        int endTimeInSeconds = endTimeDouble.toInt();
 
-          Duration startTime = Duration(seconds: startTimeInSeconds);
-          Duration endTime = Duration(seconds: endTimeInSeconds);
+        Duration startTime = Duration(seconds: startTimeInSeconds);
+        Duration endTime = Duration(seconds: endTimeInSeconds);
 
-          // clips.add(VideoClip(videoUrl: videoUrl, StartTime: startTime, EndTime: endTime));
-          clips.add(VideoClip(videoUrl: videoUrl, StartTime: Duration(seconds: startTimeInSeconds), EndTime: Duration(seconds: endTimeInSeconds)));
+        // clips.add(VideoClip(videoUrl: videoUrl, StartTime: startTime, EndTime: endTime));
+        clips.add(VideoClip(videoUrl: videoUrl, StartTime: Duration(seconds: startTimeInSeconds), EndTime: Duration(seconds: endTimeInSeconds)));
 
       }
       print('CLIPS LIST :');
       clips.forEach((element) {print('start ${element.StartTime.inSeconds} end :: ${element.EndTime.inSeconds}');});
-     //  clips.clear();
-     // clips = [
-     //    VideoClip(videoUrl: 'https://www.youtube.com/watch?v=72eQ0seOP1k', StartTime: Duration(seconds: 10), EndTime: Duration(seconds: 30)),
-     //    VideoClip(videoUrl: 'https://www.youtube.com/watch?v=72eQ0seOP1k', StartTime: Duration(seconds: 5), EndTime: Duration(seconds: 20)),
-     //    VideoClip(videoUrl: 'https://www.youtube.com/watch?v=72eQ0seOP1k', StartTime: Duration(seconds: 50), EndTime: Duration(seconds: 70)),
-     //    // Add more clips as needed
-     //  ];
+      //  clips.clear();
+      // clips = [
+      //    VideoClip(videoUrl: 'https://www.youtube.com/watch?v=72eQ0seOP1k', StartTime: Duration(seconds: 10), EndTime: Duration(seconds: 30)),
+      //    VideoClip(videoUrl: 'https://www.youtube.com/watch?v=72eQ0seOP1k', StartTime: Duration(seconds: 5), EndTime: Duration(seconds: 20)),
+      //    VideoClip(videoUrl: 'https://www.youtube.com/watch?v=72eQ0seOP1k', StartTime: Duration(seconds: 50), EndTime: Duration(seconds: 70)),
+      //    // Add more clips as needed
+      //  ];
       if (clips.isNotEmpty) {
         controller = YoutubePlayerController(
           initialVideoId: YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
@@ -108,6 +108,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
 
       if (!isCompound) {
         String videoUrl = clip['Url'] ?? '';
+        String description=clip['Description']??'';
         double startAt = double.parse(clip['Start_time'] ?? '0.0');
         double endAt = double.parse(clip['End_time'] ?? '0.0');
         YoutubePlayerController controllerr = YoutubePlayerController(
@@ -128,11 +129,11 @@ class _WatchingScreenState extends State<WatchingScreen> {
                 YoutubePlayer(controller: controllerr),
                 SizedBox(height: 10), // Add gap between video and text
                 Text(
-                  '${widget.moviename} - Part ${i + 1}', // Display movie name
+                  '${description} - Part ${i + 1}', // Display movie name
                   style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'BigshotOne'
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'BigshotOne'
                   ),
                 ),
               ],
@@ -315,8 +316,8 @@ class _WatchingScreenState extends State<WatchingScreen> {
           fontWeight: FontWeight.bold,
           fontSize: 30,
           color: Colors.black,
-      fontFamily: 'BigShotone'),),
-      centerTitle: true,
+          fontFamily: 'BigShotone'),),
+        centerTitle: true,
         backgroundColor: Colors.grey,
       ),
       body: SingleChildScrollView(
@@ -355,7 +356,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
                         //   print('Player is ready.');
                         // },
                       )
-                          // : loadingTextWidget,
+                      // : loadingTextWidget,
 
 
 
