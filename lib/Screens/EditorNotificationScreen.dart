@@ -197,13 +197,24 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
 
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: Stack(children: [
+
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('Images/SplashScreen45.png'), // Your background image
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          SingleChildScrollView(
           child: Column(
             children: projects.map((notification) {
               return buildNotificationCard(notification);
             }).toList(),
           ),
-        ),
+        ),],)
       ),
     );
   }

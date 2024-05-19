@@ -203,13 +203,23 @@ String userId='2';
         backgroundColor: Colors.black,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: Stack(children: [
+
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('Images/SplashScreen45.png'), // Your background image
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SingleChildScrollView(
           child: Column(
             children: notifications.map((notification) {
               return buildNotificationCard(notification);
             }).toList(),
           ),
-        ),
+        ),],)
       ),
     );
   }

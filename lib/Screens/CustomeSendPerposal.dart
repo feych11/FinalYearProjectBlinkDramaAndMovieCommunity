@@ -357,303 +357,329 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      body: SingleChildScrollView(
-        child: SingleChildScrollView(
+      body:Stack(children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/LoginPagePhoto.png'), // Your background image
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        SingleChildScrollView(
+          child: SingleChildScrollView(
 
-          child: Column(
+            child: Column(
 
-            children: [
-              // SafeArea(
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     children: [
-              //       Text('Movie:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
-              //       SizedBox(width: 10),
-              //       DropdownButton<String>(
-              //         value: _selectedmovie,style: TextStyle(fontFamily: 'BigshotOne'),
-              //         onChanged: (String? newValue) {
-              //           setState(() {
-              //             _selectedmovie = newValue;
-              //             // Update the text field value when a movie is selected
-              //             _moviesconController.text = _selectedmovie != null ? _movies.firstWhere((movie) => movie['Id'].toString() == _selectedmovie)['Name'] : '';
-              //            // fetchMovieDetails(newValue!);
-              //
-              //             // fetchWriters(_selectedCategories1.join(','));
-              //             print('Sel Cat'+_selectedCategories1.join(','));
-              //           });
-              //         },
-              //         iconSize: 30,
-              //         items: _movies.map<DropdownMenuItem<String>>((movie) {
-              //           return DropdownMenuItem<String>(
-              //             value: movie['Id'].toString(),
-              //             child: Text(movie['Name'],style: TextStyle(fontSize: 20,color: Colors.white),),
-              //           );
-              //         }).toList(),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _moviesconController,
-                decoration: InputDecoration(
-                  labelText: '     Movie Name',
-                  labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  hintText: 'Movie Name',
-                  hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30,),
-              TextFormField(
-                controller: Dircon,
-                decoration: InputDecoration(
-                  prefix: Icon(Icons.person),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide(color: Colors.black)),
-                  labelText: 'Director Name',
-                  labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  hintText: 'Director Name',
-                  hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+              children: [
+                // SafeArea(
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       Text('Movie:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
+                //       SizedBox(width: 10),
+                //       DropdownButton<String>(
+                //         value: _selectedmovie,style: TextStyle(fontFamily: 'BigshotOne'),
+                //         onChanged: (String? newValue) {
+                //           setState(() {
+                //             _selectedmovie = newValue;
+                //             // Update the text field value when a movie is selected
+                //             _moviesconController.text = _selectedmovie != null ? _movies.firstWhere((movie) => movie['Id'].toString() == _selectedmovie)['Name'] : '';
+                //            // fetchMovieDetails(newValue!);
+                //
+                //             // fetchWriters(_selectedCategories1.join(','));
+                //             print('Sel Cat'+_selectedCategories1.join(','));
+                //           });
+                //         },
+                //         iconSize: 30,
+                //         items: _movies.map<DropdownMenuItem<String>>((movie) {
+                //           return DropdownMenuItem<String>(
+                //             value: movie['Id'].toString(),
+                //             child: Text(movie['Name'],style: TextStyle(fontSize: 20,color: Colors.white),),
+                //           );
+                //         }).toList(),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
+                Container(
 
-
-                ),
-              ),
-              SizedBox(height: 30,),
-              TextFormField(
-                controller: Deadcon,
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: '     Select Date',
-                  labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  hintText: 'Select Date',
-                  hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  prefix: IconButton(
-                    icon: Icon(Icons.calendar_today),
-                    onPressed: () {
-                      _selectDate(context);
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(height: 30,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text('Type',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
-                  SizedBox(width: 10),
-                  DropdownButton<String>(
-                    value: _selectedType,style: TextStyle(fontFamily: 'BigshotOne'),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedType = newValue!;
-                        if (_selectedType == 'Movie') {
-                          print((_selectedType));
-                          _chargesEnabled = true;
-                        } else if (_selectedType == 'Drama') {
-                          _chargesEnabled = true;
-                          _episodeEnabled = true;
-                        }
-                      });
-                    },
-                    iconSize: 30,
-                    items: <String?>['Select type', 'Movie', 'Drama']
-                        .map<DropdownMenuItem<String>>((String? value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-
-                        child: Center(child: Text(value!,style: TextStyle(fontSize: 20),)),
-                      );
-                    }).toList(),
+                  width: 350,
+                  height: 800,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 6,
+                    ),
                   ),
 
-
-                ],
-              ),
-              SizedBox(height: 20,),
-              TextFormField(
-                controller: CharCon,
-                enabled: _chargesEnabled,
-                decoration: InputDecoration
-                  (
-                  hintText: 'Charges',
-                  hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  labelText: 'Charges',
-                  labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  prefixIcon: Icon(Icons.money),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              TextFormField(
-                controller: EpiCon,
-                enabled: _episodeEnabled,
-                decoration: InputDecoration
-                  (
-                  hintText: 'Episode No: ',
-                  hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  labelText: 'Episode No: ',
-                  labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                  prefixIcon: Icon(Icons.movie),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-
-                ),
-              ),
-              SizedBox(height: 30),
-
-
-
-              SizedBox(height: 30),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Categories',
-                  prefixIcon: IconButton(
-                    icon: Icon(Icons.category),
-                    onPressed: () {
-                      _showCategoryDialog(context);
-                    },
-                  ),
-                ),
-                controller: TextEditingController(
-                  text: _selectedCategories.isNotEmpty
-                      ? _selectedCategories.join(', ')
-                      : null,
-                ),
-                readOnly: true,
-              ),
-
-              SizedBox(height:10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text('Writer',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'Rye'),),
-                  SizedBox(width: 10),
-                  DropdownButton<String>(
-                    value: _selectedWriter,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedWriter = newValue;
-                      });
-                    },
-                    iconSize: 30,
-                    items: _writers.isEmpty || _writers == null
-                        ? [DropdownMenuItem<String>(
-                      value: null,
-                      child: Center(child: Text('No writers present')),
-                    )]
-                        :[
-                      DropdownMenuItem<String>(
-                        value: null,
-                        child: Center(child: Text('Select writer')),
+                  child: Column(children: [
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _moviesconController,
+                      decoration: InputDecoration(
+                        labelText: '     Movie Name',
+                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintText: 'Movie Name',
+                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                       ),
-                      ..._writers.map<DropdownMenuItem<String>>((writer) {
-                        return DropdownMenuItem<String>(
-                          value: writer['WriterID'].toString(),
-                          child: Center(
-                            child: Text(
-                              writer['UserName'],
-                              style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    SizedBox(height: 30,),
+                    TextFormField(
+                      controller: Dircon,
+                      decoration: InputDecoration(
+                        prefix: Icon(Icons.person),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide(color: Colors.black)),
+                        labelText: 'Director Name',
+                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintText: 'Director Name',
+                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+
+
+
+                      ),
+                    ),
+                    SizedBox(height: 30,),
+                    TextFormField(
+                      controller: Deadcon,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        labelText: '     Select Date',
+                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintText: 'Select Date',
+                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        prefix: IconButton(
+                          icon: Icon(Icons.calendar_today),
+                          onPressed: () {
+                            _selectDate(context);
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Type',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
+                        SizedBox(width: 10),
+                        DropdownButton<String>(
+                          value: _selectedType,style: TextStyle(fontFamily: 'BigshotOne'),
+                          dropdownColor: Colors.white,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedType = newValue!;
+                              if (_selectedType == 'Movie') {
+                                print((_selectedType));
+                                _chargesEnabled = true;
+                              } else if (_selectedType == 'Drama') {
+                                _chargesEnabled = true;
+                                _episodeEnabled = true;
+                              }
+                            });
+                          },
+                          iconSize: 30,
+                          items: <String?>['Select type', 'Movie', 'Drama']
+                              .map<DropdownMenuItem<String>>((String? value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+
+                              child: Center(child: Text(value!,style: TextStyle(fontSize: 20,color: Colors.black),)),
+                            );
+                          }).toList(),
+                        ),
+
+
+                      ],
+                    ),
+                    SizedBox(height: 20,),
+                    TextFormField(
+                      controller: CharCon,style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      enabled: _chargesEnabled,
+                      decoration: InputDecoration
+                        (
+                        hintText: 'Charges',
+                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        labelText: 'Charges',
+                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        prefixIcon: Icon(Icons.money),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    TextFormField(
+                      controller: EpiCon,style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      enabled: _episodeEnabled,
+                      decoration: InputDecoration
+                        (
+                        hintText: 'Episode No: ',
+                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        labelText: 'Episode No: ',
+                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        prefixIcon: Icon(Icons.movie),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+
+                      ),
+                    ),
+                    SizedBox(height: 30),
+
+
+
+                    SizedBox(height: 30),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Categories',
+                        labelStyle:TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        prefixIcon: IconButton(
+                          icon: Icon(Icons.category),
+                          onPressed: () {
+                            _showCategoryDialog(context);
+                          },
+                        ),
+                      ),
+                      controller: TextEditingController(
+                        text: _selectedCategories.isNotEmpty
+                            ? _selectedCategories.join(', ')
+                            : null,
+                      ),style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      readOnly: true,
+                    ),
+
+                    SizedBox(height:10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Writer',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'Rye'),),
+                        SizedBox(width: 10),
+                        DropdownButton<String>(
+                          value: _selectedWriter,
+                          dropdownColor: Colors.white,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedWriter = newValue;
+                            });
+                          },
+                          iconSize: 30,
+                          items: _writers.isEmpty || _writers == null
+                              ? [DropdownMenuItem<String>(
+                            value: null,
+                            child: Center(child: Text('No writers present',style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black,fontSize: 20),),),
+                          )]
+                              :[
+                            DropdownMenuItem<String>(
+                              value: null,
+                              child: Center(child: Text('Select writer')),
                             ),
-                          ),
-                        );
-                      }).toList(),
+                            ..._writers.map<DropdownMenuItem<String>>((writer) {
+                              return DropdownMenuItem<String>(
+                                value: writer['WriterID'].toString(),
+                                child: Center(
+                                  child: Text(
+                                    writer['UserName'],
+                                    style: TextStyle(fontSize: 20, color: Colors.black),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                  ],),),
+                SizedBox(height: 10,),
+
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
                     ],
+
                   ),
-                ],
-              ),
-              SizedBox(height: 10,),
-
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.grey[200],
-                      ),
-                      height: 200,
-                      width: 200,
-                    ),
-                    _image == null
-                        ? Text(
-                      'No image selected.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-
-                      ),
-                    )
-                        : ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.file(
-                        _image!,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.grey[200],
+                        ),
                         height: 200,
                         width: 200,
-                        fit: BoxFit.cover,
+                      ),
+                      _image == null
+                          ? Text(
+                        'No image selected.',
+                        style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black,fontSize: 20),
+                      )
+                          : ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.file(
+                          _image!,
+                          height: 200,
+                          width: 200,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                ),
+                SizedBox(height: 20,),
+
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Add your onPressed logic here
+                      sendProposal();
+                      print('Elevated Button Pressed');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black, // Background color
+                      foregroundColor: Colors.white, // Text color
+                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Button padding
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10), // Button border radius
+                      ),
+                      elevation: 3, // Button shadow
+                    ),
+                    child: Text(
+                      'SEND PROPOSAL',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'BigshotOne'
                       ),
                     ),
-                  ],
-                ),
-
-              ),
-              SizedBox(height: 20,),
-
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Add your onPressed logic here
-                    sendProposal();
-                    print('Elevated Button Pressed');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black, // Background color
-                    foregroundColor: Colors.white, // Text color
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Button padding
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), // Button border radius
-                    ),
-                    elevation: 3, // Button shadow
-                  ),
-                  child: Text(
-                    'SEND PROPOSAL',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'BigshotOne'
-                    ),
                   ),
                 ),
-              ),
 
 
 
-            ],),
+              ],),
+          ),
+
         ),
-
-      ),
+      ],),
       floatingActionButton: FloatingActionButton(
         onPressed: getImage,
         tooltip: 'Pick Image',

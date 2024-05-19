@@ -509,33 +509,45 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.grey,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Display proposals
-              Column(
-                children: notifications.map((notification) {
-                  return buildNotificationCard(notification);
-                }).toList(),
-              ),
-              // Display rewrite projects
-              Column(
-                children: notifications1.asMap().entries.map((entry) {
-                  final int index = entry.key;
-                  final Map<String, dynamic> notification1 = entry.value;
-                  return buildNotificationCard1(notification1, index);
-                }).toList(),
-              ),
-              Column(
-                children: notifications2.map((notification2) {
-                  return buildNotificationCard2(notification2);
-                }).toList(),
-              ),
-            ],
+      body: Stack(children: [
+
+
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/SplashScreen45.png'), // Your background image
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
+        SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Display proposals
+                Column(
+                  children: notifications.map((notification) {
+                    return buildNotificationCard(notification);
+                  }).toList(),
+                ),
+                // Display rewrite projects
+                Column(
+                  children: notifications1.asMap().entries.map((entry) {
+                    final int index = entry.key;
+                    final Map<String, dynamic> notification1 = entry.value;
+                    return buildNotificationCard1(notification1, index);
+                  }).toList(),
+                ),
+                Column(
+                  children: notifications2.map((notification2) {
+                    return buildNotificationCard2(notification2);
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],)
     );
   }
   Widget buildNotificationCard(Map<String, dynamic> notification) {

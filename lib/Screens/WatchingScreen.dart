@@ -315,146 +315,158 @@ class _WatchingScreenState extends State<WatchingScreen> {
       appBar: AppBar(title: Text('Watching',style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 30,
-          color: Colors.black,
+          color: Colors.white,
           fontFamily: 'BigShotone'),),
         centerTitle: true,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.black,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(children: [
-          SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 350,
-                height: 200,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 4,
+      body: Stack(children: [
+
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/bgimg1.png'), // Your background image
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+
+        SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(children: [
+            SizedBox(height: 10,),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 350,
+                  height: 200,
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 4,
+                      ),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        //Image
+
+                        // isPlayerReady
+                        //     ?
+                        YoutubePlayer(
+                          controller: controller,
+                          showVideoProgressIndicator: true,
+                          // // onReady: () {
+                          // //   setState(() {
+                          // //     isPlayerReady = true;
+                          // //   });
+                          //   print('Player is ready.');
+                          // },
+                        )
+                        // : loadingTextWidget,
+
+
+
+                        // Text in the right bottom corner
+                        // Column(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Text(
+                        //       'WAAR',
+                        //       style: TextStyle(
+                        //           color: Colors.white, // Set your desired text color
+                        //           fontSize: 16,
+                        //           fontWeight:
+                        //           FontWeight.bold // Set your desired text size
+                        //       ),
+                        //     ),
+                        //     Text(
+                        //       'Bilal Lashari',
+                        //       style: TextStyle(
+                        //           color: Colors.yellow,
+                        //           fontSize: 10,
+                        //           fontWeight: FontWeight.bold),
+                        //     ),
+                        //     Text(
+                        //       'Writer: Amman',
+                        //       style: TextStyle(
+                        //           color: Colors.yellow,
+                        //           fontSize: 10,
+                        //           fontWeight: FontWeight.bold),
+                        //     ),
+                        //   ],
+                        // ),
+                      ],
                     ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Stack(
-                    children: [
-                      //Image
-
-                      // isPlayerReady
-                      //     ?
-                      YoutubePlayer(
-                        controller: controller,
-                        showVideoProgressIndicator: true,
-                        // // onReady: () {
-                        // //   setState(() {
-                        // //     isPlayerReady = true;
-                        // //   });
-                        //   print('Player is ready.');
-                        // },
-                      )
-                      // : loadingTextWidget,
-
-
-
-                      // Text in the right bottom corner
-                      // Column(
-                      //   mainAxisAlignment: MainAxisAlignment.end,
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Text(
-                      //       'WAAR',
-                      //       style: TextStyle(
-                      //           color: Colors.white, // Set your desired text color
-                      //           fontSize: 16,
-                      //           fontWeight:
-                      //           FontWeight.bold // Set your desired text size
-                      //       ),
-                      //     ),
-                      //     Text(
-                      //       'Bilal Lashari',
-                      //       style: TextStyle(
-                      //           color: Colors.yellow,
-                      //           fontSize: 10,
-                      //           fontWeight: FontWeight.bold),
-                      //     ),
-                      //     Text(
-                      //       'Writer: Amman',
-                      //       style: TextStyle(
-                      //           color: Colors.yellow,
-                      //           fontSize: 10,
-                      //           fontWeight: FontWeight.bold),
-                      //     ),
-                      //   ],
-                      // ),
-                    ],
                   ),
                 ),
               ),
             ),
-          ),
 
 
-          Container(
-            height: 50,
-            width: 200,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.white,
-                width: 4,
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Colors.black, Colors.black, Colors.yellow, Colors.yellow],
-                stops: [0.0, 0.5, 0.5, 1.0],
-              ),
-              borderRadius: BorderRadius.circular(20),
-
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
-                      child: Text('Read',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),)),
+            Container(
+              height: 50,
+              width: 200,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white,
+                  width: 4,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                      onTap: (){
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [Colors.black, Colors.black, Colors.yellow, Colors.yellow],
+                  stops: [0.0, 0.5, 0.5, 1.0],
+                ),
+                borderRadius: BorderRadius.circular(20),
 
-                      },
-                      child: Text('Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),)),
-                )
-              ],),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Text('Read',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                        onTap: (){
 
-          ),
-          SizedBox(height: 30,),
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(20), // Adjust padding as needed
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children:
+                        },
+                        child: Text('Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),)),
+                  )
+                ],),
 
-                nonCompoundVideoWidgets,
+            ),
+            SizedBox(height: 30,),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(20), // Adjust padding as needed
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children:
+
+                  nonCompoundVideoWidgets,
+                ),
               ),
             ),
-          ),
 
-          SizedBox(height: 10,),
+            SizedBox(height: 10,),
 
 
-        ],),
-      ),
+          ],),
+        ),
+      ],)
     );
   }
   void _onControllerStateChanged() {

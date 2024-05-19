@@ -210,15 +210,27 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
       appBar: AppBar(title: Text('ACCEPTED PROPOSALS',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white,fontFamily: 'BigshotOne'),),
       backgroundColor: Colors.black,
       ),
-      body:SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: notifications.map((notification) {
-              return buildNotificationCard(notification);
-            }).toList(),
+      body:Stack(children: [
+
+
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/SplashScreen45.png'), // Your background image
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
+        SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: notifications.map((notification) {
+                return buildNotificationCard(notification);
+              }).toList(),
+            ),
+          ),
+        ),
+      ],)
     );
   }
 

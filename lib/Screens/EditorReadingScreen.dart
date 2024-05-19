@@ -381,228 +381,238 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 30,
-              color: Colors.black,
+              color: Colors.white,
           fontFamily: 'BigShotone'),
         ),
         centerTitle: true,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.black,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 30,
+      body: Stack(children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/SplashScreen45.png'), // Your background image
+              fit: BoxFit.cover,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(20),
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(8.0),
-            //     child: Container(
-            //       width: 350,
-            //       height: 200,
-            //       decoration: BoxDecoration(
-            //           color: Colors.black,
-            //           borderRadius: BorderRadius.circular(10)),
-            //       child: Padding(
-            //         padding: const EdgeInsets.all(8.0),
-            //         child: Stack(
-            //           children: [
-            //             // Image
-            //             //
-            //             // isPlayerReady
-            //             //     ? YoutubePlayer(
-            //             //   controller: controller,
-            //             //   showVideoProgressIndicator: true,
-            //             //   onReady: () {
-            //             //     setState(() {
-            //             //       isPlayerReady = true;
-            //             //     });
-            //             //     print('Player is ready.');
-            //             //   },
-            //             // )
-            //             //     : loadingTextWidget,
-            //
-            //
-            //
-            //             // Text in the right bottom corner
-            //             // Column(
-            //             //   mainAxisAlignment: MainAxisAlignment.end,
-            //             //   crossAxisAlignment: CrossAxisAlignment.start,
-            //             //   children: [
-            //             //     Text(
-            //             //       'WAAR',
-            //             //       style: TextStyle(
-            //             //           color: Colors.white, // Set your desired text color
-            //             //           fontSize: 16,
-            //             //           fontWeight:
-            //             //           FontWeight.bold // Set your desired text size
-            //             //       ),
-            //             //     ),
-            //             //     Text(
-            //             //       'Bilal Lashari',
-            //             //       style: TextStyle(
-            //             //           color: Colors.yellow,
-            //             //           fontSize: 10,
-            //             //           fontWeight: FontWeight.bold),
-            //             //     ),
-            //             //     Text(
-            //             //       'Writer: Amman',
-            //             //       style: TextStyle(
-            //             //           color: Colors.yellow,
-            //             //           fontSize: 10,
-            //             //           fontWeight: FontWeight.bold),
-            //             //     ),
-            //             //   ],
-            //             // ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            SizedBox(
-              height: 10,
-            ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 500),
-              height: 50,
-              width: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white,
-                  width: 4,
-                ),
-                gradient: LinearGradient(
-                  begin: Alignment.centerRight,
-                  end: Alignment.centerLeft,
-                  colors: [
-                    Colors.black,
-                    Colors.black,
-                    Colors.yellow,
-                    Colors.yellow
-                  ],
-                  stops: [0.0, 0.5, 0.5, 1.0],
-                ),
-                borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 30,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditorReadingScreen()));
-                        },
-                        child: Text(
-                          'Read',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black,fontFamily: 'BigshotOne'),
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                        onTap: () {},
-                        child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            WatchingScreen(moviename: widget.moviename,clipsData: clipsData,ClipsInfoList: clipsInfoList,
-
-                                            )));
-                              });
-                            },
-                            child: Text(
-                              'Watch',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,fontFamily: 'BigshotOne'),
-                            ))),
-                  )
-                ],
+              // Padding(
+              //   padding: const EdgeInsets.all(20),
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Container(
+              //       width: 350,
+              //       height: 200,
+              //       decoration: BoxDecoration(
+              //           color: Colors.black,
+              //           borderRadius: BorderRadius.circular(10)),
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Stack(
+              //           children: [
+              //             // Image
+              //             //
+              //             // isPlayerReady
+              //             //     ? YoutubePlayer(
+              //             //   controller: controller,
+              //             //   showVideoProgressIndicator: true,
+              //             //   onReady: () {
+              //             //     setState(() {
+              //             //       isPlayerReady = true;
+              //             //     });
+              //             //     print('Player is ready.');
+              //             //   },
+              //             // )
+              //             //     : loadingTextWidget,
+              //
+              //
+              //
+              //             // Text in the right bottom corner
+              //             // Column(
+              //             //   mainAxisAlignment: MainAxisAlignment.end,
+              //             //   crossAxisAlignment: CrossAxisAlignment.start,
+              //             //   children: [
+              //             //     Text(
+              //             //       'WAAR',
+              //             //       style: TextStyle(
+              //             //           color: Colors.white, // Set your desired text color
+              //             //           fontSize: 16,
+              //             //           fontWeight:
+              //             //           FontWeight.bold // Set your desired text size
+              //             //       ),
+              //             //     ),
+              //             //     Text(
+              //             //       'Bilal Lashari',
+              //             //       style: TextStyle(
+              //             //           color: Colors.yellow,
+              //             //           fontSize: 10,
+              //             //           fontWeight: FontWeight.bold),
+              //             //     ),
+              //             //     Text(
+              //             //       'Writer: Amman',
+              //             //       style: TextStyle(
+              //             //           color: Colors.yellow,
+              //             //           fontSize: 10,
+              //             //           fontWeight: FontWeight.bold),
+              //             //     ),
+              //             //   ],
+              //             // ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              SizedBox(
+                height: 10,
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Container(
-                height: 400,
-                width: 300,
+              AnimatedContainer(
+                duration: Duration(milliseconds: 500),
+                height: 50,
+                width: 200,
                 decoration: BoxDecoration(
-                    color: Colors.black,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 4,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Column(
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 4,
+                  ),
+                  gradient: LinearGradient(
+                    begin: Alignment.centerRight,
+                    end: Alignment.centerLeft,
+                    colors: [
+                      Colors.black,
+                      Colors.black,
+                      Colors.yellow,
+                      Colors.yellow
+                    ],
+                    stops: [0.0, 0.5, 0.5, 1.0],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        summaryText ?? 'Loading summary...',
-                        style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'BigshotOne',fontWeight: FontWeight.bold),
-                      ),
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditorReadingScreen()));
+                          },
+                          child: Text(
+                            'Read',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.black,fontFamily: 'BigshotOne'),
+                          )),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.yellow,),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                          onTap: () {},
+                          child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              WatchingScreen(moviename: widget.moviename,clipsData: clipsData,ClipsInfoList: clipsInfoList,
 
-                          onPressed: () {
-                            AcceptSentProject(widget.sentProjectID.toString());
-                          },
-                          child: Text(
-                            'Upload',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.black,fontFamily: 'BigshotOne'),
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.yellow),
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorAddCommentsFroWriterScreen(MovieID: widget.MovieID,sentProjectID: widget.sentProjectID,)));
-                          },
-                          child: Text(
-                            'Rewrite',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.black,fontFamily: 'BigshotOne'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                                              )));
+                                });
+                              },
+                              child: Text(
+                                'Watch',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,fontFamily: 'BigshotOne'),
+                              ))),
+                    )
                   ],
                 ),
               ),
-            )
-          ],
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Container(
+                  height: 400,
+                  width: 300,
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 4,
+                      ),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          summaryText ?? 'Loading summary...',
+                          style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'BigshotOne',fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.yellow,),
+
+                            onPressed: () {
+                              AcceptSentProject(widget.sentProjectID.toString());
+                            },
+                            child: Text(
+                              'Upload',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.black,fontFamily: 'BigshotOne'),
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.yellow),
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorAddCommentsFroWriterScreen(MovieID: widget.MovieID,sentProjectID: widget.sentProjectID,)));
+                            },
+                            child: Text(
+                              'Rewrite',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.black,fontFamily: 'BigshotOne'),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
+      ],)
     );
   }
 //   void _onControllerStateChanged() {

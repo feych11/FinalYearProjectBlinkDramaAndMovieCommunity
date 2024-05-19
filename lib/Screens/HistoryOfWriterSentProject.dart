@@ -219,13 +219,26 @@ backgroundColor: Colors.grey,
       ),
       body:
       // Display proposals
-      SingleChildScrollView(
-        child: Column(
-        children: notifications.map((notification) {
-            return buildNotificationCard(notification);
-            }).toList(),
+      Stack(children: [
+
+
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/SplashScreen45.png'), // Your background image
+              fit: BoxFit.cover,
             ),
-      ),
+          ),
+        ),
+
+        SingleChildScrollView(
+          child: Column(
+            children: notifications.map((notification) {
+              return buildNotificationCard(notification);
+            }).toList(),
+          ),
+        ),
+      ],)
     );
   }
   Widget buildNotificationCard(Map<String, dynamic> notification) {

@@ -85,168 +85,205 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
         title: Center(
             child: Text(
           'SIGNUP SCREEN',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.white),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.white,fontFamily: 'BigshotONe'),
         )),
         backgroundColor: Colors.black,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
+      body:
 
-            Center(
-              child: GestureDetector(
-                onTap: getImage,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.black,
-                  backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
-                  child: _imageFile == null ? Icon(Icons.person, size: 50,color: Colors.white,) : null,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: reaemailcont,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-                  hintText: 'Email',
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: reanamecon,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-                  hintText: 'Username',
-                  labelText: 'Username',
-                  prefixIcon: Icon(Icons.person),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: reapasscount,
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-                  hintText: 'Password',
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.lock),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: TextFormField(
-            //     controller: reaconpasscount,
-            //     obscureText: false,
-            //     onChanged: (value) {
-            //       setState(() {
-            //         _passwordsMatch = reapasscount == value;
-            //       });
-            //     },
-            //     decoration: InputDecoration(
-            //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-            //       hintText: 'Confirm Password',
-            //       labelText: 'Confirm Password',
-            //       errorText: reaconpasscount==reapasscount?null:'Password do not Match',
-            //       prefixIcon: Icon(Icons.lock),
-            //     ),
-            //   ),
-            // ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Text(
-                  'Role:',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Row(children: [
-                  Radio(
-                      value: UserRole.Reader,
-                      groupValue: _selectedRole,
-                      onChanged: ( UserRole? value) {
-                        setState(() {
-                          _selectedRole = value!;
-                        });
-                      }),
-                  //SizedBox(width: 10,),
-                  Text('Reader',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
-                ],),
-                SizedBox(
-                  width: 10,
-                ),
-                Row(children: [
-                  Radio(
 
-                      value: UserRole.Writer,
+      Stack(children: [
 
-                      groupValue: _selectedRole,
-                      onChanged: ( UserRole? value) {
-                        setState(() {
-                          _selectedRole = value!;
-                        });
-                      }),
-                  //SizedBox(width: 5,),
-                  Text('Writer',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
-                ],)
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Center(
-                child: InkWell(
-                  onTap: ()async{
 
-                    _signUp();
-                  },
-                  child: Container(
-                    height: 40,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Center(child: Text('SIGNUP',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white))),
-                  ),
-                )
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/SplashScreen45.png'), // Your background image
+              fit: BoxFit.cover,
             ),
-            SizedBox(height: 10,),
-           Row(children: [
-             Text('Have an account?'),
-             InkWell(
-                 onTap: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
-                 },
-                 child: Text('Login',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),))
-           ],)
-          ],
+          ),
         ),
-      ),
+        SingleChildScrollView(
+          child: Column(
+            children: [
+
+              Center(
+                child: GestureDetector(
+                  onTap: getImage,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                    backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
+                    child: _imageFile == null ? Icon(Icons.person, size: 50,color: Colors.black,) : null,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 350,
+                height: 400,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFFFFFF).withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 6,
+                  ),
+                ),
+
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: reaemailcont,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+                          hintText: 'Email',
+                          hintStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          labelText: 'Email',
+                          labelStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          prefixIcon: Icon(Icons.email),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: reanamecon,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+                          hintText: 'Username',
+                          hintStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          labelText: 'Username',
+                          prefixIcon: Icon(Icons.person),
+                          labelStyle: TextStyle(fontFamily: 'BigshotOne')
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: reapasscount,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+                          hintText: 'Password',
+                          hintStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          labelText: 'Password',
+                          labelStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          prefixIcon: Icon(Icons.lock),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: TextFormField(
+                    //     controller: reaconpasscount,
+                    //     obscureText: false,
+                    //     onChanged: (value) {
+                    //       setState(() {
+                    //         _passwordsMatch = reapasscount == value;
+                    //       });
+                    //     },
+                    //     decoration: InputDecoration(
+                    //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+                    //       hintText: 'Confirm Password',
+                    //       labelText: 'Confirm Password',
+                    //       errorText: reaconpasscount==reapasscount?null:'Password do not Match',
+                    //       prefixIcon: Icon(Icons.lock),
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Role:',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Row(children: [
+                          Radio(
+                              value: UserRole.Reader,
+                              groupValue: _selectedRole,
+                              onChanged: ( UserRole? value) {
+                                setState(() {
+                                  _selectedRole = value!;
+                                });
+                              }),
+                          //SizedBox(width: 10,),
+                          Text('Reader',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),)
+                        ],),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Row(children: [
+                          Radio(
+
+                              value: UserRole.Writer,
+
+                              groupValue: _selectedRole,
+                              onChanged: ( UserRole? value) {
+                                setState(() {
+                                  _selectedRole = value!;
+                                });
+                              }),
+                          //SizedBox(width: 5,),
+                          Text('Writer',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'BigshotOne'),)
+                        ],)
+                      ],
+                    ),
+                  ],),),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                  child: InkWell(
+                    onTap: ()async{
+
+                      _signUp();
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Center(child: Text('SIGNUP',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black,fontFamily: 'Jaro'))),
+                    ),
+                  )
+              ),
+              SizedBox(height: 10,),
+              Row(children: [
+                Text('Have an account?'),
+                InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                    },
+                    child: Text('Login',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),))
+              ],)
+            ],
+          ),
+        ),
+      ],)
     );
   }
   void _signUp() {

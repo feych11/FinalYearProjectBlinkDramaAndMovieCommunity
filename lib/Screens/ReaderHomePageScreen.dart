@@ -419,7 +419,16 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
       ),
       backgroundColor: Colors.grey,
       body: Subscription == 'Free'
-          ?Column(
+          ?Stack(children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/bgimg1.png'), // Your background image
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+            Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
@@ -1017,17 +1026,29 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
           )
 
         ],
-      )
+      )],)
           :
-      SingleChildScrollView(child: SafeArea(child: Column(
-        children: [
-          Column(
-            children: filteredNotifications.map((notification) {
-              return buildNotificationCard2(notification);
-            }).toList(),
+      Stack(children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('Images/SplashScreen45.png'), // Your background image
+              fit: BoxFit.cover,
+            ),
           ),
-        ],
-      ))),
+        ),
+
+
+        SingleChildScrollView(child: SafeArea(child: Column(
+          children: [
+            Column(
+              children: filteredNotifications.map((notification) {
+                return buildNotificationCard2(notification);
+              }).toList(),
+            ),
+          ],
+        ))),
+      ],)
     );
   }
   Widget buildNotificationCard2(Map<String, dynamic> notification2) {
