@@ -22,7 +22,7 @@ class ReaderHomePageScreen extends StatefulWidget {
 class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   final TextEditingController _balanceController = TextEditingController();
   String ?userId;
-
+  int? Writer_ID;
   String? ReaderName;
   String ?Subscription;
   String? ReaderBalance;
@@ -83,12 +83,14 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
           movieImage = '$baseurl3/Images/${jsonData['Movie']['Image']}';
           movieType = jsonData['Movie']['Type'];
 
+
         });
         // Print or use the movie details here
         print('Movie _ID: $movieID');
         print('Movie Name: $movieName');
         print('Movie Image: $movieImage');
         print('Movie Type: $movieType');
+        print('Writer_ID::: $Writer_ID');
 
         final writer = jsonData['Writer'];
         final issueDate = jsonData['issueDate'];
@@ -101,7 +103,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         print('Movie Name: $movieName');
         print('Movie Image: $movieImage');
         print('Movie Type: $movieType');
-        print('Writer: $writer');
+        print('Writer: $Writer_ID');
         print('issueDate:${issueDate}');
         print('Issued Movie: $issuedMovie');
       } else {
@@ -176,6 +178,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
               'director': project['ProposalData']['Director'],
               'type': project['ProposalData']['Type'],
               'rating': 4,
+              'UserName':project['WriterData']['UserName'],
               'imagePath': '$baseUrl3/Images/${project['ProposalData']['Image']}',
               'status': project['Status'],
             };
@@ -442,7 +445,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             child: Center(
               child: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(MovieID:movieID,moviename: movieName,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(Writer_ID: Writer_ID,MovieID:movieID,moviename: movieName,)));
                 },
                 child: Container(
 
@@ -1056,7 +1059,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
     final int Movieid = notification2['Movieid'] ?? '';
     final String title = notification2['title'] ?? '';
-
+    final String UserName=notification2['UserName']?? '';
     final String director = notification2['director'] ?? '';
     final String status = notification2['status'] ?? '';
     final String type = notification2['type'] ?? '';
@@ -1162,7 +1165,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                     Row(
                       children: [
                         Text(
-                          'Status:',
+                          'Writer:',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
@@ -1172,7 +1175,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ),
                         SizedBox(width: 6),
                         Text(
-                          status,
+                          UserName,
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,

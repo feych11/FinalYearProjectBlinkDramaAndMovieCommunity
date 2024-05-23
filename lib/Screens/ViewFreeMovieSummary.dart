@@ -9,8 +9,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class ViewFreeMovieSummaryScreen extends StatefulWidget {
   final int? MovieID;
   final String? moviename;
+  final int? Writer_ID;
 
-  const ViewFreeMovieSummaryScreen({Key? key, this.MovieID, this.moviename}) : super(key: key);
+  const ViewFreeMovieSummaryScreen({Key? key, this.MovieID, this.moviename,this.Writer_ID}) : super(key: key);
 
   @override
   State<ViewFreeMovieSummaryScreen> createState() => _ViewFreeMovieSummaryScreenState();
@@ -76,6 +77,7 @@ class _ViewFreeMovieSummaryScreenState extends State<ViewFreeMovieSummaryScreen>
     super.initState();
     viewSentProject(widget.MovieID!);
     print('Title::${widget.moviename}');
+    print('Writer_ID::::: ${widget.Writer_ID!}');
   }
 
   void refreshPage() {
@@ -421,6 +423,7 @@ class _StarRatingWidgetState extends State<StarRatingWidget> {
   void _setRating(int rating) {
     setState(() {
       _rating = rating;
+      print('RATING:: $_rating');
     });
   }
 
