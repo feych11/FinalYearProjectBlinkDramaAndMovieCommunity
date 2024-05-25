@@ -9,9 +9,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class ViewFreeMovieSummaryScreen extends StatefulWidget {
   final int? MovieID;
   final String? moviename;
-  final int? Writer_ID;
-
-  const ViewFreeMovieSummaryScreen({Key? key, this.MovieID, this.moviename,this.Writer_ID}) : super(key: key);
+  final int? FreeWriter_ID;
+  final String?FreeWriterName;
+  const ViewFreeMovieSummaryScreen({Key? key, this.MovieID, this.moviename,this.FreeWriter_ID,this.FreeWriterName}) : super(key: key);
 
   @override
   State<ViewFreeMovieSummaryScreen> createState() => _ViewFreeMovieSummaryScreenState();
@@ -71,15 +71,57 @@ class _ViewFreeMovieSummaryScreenState extends State<ViewFreeMovieSummaryScreen>
       print('Error viewing sent project: $e');
     }
   }
+Future<void>UpdateWriterRating(int WriterID,int Rating)async
+{
+  final String BaseUrl=APIHandler.baseUrl1;
+  final Responce=await http.post(Uri.parse('$BaseUrl/Writer/UpdateWriterRating?writerId=$WriterID&rating=$Rating'));
+  final Map<String,dynamic>Data={
+    'writerId':WriterID,
+    'rating':Rating,
+  };
+  body:jsonEncode(Data);
+  try{
+
+    if(Responce.statusCode==200)
+      {
+        print('Update Writer Rating');
+      }
+    else{
+      final Map<String, dynamic> responseBody = jsonDecode(Responce.body);
+      print('Unable To Update Writer Rating: ${responseBody['Message']}');
+    }
+  }
+  catch(ex)
+  {
+    print('Unable To Upadte Writer Rating ${ex}');
+  }
+}
 
   @override
   void initState() {
     super.initState();
     viewSentProject(widget.MovieID!);
+    print('Movie ID: ${widget.MovieID}');
     print('Title::${widget.moviename}');
-    print('Writer_ID::::: ${widget.Writer_ID!}');
+    print('Free Writer_ID::::: ${widget.FreeWriter_ID}');
+    print('Free Writer_Name::::: ${widget.FreeWriterName}');
   }
+  int _rating=0;
+  int _rating1=0;
+  void _setRating(int rating) {
+    setState(() {
+      _rating = rating;
+      print('RATING:: $_rating');
 
+    });
+  }
+  void _setRating1(int rating) {
+    setState(() {
+      _rating1 = rating;
+      print('RATING:: $_rating1');
+
+    });
+  }
   void refreshPage() {
     setState(() {
       summaryText = summariesData.isNotEmpty ? summariesData.last['Summary1'].toString() : '';
@@ -377,7 +419,22 @@ class _ViewFreeMovieSummaryScreenState extends State<ViewFreeMovieSummaryScreen>
                               ),
                             ),
                             SizedBox(width: 8),
-                            StarRatingWidget(), // Add the star rating widget here
+    Row(
+    mainAxisSize: MainAxisSize.min,
+    children: List.generate(5, (index) {
+    return GestureDetector(
+    onTap: () { _setRating1(index + 1);
+
+    UpdateWriterRating(widget.FreeWriter_ID!, _rating1);
+      },
+    child: Icon(
+    Icons.star,
+    color: index < _rating1 ? Colors.yellow : Colors.grey,
+    size: 30.0, // Adjust the size of the stars if needed
+    ),
+    );
+    }),
+    ) // Add the star rating widget here
                           ],
                         ),
                         SizedBox(
@@ -396,7 +453,19 @@ class _ViewFreeMovieSummaryScreenState extends State<ViewFreeMovieSummaryScreen>
                               ),
                             ),
                             SizedBox(width: 8),
-                            StarRatingWidget(), // Add the star rating widget here
+                       Row(
+                     mainAxisSize: MainAxisSize.min,
+                     children: List.generate(5, (index) {
+                   return GestureDetector(
+                onTap: () => _setRating(index + 1),
+              child: Icon(
+                 Icons.star,
+               color: index < _rating ? Colors.yellow : Colors.grey,
+                size: 30.0, // Adjust the size of the stars if needed
+             ),
+              );
+    }),
+    )                       // Add the star rating widget here
                           ],
                         ),
                       ],
@@ -424,6 +493,7 @@ class _StarRatingWidgetState extends State<StarRatingWidget> {
     setState(() {
       _rating = rating;
       print('RATING:: $_rating');
+
     });
   }
 

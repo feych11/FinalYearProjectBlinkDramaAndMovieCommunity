@@ -28,6 +28,8 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   String? ReaderBalance;
   String? ReaderImage;
   int? movieID;
+  int?FreeWriter_ID;
+  String?FreeWriterName;
   String?movieName;
   String ?movieImage;
   String?movieType;
@@ -76,13 +78,15 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
         final moviedata = jsonData['Movie'];
+        final writerData=jsonData['Writer'];
         setState(() {
           // Assign data to class-level variables
           movieID=jsonData['Movie']['Movie_ID'];
           movieName = jsonData['Movie']['Name'];
           movieImage = '$baseurl3/Images/${jsonData['Movie']['Image']}';
           movieType = jsonData['Movie']['Type'];
-
+          FreeWriter_ID=jsonData['Writer']['Writer_ID'];
+          FreeWriterName=jsonData['Writer']['UserName'];
 
         });
         // Print or use the movie details here
@@ -92,7 +96,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         print('Movie Type: $movieType');
         print('Writer_ID::: $Writer_ID');
 
-        final writer = jsonData['Writer'];
+
         final issueDate = jsonData['issueDate'];
         final issuedMovie=jsonData['IssuedMovie'];
 
@@ -106,6 +110,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         print('Writer: $Writer_ID');
         print('issueDate:${issueDate}');
         print('Issued Movie: $issuedMovie');
+        print('Free Writer ID:${FreeWriter_ID}');
       } else {
         // Handle other status codes here
         print('Failed to issue free movie: ${response.reasonPhrase}');
@@ -445,7 +450,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             child: Center(
               child: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(Writer_ID: Writer_ID,MovieID:movieID,moviename: movieName,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen( )));
                 },
                 child: Container(
 
@@ -468,7 +473,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'FREE DAILY',
+                              FreeWriter_ID.toString(),
                               style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontFamily: 'Rye'),
                             ),
                           ),
@@ -479,7 +484,10 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(MovieID:movieID,moviename: movieName,)));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(   FreeWriter_ID: FreeWriter_ID,
+                                    MovieID: movieID,
+                                    moviename: movieName,
+                                    FreeWriterName:FreeWriterName)));
                               },
                               child: Container(
                                 height: 150,
