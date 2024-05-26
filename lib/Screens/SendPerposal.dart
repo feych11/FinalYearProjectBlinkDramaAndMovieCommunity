@@ -588,6 +588,7 @@ class _SendPerposalState extends State<SendPerposal> {
                         SizedBox(width: 10),
                         DropdownButton<String>(
                           value: _selectedWriter,
+                          dropdownColor: Colors.white,
                           onChanged: (String? newValue) {
                             setState(() {
                               _selectedWriter = newValue;

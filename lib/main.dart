@@ -4,6 +4,7 @@ import 'package:finalsemproject/Screens/AcceptedToRewriteScreen3.dart';
 import 'package:finalsemproject/Screens/CustomeSendPerposal.dart';
 import 'package:finalsemproject/Screens/DetailsScreen.dart';
 import 'package:finalsemproject/Screens/EditorAddCommentsFroWriterScreen.dart';
+import 'package:finalsemproject/Screens/EditorBalanceRequestScreen.dart';
 import 'package:finalsemproject/Screens/EditorDashboardScreen.dart';
 
 import 'package:finalsemproject/Screens/EditorNotificationScreen.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Splashscreen(),
+      home: const EditorBalanceRequestScreen(),
     );
   }
 }

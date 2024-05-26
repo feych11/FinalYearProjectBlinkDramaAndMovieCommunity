@@ -40,32 +40,35 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   List<dynamic> movieDetails = [];
   
   
-  
-  Future<void>RechargeBalance(String newbalance)async
+  Future<void>SendBalanceRequest(String newbalance)async
   {
     final String baseurl=APIHandler.baseUrl1;
-    final responce=await http.post(Uri.parse('$baseurl/Reader/RechargeBalance?Reader_ID=$userId&newBalance=$newbalance'),
+    final Responce=await http.put(Uri.parse('$baseurl/Reader/SendBalanceRequest?Reader_ID=$userId&Amount=$newbalance'),
+
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
         'Reader_ID': userId,
         'newBalance': newbalance,
-      }),);
+      }),
+    );
+
     try{
-      if(responce.statusCode==200){
-          print('Balance Recharge Successfully');
+      if(Responce.statusCode==200){
+        print('Balance Recharge Successfully');
       }
       else
-        {
-          print('Unable To  Recharge Balance ');
-        }
+      {
+        print('Unable To  Recharge Balance ');
+      }
     }
     catch(error)
     {
       print('Unable To Recharge Your Balance ${error}');
     }
-  } 
+  }
+
   
   Future<void> issueFreeMovie() async {
     final String baseUrl = APIHandler.baseUrl1;
@@ -153,7 +156,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             TextButton(
               child: Text('Recharge',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
               onPressed: (){
-                RechargeBalance(_balanceController.text);
+                SendBalanceRequest(_balanceController.text);
               }
             ),
           ],
