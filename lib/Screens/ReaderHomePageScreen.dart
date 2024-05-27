@@ -7,6 +7,7 @@ import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
 import 'package:finalsemproject/Screens/ViewFreeMovieSummary.dart';
+import 'package:finalsemproject/Screens/ViewPaidMovieSummary.dart';
 import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
@@ -38,8 +39,24 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   String _searchQuery = "";
   List<Map<String,dynamic>>notifications2=[];
   List<dynamic> movieDetails = [];
-  
-  
+
+
+  Future<void> addReaderFavorites(int readerId, int writerId, int movieId) async {
+
+
+
+    final String url = '${APIHandler.baseUrl1}/Reader/AddReaderFavorites?readerId=$readerId&writerId=$writerId&movieId=$movieId';
+
+    final response = await http.post(
+      Uri.parse(url),
+);
+
+    if (response.statusCode == 200) {
+      print('Added to favorites');
+    } else {
+      print('Failed to add to favorites: ${response.reasonPhrase}');
+    }
+  }
   Future<void>SendBalanceRequest(String newbalance)async
   {
     final String baseurl=APIHandler.baseUrl1;
@@ -182,7 +199,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
               'Movieid':project['Movie_ID'],
               'id': project['SentProject_ID'],
               'title': project['ProposalData']['Movie_Name'],
-              'writerName': project['Writer_ID'],
+              'WriterId': project['Writer_ID'],
               'director': project['ProposalData']['Director'],
               'type': project['ProposalData']['Type'],
               'rating': 4,
@@ -476,7 +493,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              FreeWriter_ID.toString(),
+                             'Free Daily',
                               style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontFamily: 'Rye'),
                             ),
                           ),
@@ -520,24 +537,34 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Row(
+
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                Text(
+                                  movieName.toString(),
+                                  style: TextStyle(color: Colors.black,fontSize:15,fontWeight: FontWeight.bold,fontFamily:'BigshotOne'),
+                                ),
+                                InkWell
+                                  (
+                                    onTap: (){
+                                      // Assuming userId, FreeWriter_ID, and movieID are nullable types
+
+// Check for nullability and convert to non-nullable types if possible
+                                      int userId1 = userId != null ? int.parse(userId.toString()) : 0;
+                                      int FreeWriter_ID1 = FreeWriter_ID != null ? int.parse(FreeWriter_ID.toString()) : 0;
+                                      int movieID1 = movieID != null ? int.parse(movieID.toString()) : 0;
+
+// Call the addReaderFavorites function with non-nullable integer arguments
+                                      addReaderFavorites(userId1, FreeWriter_ID1, movieID1);
+                                    },
+                                    child: Icon(Icons.favorite,color: Colors.red,size: 30,))
+                              ],),
                               Text(
-                                movieName.toString(),
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily:'BigshotOne'),
-                              ),
-                              Text(
-                                movieType.toString(),
+                                '                 Type: ${movieType.toString()}',
                                 style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'BigshotOne'),
                               ),
-                              Row(
-                                //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                ],
-                              ),
+
                             ],
                           ),
                         ),
@@ -1067,7 +1094,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   }
   Widget buildNotificationCard2(Map<String, dynamic> notification2) {
     final int id = notification2['id'] ?? '';
-
+    final int WriterId=notification2['WriterId']??'';
     final int Movieid = notification2['Movieid'] ?? '';
     final String title = notification2['title'] ?? '';
     final String UserName=notification2['UserName']?? '';
@@ -1112,18 +1139,36 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Column(
                   children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontFamily: 'BigshotOne'
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'BigshotOne'
+                        ),
                       ),
-                    ),
+                      InkWell
+                        (
+                          onTap: (){
+                            // Assuming userId, FreeWriter_ID, and movieID are nullable types
+
+// Check for nullability and convert to non-nullable types if possible
+                            int userId1 = userId != null ? int.parse(userId.toString()) : 0;
+                            int Writer_ID1 = WriterId != null ? int.parse(WriterId.toString()) : 0;
+                            int movieID1 = Movieid != null ? int.parse(Movieid.toString()) : 0;
+
+// Call the addReaderFavorites function with non-nullable integer arguments
+                            addReaderFavorites(userId1, Writer_ID1, movieID1);
+                          },
+                          child: Icon(Icons.favorite,color: Colors.red,size: 30,)),
+                    ],),
                     SizedBox(height: 10),
 
-                    SizedBox(height: 5),
+
                     Row(
                       children: [
                         Text(
@@ -1147,7 +1192,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -1171,7 +1216,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     //SizedBox(height: 5),
                     Row(
                       children: [
@@ -1201,7 +1246,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                       child: GestureDetector(
                         onTap: (){
 
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorViewAcceptedSummary(MovieID: Movieid,moviename: title,)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPaidMovieSummaryScreen(FreeWriter_ID: WriterId,MovieID: Movieid,)));
 
                         },
                         child: Container(

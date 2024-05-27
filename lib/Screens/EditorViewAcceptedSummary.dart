@@ -101,53 +101,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
 
     });
   }
-//   void refreshPage () {
-//     setState(()  {
 
-//
-//       if (clipsData.isNotEmpty) {
-//         bool isCompoundClip = clipsData[currentClipIndex]['isCompoundClip'];
-//         if (isCompoundClip) {
-//
-//           String startTimeStr = clipsData[currentClipIndex]['Start_time'].trim();
-//           String endTimeStr = clipsData[currentClipIndex]['End_time'].trim();
-//
-//           double startTimeDouble = double.parse(startTimeStr);
-//           double endTimeDouble = double.parse(endTimeStr);
-//
-// // Convert the double values to integers
-//           int startTimeInSeconds = startTimeDouble.toInt();
-//           int endTimeInSeconds = endTimeDouble.toInt();
-//
-// // Create Duration objects
-//           Duration startTime = Duration(seconds: startTimeInSeconds);
-//           Duration endTime = Duration(seconds: endTimeInSeconds);
-//
-//
-//           // Future.delayed(Duration(milliseconds: startTime)); // Delay start
-//           // Initialize YoutubePlayerController for each clip
-//           controller = YoutubePlayerController(
-//             initialVideoId: YoutubePlayer.convertUrlToId(clipsData[currentClipIndex]['Url']) ?? '',
-//             flags: YoutubePlayerFlags(
-//
-//
-//                 autoPlay: true,
-//                 startAt: startTime.inSeconds
-//
-//               // End at the clip's end time
-//             ),
-//           )..addListener(_onControllerStateChanged);
-//           //
-//
-//         }
-//
-//
-//          isPlayerReady = true;
-//       }
-//
-//
-//     });
-//   }
 
 
   @override
@@ -318,73 +272,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
               SizedBox(
                 height: 30,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(20),
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Container(
-              //       width: 350,
-              //       height: 200,
-              //       decoration: BoxDecoration(
-              //           color: Colors.black,
-              //           borderRadius: BorderRadius.circular(10)),
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(8.0),
-              //         child: Stack(
-              //           children: [
-              //             // Image
-              //             //
-              //             // isPlayerReady
-              //             //     ? YoutubePlayer(
-              //             //   controller: controller,
-              //             //   showVideoProgressIndicator: true,
-              //             //   onReady: () {
-              //             //     setState(() {
-              //             //       isPlayerReady = true;
-              //             //     });
-              //             //     print('Player is ready.');
-              //             //   },
-              //             // )
-              //             //     : loadingTextWidget,
-              //
-              //
-              //
-              //             // Text in the right bottom corner
-              //             // Column(
-              //             //   mainAxisAlignment: MainAxisAlignment.end,
-              //             //   crossAxisAlignment: CrossAxisAlignment.start,
-              //             //   children: [
-              //             //     Text(
-              //             //       'WAAR',
-              //             //       style: TextStyle(
-              //             //           color: Colors.white, // Set your desired text color
-              //             //           fontSize: 16,
-              //             //           fontWeight:
-              //             //           FontWeight.bold // Set your desired text size
-              //             //       ),
-              //             //     ),
-              //             //     Text(
-              //             //       'Bilal Lashari',
-              //             //       style: TextStyle(
-              //             //           color: Colors.yellow,
-              //             //           fontSize: 10,
-              //             //           fontWeight: FontWeight.bold),
-              //             //     ),
-              //             //     Text(
-              //             //       'Writer: Amman',
-              //             //       style: TextStyle(
-              //             //           color: Colors.yellow,
-              //             //           fontSize: 10,
-              //             //           fontWeight: FontWeight.bold),
-              //             //     ),
-              //             //   ],
-              //             // ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+
               SizedBox(
                 height: 10,
               ),
@@ -496,50 +384,4 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
       ],)
     );
   }
-//   void _onControllerStateChanged() {
-//     String startTimeStr = clipsData[currentClipIndex]['Start_time'].trim();
-//     String endTimeStr = clipsData[currentClipIndex]['End_time'].trim();
-//
-//     double startTimeDouble = double.parse(startTimeStr);
-//     double endTimeDouble = double.parse(endTimeStr);
-//
-// // Convert the double values to integers
-//     int startTimeInSeconds = startTimeDouble.toInt();
-//     int endTimeInSeconds = endTimeDouble.toInt();
-//
-// // Create Duration objects
-//     Duration startTime = Duration(seconds: startTimeInSeconds);
-//     Duration EndTime = Duration(seconds: endTimeInSeconds);
-//     final currentTime = controller.value.position;
-//     final  endTime = EndTime;
-//
-//
-//
-//
-//     if (currentTime >= endTime) {
-//       if(init)
-//         return;
-//       init=true;
-//
-//       // Current clip ended, load next clip
-//       if (currentClipIndex < clipsData.length - 1) {
-//         currentClipIndex++;
-//         controller.load(clipsData[currentClipIndex]['Url']);
-//         controller.seekTo(startTime);
-//         init=false;
-//       } else {
-//         currentClipIndex=0;
-//         controller.load(clipsData[currentClipIndex]['Url']);
-//         controller.seekTo(startTime);
-//         init=false;
-//         // All clips played
-//         // You can add logic here for what to do when all clips are played
-//       }
-//     }
-//   }
-//   @override
-//   void dispose() {
-//     controller.dispose();
-//     super.dispose();
-//   }
 }
