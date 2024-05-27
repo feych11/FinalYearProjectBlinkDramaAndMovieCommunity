@@ -242,7 +242,7 @@ int ? id;
 
         iconTheme: IconThemeData(color: Colors.white),
         centerTitle: true,
-        title: Text('History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
+        title: Text('Balance Request',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,
       ),
       body: SafeArea(

@@ -1080,7 +1080,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         ),
 
 
-        SingleChildScrollView(child: SafeArea(child: Column(
+        SingleChildScrollView(child:
+
+        SafeArea(child: Column(
           children: [
             Column(
               children: filteredNotifications.map((notification) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:finalsemproject/API.dart';
-import 'package:finalsemproject/Screens/EditorAddCommentsFroWriterScreen.dart';
 import 'package:finalsemproject/Screens/WatchingScreen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -10,8 +9,15 @@ class ViewPaidMovieSummaryScreen extends StatefulWidget {
   final int? MovieID;
   final String? moviename;
   final int? FreeWriter_ID;
-  final String?FreeWriterName;
-  const ViewPaidMovieSummaryScreen({Key? key, this.MovieID, this.moviename,this.FreeWriter_ID,this.FreeWriterName}) : super(key: key);
+  final String? FreeWriterName;
+
+  const ViewPaidMovieSummaryScreen({
+    Key? key,
+    this.MovieID,
+    this.moviename,
+    this.FreeWriter_ID,
+    this.FreeWriterName,
+  }) : super(key: key);
 
   @override
   State<ViewPaidMovieSummaryScreen> createState() => _ViewPaidMovieSummaryScreenState();
@@ -71,29 +77,44 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
       print('Error viewing sent project: $e');
     }
   }
-  Future<void>UpdateWriterRating(int WriterID,int Rating)async
-  {
-    final String BaseUrl=APIHandler.baseUrl1;
-    final Responce=await http.post(Uri.parse('$BaseUrl/Writer/UpdateWriterRating?writerId=$WriterID&rating=$Rating'));
-    final Map<String,dynamic>Data={
-      'writerId':WriterID,
-      'rating':Rating,
-    };
-    body:jsonEncode(Data);
-    try{
 
-      if(Responce.statusCode==200)
-      {
+  Future<void> UpdateWriterRating(int WriterID, int Rating) async {
+    final String BaseUrl = APIHandler.baseUrl1;
+    final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateWriterRating?writerId=$WriterID&rating=$Rating'));
+    final Map<String, dynamic> Data = {
+      'writerId': WriterID,
+      'rating': Rating,
+    };
+    body: jsonEncode(Data);
+    try {
+      if (Responce.statusCode == 200) {
         print('Update Writer Rating');
-      }
-      else{
+      } else {
         final Map<String, dynamic> responseBody = jsonDecode(Responce.body);
         print('Unable To Update Writer Rating: ${responseBody['Message']}');
       }
-    }
-    catch(ex)
-    {
+    } catch (ex) {
       print('Unable To Upadte Writer Rating ${ex}');
+    }
+  }
+
+  Future<void> UpdateMovieRating(int Movieid, int Rating) async {
+    final String BaseUrl = APIHandler.baseUrl1;
+    final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateMovieRating?movieId=$Movieid&rating=$Rating'));
+    final Map<String, dynamic> Data = {
+      'movieId': Movieid,
+      'rating': Rating,
+    };
+    body: jsonEncode(Data);
+    try {
+      if (Responce.statusCode == 200) {
+        print('Update Movie Rating');
+      } else {
+        final Map<String, dynamic> responseBody = jsonDecode(Responce.body);
+        print('Unable To Update Movie Rating: ${responseBody['Message']}');
+      }
+    } catch (ex) {
+      print('Unable To Upadte Movie Rating ${ex}');
     }
   }
 
@@ -106,26 +127,83 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
     print('Free Writer_ID::::: ${widget.FreeWriter_ID}');
     print('Free Writer_Name::::: ${widget.FreeWriterName}');
   }
-  int _rating=0;
-  int _rating1=0;
+
+  int _rating = 0;
+  int _rating1 = 0;
+  bool hasRatedWriter = false; // Flag to track if the user has already rated the writer
+  bool hasRatedMovie = false;  // Flag to track if the user has already rated the movie
+
   void _setRating(int rating) {
     setState(() {
       _rating = rating;
       print('RATING:: $_rating');
-
     });
   }
+
   void _setRating1(int rating) {
     setState(() {
       _rating1 = rating;
       print('RATING:: $_rating1');
-
     });
   }
+
   void refreshPage() {
     setState(() {
       summaryText = summariesData.isNotEmpty ? summariesData.last['Summary1'].toString() : '';
     });
+  }
+
+  Future<void> _handleRating(int rating, bool isWriter) async {
+    if (isWriter) {
+      if (hasRatedWriter) {
+        _showAlertDialog();
+      } else {
+        _setRating1(rating);
+        await UpdateWriterRating(widget.FreeWriter_ID!, _rating1);
+        hasRatedWriter = true;
+      }
+    } else {
+      if (hasRatedMovie) {
+        _showAlertDialog();
+      } else {
+        _setRating(rating);
+        await UpdateMovieRating(widget.MovieID!, _rating);
+        hasRatedMovie = true;
+      }
+    }
+  }
+
+  void _showAlertDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return
+          Theme(
+            data: ThemeData( // Define custom theme data
+            dialogBackgroundColor: Colors.grey, // Background color
+            dialogTheme: DialogTheme( // Define dialog theme
+            shape: RoundedRectangleBorder( // Define border shape
+            side: BorderSide(color: Colors.black,width: 4), // Border color
+        borderRadius: BorderRadius.circular(20.0), // Border radius
+        ),
+        ),
+        ),
+
+        child:
+          AlertDialog(
+          title: Text('Rating Submitted'),
+          content: Text('Your response will be stored.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ));
+      },
+    );
   }
 
   @override
@@ -141,6 +219,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
         ),
       ),
     );
+
     return Scaffold(
       backgroundColor: Colors.grey,
       drawer: Drawer(
@@ -167,16 +246,18 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                       Text(
                         'Faizan Mustafa',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
                         'Balance:2000',
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       )
                     ],
                   ),
@@ -199,7 +280,10 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
             ListTile(
               title: Text(
                 'Home',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
               ),
               onTap: () {
                 // Add your action when the item is tapped
@@ -209,7 +293,10 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
             ListTile(
               title: Text(
                 'Subscription:Free',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               onTap: () {
                 // Add your action when the item is tapped
@@ -219,7 +306,10 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
             ListTile(
               title: Text(
                 'Update Interest',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
               ),
               onTap: () {
                 // Add your action when the item is tapped
@@ -229,7 +319,10 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
             ListTile(
               title: Text(
                 'Recharge Balance',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
               ),
               onTap: () {
                 // Add your action when the item is tapped
@@ -239,7 +332,10 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
             ListTile(
               title: Text(
                 'Account Setting',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
               ),
               onTap: () {
                 // Add your action when the item is tapped
@@ -257,9 +353,10 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                 child: Text(
                   'LOGOUT',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.red),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.red,
+                  ),
                 ),
               ),
             ),
@@ -270,10 +367,11 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
         title: Text(
           'Reading',
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-              color: Colors.white,
-              fontFamily: 'BigShotone'),
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+            color: Colors.white,
+            fontFamily: 'BigShotone',
+          ),
         ),
         centerTitle: true,
         backgroundColor: Colors.black,
@@ -313,7 +411,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                         Colors.black,
                         Colors.black,
                         Colors.yellow,
-                        Colors.yellow
+                        Colors.yellow,
                       ],
                       stops: [0.0, 0.5, 0.5, 1.0],
                     ),
@@ -334,10 +432,11 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                           child: Text(
                             'Read',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontFamily: 'BigshotOne'),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontFamily: 'BigshotOne',
+                            ),
                           ),
                         ),
                       ),
@@ -363,10 +462,11 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                             child: Text(
                               'Watch',
                               style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontFamily: 'BigshotOne'),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'BigshotOne',
+                              ),
                             ),
                           ),
                         ),
@@ -423,9 +523,8 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                               mainAxisSize: MainAxisSize.min,
                               children: List.generate(5, (index) {
                                 return GestureDetector(
-                                  onTap: () { _setRating1(index + 1);
-
-                                  UpdateWriterRating(widget.FreeWriter_ID!, _rating1);
+                                  onTap: () {
+                                    _handleRating(index + 1, true);
                                   },
                                   child: Icon(
                                     Icons.star,
@@ -434,7 +533,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                                   ),
                                 );
                               }),
-                            ) // Add the star rating widget here
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -457,7 +556,9 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                               mainAxisSize: MainAxisSize.min,
                               children: List.generate(5, (index) {
                                 return GestureDetector(
-                                  onTap: () => _setRating(index + 1),
+                                  onTap: () {
+                                    _handleRating(index + 1, false);
+                                  },
                                   child: Icon(
                                     Icons.star,
                                     color: index < _rating ? Colors.yellow : Colors.grey,
@@ -465,7 +566,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                                   ),
                                 );
                               }),
-                            )                       // Add the star rating widget here
+                            ),
                           ],
                         ),
                       ],
@@ -477,40 +578,6 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
           ),
         ],
       ),
-    );
-  }
-}
-
-class StarRatingWidget extends StatefulWidget {
-  @override
-  _StarRatingWidgetState createState() => _StarRatingWidgetState();
-}
-
-class _StarRatingWidgetState extends State<StarRatingWidget> {
-  int _rating = 0;
-
-  void _setRating(int rating) {
-    setState(() {
-      _rating = rating;
-      print('RATING:: $_rating');
-
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(5, (index) {
-        return GestureDetector(
-          onTap: () => _setRating(index + 1),
-          child: Icon(
-            Icons.star,
-            color: index < _rating ? Colors.yellow : Colors.grey,
-            size: 30.0, // Adjust the size of the stars if needed
-          ),
-        );
-      }),
     );
   }
 }

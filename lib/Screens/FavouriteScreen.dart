@@ -1,6 +1,7 @@
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -26,6 +27,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   String ?Subscription;
   String? ReaderBalance;
   String? ReaderImage;
+  bool _isSearching = false;
+  String _searchQuery = "";
+  List<Map<String,dynamic>>notifications2=[];
   Future<void> getUserIdFromSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString('Reader_ID');
@@ -67,7 +71,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
-          notifications = data.map((proposal) {
+          notifications2 = data.map((proposal) {
             return {
               'ReaderId': proposal['ReaderId'],
               'MovieId': proposal['MovieId'],
@@ -77,6 +81,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               'Director': proposal['Director'],
               'imagePath': '$baseurl3/Images/${proposal['Image']}',
               'WriterRating': proposal['WriterRating'],
+              'MovieRating':proposal['MovieRating'],
             };
           }).toList();
         });
@@ -100,6 +105,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   int _notificationCount = 3;
   @override
   Widget build(BuildContext context) {
+    final filteredNotifications = notifications2
+        .where((notification) =>
+        notification['MovieTitle']!.toLowerCase().startsWith(_searchQuery.toLowerCase()))
+        .toList();
     return Scaffold(
       backgroundColor: Colors.grey,
       drawer: Drawer(
@@ -204,11 +213,33 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         ),
       ),
       appBar: AppBar(
-
-
-        iconTheme: IconThemeData(color: Colors.white),
-        centerTitle: true,
-        title: Text('Favourite Screen',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
+        title: _isSearching
+            ? TextField(
+          onChanged: (query) {
+            setState(() {
+              _searchQuery = query;
+            });
+          },
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
+          decoration: InputDecoration(
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.white),
+          ),
+        )
+            : Center(child: Text('Favourite Screen',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
+        actions: [
+          IconButton(
+            icon: Icon(_isSearching ? Icons.close : Icons.search),
+            onPressed: () {
+              setState(() {
+                _isSearching = !_isSearching;
+                if (!_isSearching) {
+                  _searchQuery = "";
+                }
+              });
+            },
+          ),
+        ],
         backgroundColor: Colors.black,
       ),
       body: SafeArea(
@@ -223,30 +254,41 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               ),
             ),
             SingleChildScrollView(
-              child: Column(
-                children: notifications.map((notification) {
-                  return buildNotificationCard(notification);
-                }).toList(),
-              ),
-            ),],)
+              scrollDirection: Axis.horizontal,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+
+                child:
+                SafeArea(child: Column(
+                children: [
+                  Column(
+                  children: filteredNotifications.map((notification) {
+                  return buildNotificationCard2(notification);
+                  }).toList(),
+                  ),
+                  ],
+                  ))),
+            ),
+            ],)
       ),
     );
   }
-  Widget buildNotificationCard(Map<String, dynamic> notification) {
-    final int ReaderId = notification['ReaderId'] ?? '';
-    final int WriterId = notification['WriterId'] ?? '';
-    final String WriterName = notification['WriterName'] ?? '';
-    final String MovieTitle = notification['MovieTitle'] ?? '';
-    final String Director = notification['Director'] ?? '';
-    final double WriterRating = notification['WriterRating'] ?? 0;
-    final String imagePath = notification['imagePath'] ?? '';
+  Widget buildNotificationCard2(Map<String, dynamic> notification2) {
+    final int ReaderId = notification2['ReaderId'] ?? '';
+    final int WriterId = notification2['WriterId'] ?? '';
+    final String WriterName = notification2['WriterName'] ?? '';
+    final String MovieTitle = notification2['MovieTitle'] ?? '';
+    final String Director = notification2['Director'] ?? '';
+    final double WriterRating = notification2['WriterRating'] ?? 0;
+    final double MovieRating=notification2['MovieRating']??0;
+    final String imagePath = notification2['imagePath'] ?? '';
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedContainer(
         duration:Duration(milliseconds: 500),
         height: 200,
-        width: 320,
+        width: 420,
         decoration: BoxDecoration(
           color: Colors.amber,
           border: Border.all(
@@ -271,7 +313,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             SizedBox(width: 10),
             Container(
               height: 210,
-              width: 200,
+              width: 300,
 
               decoration: BoxDecoration(
 
@@ -314,7 +356,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -338,7 +380,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
@@ -362,6 +404,31 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          '  Movie Rating:',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          MovieRating.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+
 
 
                   ],

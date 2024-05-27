@@ -10,14 +10,19 @@ class ViewFreeMovieSummaryScreen extends StatefulWidget {
   final int? MovieID;
   final String? moviename;
   final int? FreeWriter_ID;
-  final String?FreeWriterName;
-  const ViewFreeMovieSummaryScreen({Key? key, this.MovieID, this.moviename,this.FreeWriter_ID,this.FreeWriterName}) : super(key: key);
+  final String? FreeWriterName;
+
+  const ViewFreeMovieSummaryScreen(
+      {Key? key, this.MovieID, this.moviename, this.FreeWriter_ID, this.FreeWriterName})
+      : super(key: key);
 
   @override
-  State<ViewFreeMovieSummaryScreen> createState() => _ViewFreeMovieSummaryScreenState();
+  State<ViewFreeMovieSummaryScreen> createState() =>
+      _ViewFreeMovieSummaryScreenState();
 }
 
-class _ViewFreeMovieSummaryScreenState extends State<ViewFreeMovieSummaryScreen> {
+class _ViewFreeMovieSummaryScreenState
+    extends State<ViewFreeMovieSummaryScreen> {
   String? summaryText;
   String? writerName = '';
   Duration? endtime;
@@ -31,6 +36,9 @@ class _ViewFreeMovieSummaryScreenState extends State<ViewFreeMovieSummaryScreen>
   bool isPlayerReady = false;
   int currentClipIndex = 0;
   bool init = false;
+
+  bool hasRatedWriter = false;
+  bool hasRatedMovie = false;
 
   Future<void> viewSentProject(int movieId) async {
     const String baseUrl = APIHandler.baseUrl1; // Update with your API base URL
@@ -71,31 +79,46 @@ class _ViewFreeMovieSummaryScreenState extends State<ViewFreeMovieSummaryScreen>
       print('Error viewing sent project: $e');
     }
   }
-Future<void>UpdateWriterRating(int WriterID,int Rating)async
-{
-  final String BaseUrl=APIHandler.baseUrl1;
-  final Responce=await http.post(Uri.parse('$BaseUrl/Writer/UpdateWriterRating?writerId=$WriterID&rating=$Rating'));
-  final Map<String,dynamic>Data={
-    'writerId':WriterID,
-    'rating':Rating,
-  };
-  body:jsonEncode(Data);
-  try{
 
-    if(Responce.statusCode==200)
-      {
+  Future<void> UpdateWriterRating(int WriterID, int Rating) async {
+    final String BaseUrl = APIHandler.baseUrl1;
+    final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateWriterRating?writerId=$WriterID&rating=$Rating'));
+    final Map<String, dynamic> Data = {
+      'writerId': WriterID,
+      'rating': Rating,
+    };
+    body: jsonEncode(Data);
+    try {
+      if (Responce.statusCode == 200) {
         print('Update Writer Rating');
+      } else {
+        final Map<String, dynamic> responseBody = jsonDecode(Responce.body);
+        print('Unable To Update Writer Rating: ${responseBody['Message']}');
       }
-    else{
-      final Map<String, dynamic> responseBody = jsonDecode(Responce.body);
-      print('Unable To Update Writer Rating: ${responseBody['Message']}');
+    } catch (ex) {
+      print('Unable To Update Writer Rating $ex');
     }
   }
-  catch(ex)
-  {
-    print('Unable To Upadte Writer Rating ${ex}');
+
+  Future<void> UpdateMovieRating(int Movieid, int Rating) async {
+    final String BaseUrl = APIHandler.baseUrl1;
+    final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateMovieRating?movieId=$Movieid&rating=$Rating'));
+    final Map<String, dynamic> Data = {
+      'movieId': Movieid,
+      'rating': Rating,
+    };
+    body: jsonEncode(Data);
+    try {
+      if (Responce.statusCode == 200) {
+        print('Update Movie Rating');
+      } else {
+        final Map<String, dynamic> responseBody = jsonDecode(Responce.body);
+        print('Unable To Update Movie Rating: ${responseBody['Message']}');
+      }
+    } catch (ex) {
+      print('Unable To Update Movie Rating $ex');
+    }
   }
-}
 
   @override
   void initState() {
@@ -106,26 +129,78 @@ Future<void>UpdateWriterRating(int WriterID,int Rating)async
     print('Free Writer_ID::::: ${widget.FreeWriter_ID}');
     print('Free Writer_Name::::: ${widget.FreeWriterName}');
   }
-  int _rating=0;
-  int _rating1=0;
+
+  int _rating = 0;
+  int _rating1 = 0;
+
   void _setRating(int rating) {
     setState(() {
       _rating = rating;
       print('RATING:: $_rating');
-
     });
   }
+
   void _setRating1(int rating) {
     setState(() {
       _rating1 = rating;
       print('RATING:: $_rating1');
-
     });
   }
+
   void refreshPage() {
     setState(() {
       summaryText = summariesData.isNotEmpty ? summariesData.last['Summary1'].toString() : '';
     });
+  }
+
+  void _handleRating(int rating, bool isWriterRating) {
+    if (isWriterRating && hasRatedWriter || !isWriterRating && hasRatedMovie) {
+      _showAlertDialog();
+      return;
+    }
+
+    if (isWriterRating) {
+      _setRating1(rating);
+      UpdateWriterRating(widget.FreeWriter_ID!, _rating1);
+      hasRatedWriter = true;
+    } else {
+      _setRating(rating);
+      UpdateMovieRating(widget.MovieID!, _rating);
+      hasRatedMovie = true;
+    }
+  }
+
+  void _showAlertDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Theme(
+            data: ThemeData( // Define custom theme data
+            dialogBackgroundColor: Colors.grey, // Background color
+            dialogTheme: DialogTheme( // Define dialog theme
+            shape: RoundedRectangleBorder( // Define border shape
+            side: BorderSide(color: Colors.black,width: 4), // Border color
+        borderRadius: BorderRadius.circular(20.0), // Border radius
+        ),
+        ),
+        ),
+
+          child:
+
+          AlertDialog(
+          title: Text("Rating Submitted"),
+          content: Text("Your response will be stored."),
+          actions: [
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ));
+      },
+    );
   }
 
   @override
@@ -141,6 +216,7 @@ Future<void>UpdateWriterRating(int WriterID,int Rating)async
         ),
       ),
     );
+
     return Scaffold(
       backgroundColor: Colors.grey,
       drawer: Drawer(
@@ -419,22 +495,23 @@ Future<void>UpdateWriterRating(int WriterID,int Rating)async
                               ),
                             ),
                             SizedBox(width: 8),
-    Row(
-    mainAxisSize: MainAxisSize.min,
-    children: List.generate(5, (index) {
-    return GestureDetector(
-    onTap: () { _setRating1(index + 1);
-
-    UpdateWriterRating(widget.FreeWriter_ID!, _rating1);
-      },
-    child: Icon(
-    Icons.star,
-    color: index < _rating1 ? Colors.yellow : Colors.grey,
-    size: 30.0, // Adjust the size of the stars if needed
-    ),
-    );
-    }),
-    ) // Add the star rating widget here
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(5, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    _handleRating(index + 1, true);
+                                  },
+                                  child: Icon(
+                                    Icons.star,
+                                    color: index < _rating1
+                                        ? Colors.yellow
+                                        : Colors.grey,
+                                    size: 30.0, // Adjust the size of the stars if needed
+                                  ),
+                                );
+                              }),
+                            ) // Add the star rating widget here
                           ],
                         ),
                         SizedBox(
@@ -453,19 +530,23 @@ Future<void>UpdateWriterRating(int WriterID,int Rating)async
                               ),
                             ),
                             SizedBox(width: 8),
-                       Row(
-                     mainAxisSize: MainAxisSize.min,
-                     children: List.generate(5, (index) {
-                   return GestureDetector(
-                onTap: () => _setRating(index + 1),
-              child: Icon(
-                 Icons.star,
-               color: index < _rating ? Colors.yellow : Colors.grey,
-                size: 30.0, // Adjust the size of the stars if needed
-             ),
-              );
-    }),
-    )                       // Add the star rating widget here
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(5, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    _handleRating(index + 1, false);
+                                  },
+                                  child: Icon(
+                                    Icons.star,
+                                    color: index < _rating
+                                        ? Colors.yellow
+                                        : Colors.grey,
+                                    size: 30.0, // Adjust the size of the stars if needed
+                                  ),
+                                );
+                              }),
+                            ) // Add the star rating widget here
                           ],
                         ),
                       ],
@@ -493,7 +574,6 @@ class _StarRatingWidgetState extends State<StarRatingWidget> {
     setState(() {
       _rating = rating;
       print('RATING:: $_rating');
-
     });
   }
 
