@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:finalsemproject/API.dart';
 import 'dart:convert';
 import 'package:badges/badges.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class EditorBalanceRequestScreen extends StatefulWidget {
@@ -20,6 +21,9 @@ class _EditorBalanceRequestScreenState extends State<EditorBalanceRequestScreen>
   List<Map<String, dynamic>> notifications = [];
   final Color mateBlack = Color(0xFF242424);
   final Color parotgreen=Color(0xFFADE338);
+  String?Admin_ID;
+  String?AdminName;
+  String?AdminEmail;
   // String?userId;
   // Future<void> getUserIdFromSharedPreferences() async {
   //   final prefs = await SharedPreferences.getInstance();
@@ -31,6 +35,25 @@ class _EditorBalanceRequestScreenState extends State<EditorBalanceRequestScreen>
   //     fetchProposals();
   //   }
   // }
+  Future<void> getUserIdFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final AdminId = prefs.getString('Admin_ID');
+    final UserName=prefs.getString('UserName');
+    final Email=prefs.getString('Email');
+
+    setState(() {
+      Admin_ID = AdminId;
+      AdminName=UserName;
+      AdminEmail=Email;
+
+      print('Admin ID: ${Admin_ID}');
+      print('AdminName: ${AdminName}');
+      print('AdminEMail: ${AdminEmail}');
+
+    });
+
+  }
+
 int ? id;
   Future<void> GetBalnaceRequest() async {
     const String baseurl2=APIHandler.baseUrl1;
@@ -127,7 +150,7 @@ int ? id;
   void initState() {
     super.initState();
     GetBalnaceRequest();
-
+    getUserIdFromSharedPreferences();
     //getSentProposalsIdsWithEditorNotification(2);
 
   }

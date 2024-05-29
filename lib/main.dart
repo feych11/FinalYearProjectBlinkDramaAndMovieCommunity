@@ -1,6 +1,8 @@
 import 'package:finalsemproject/AcceptedToRewriteScreen2.dart';
 import 'package:finalsemproject/Screens/AcceptedToRewriteScreen1.dart';
 import 'package:finalsemproject/Screens/AcceptedToRewriteScreen3.dart';
+import 'package:finalsemproject/Screens/AdminBottomNavBar.dart';
+import 'package:finalsemproject/Screens/AdminLoginScreen.dart';
 import 'package:finalsemproject/Screens/CustomeSendPerposal.dart';
 import 'package:finalsemproject/Screens/DetailsScreen.dart';
 import 'package:finalsemproject/Screens/EditorAddCommentsFroWriterScreen.dart';
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Splashscreen(),
+      home: const AdminLoginScreen(),
     );
   }
 }
