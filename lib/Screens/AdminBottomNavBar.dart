@@ -1,3 +1,4 @@
+import 'package:finalsemproject/Screens/AdminDashboardScreen.dart';
 import 'package:finalsemproject/Screens/BalanceRequestScreen.dart';
 import 'package:finalsemproject/Screens/EditorBalanceRequestScreen.dart';
 import 'package:finalsemproject/Screens/EditorSignupScreen.dart';
@@ -18,6 +19,8 @@ class _AdminBottomNavScreenState extends State<AdminBottomNavScreen> {
 
   final List<Widget> _pages = [
     // Replace these with your actual content widgets for each tab
+
+    AdminDashboardScreen(),
     EditorBalanceRequestScreen(),
     EditorSignUpScreen(),
 
@@ -39,18 +42,19 @@ class _AdminBottomNavScreenState extends State<AdminBottomNavScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.balance),
-            label: 'Balance Request',
+            icon: Icon(Icons.home),
+            label: 'Dashboard',
 
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
             label: 'Add Editor',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.history),
-          //   label: 'History',
-          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.balance),
+            label: 'Balance Request',
+
+          ),
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.favorite),
           //   label: 'Favourite',

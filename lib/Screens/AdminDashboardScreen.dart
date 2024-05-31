@@ -11,14 +11,14 @@ import 'package:badges/badges.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class FavouriteScreen extends StatefulWidget {
-  const FavouriteScreen({super.key});
+class AdminDashboardScreen extends StatefulWidget {
+  const AdminDashboardScreen({super.key});
 
   @override
-  State<FavouriteScreen> createState() => _FavouriteScreenState();
+  State<AdminDashboardScreen> createState() => _AdminDashboardScreenState();
 }
 
-class _FavouriteScreenState extends State<FavouriteScreen> {
+class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   List<Map<String, dynamic>> notifications = [];
   final Color mateBlack = Color(0xFF242424);
   final Color parotgreen=Color(0xFFADE338);
@@ -30,42 +30,12 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   bool _isSearching = false;
   String _searchQuery = "";
   List<Map<String,dynamic>>notifications2=[];
-  Future<void> getUserIdFromSharedPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final user = prefs.getString('Reader_ID');
-    final username=prefs.getString('Username1');
-    final Subscription1=prefs.getString('Subscription');
-    final userbalance=prefs.getString('Balance');
-    final userImage=prefs.getString('UserImage1');
-    setState(() {
-      userId = user;
-      ReaderName=username;
-      Subscription=Subscription1;
-      ReaderBalance=userbalance;
-      ReaderImage=userImage;
-      print('jskksd: ${userId}');
-      print('ReaderName: ${ReaderName}');
-      print('Subscription::: $Subscription');
-      print('Reader Balance: ${ReaderBalance}');
-      print('ReaderImageL ${ReaderImage}');
-    });
-    if (userId != null) {
-      fetchProposals();
 
-
-      // print('Getrewrtedata:${getRewriteData}');
-
-      print('ghjk:${userId}');
-      print('ReaderName: ${ReaderName}');
-      print('Reader Balance: ${ReaderBalance}');
-      print('ReaderImageL ${ReaderImage}');
-    }
-  }
 
   Future<void> fetchProposals() async {
     const String baseurl2=APIHandler.baseUrl1;
     const String baseurl3=APIHandler.baseUrl2;
-    final url = Uri.parse('$baseurl2/Reader/GetFavoriteDetails?Reader_ID=${userId}');
+    final url = Uri.parse('$baseurl2/Admin/ShowAllUser');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -73,15 +43,14 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         setState(() {
           notifications2 = data.map((proposal) {
             return {
-              'ReaderId': proposal['ReaderId'],
-              'MovieId': proposal['MovieId'],
-              'WriterId': proposal['WriterId'],
-              'WriterName': proposal['WriterName'],
-              'MovieTitle':proposal['MovieTitle'],
-              'Director': proposal['Director'],
+              'Reader_ID': proposal['Reader_ID'],
+              'Email': proposal['Email'],
+              'Balance': proposal['Balance'],
+              'Subscription': proposal['Subscription'],
+              'Interest':proposal['Interest'],
+              'UserName': proposal['UserName'],
               'imagePath': '$baseurl3/Images/${proposal['Image']}',
-              'WriterRating': proposal['WriterRating'],
-              'MovieRating':proposal['MovieRating'],
+
             };
           }).toList();
         });
@@ -97,7 +66,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   @override
   void initState() {
     super.initState();
-    getUserIdFromSharedPreferences();
+    fetchProposals();
 
     //getSentProposalsIdsWithEditorNotification(2);
 
@@ -107,7 +76,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   Widget build(BuildContext context) {
     final filteredNotifications = notifications2
         .where((notification) =>
-        notification['MovieTitle']!.toLowerCase().startsWith(_searchQuery.toLowerCase()))
+        notification['UserName']!.toLowerCase().startsWith(_searchQuery.toLowerCase()))
         .toList();
     return Scaffold(
       backgroundColor: Colors.grey,
@@ -226,7 +195,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             hintStyle: TextStyle(color: Colors.white),
           ),
         )
-            : Center(child: Text('Favourite Screen',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
+            : Center(child: Text('DASHBOARD',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
         actions: [
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
@@ -261,10 +230,21 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   child:
                   SafeArea(child: Column(
                     children: [
-                      Column(
-                        children: filteredNotifications.map((notification) {
-                          return buildNotificationCard2(notification);
-                        }).toList(),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child:
+                        Column(
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                          Text('ALL READER',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),),
+                          SizedBox(height: 10,),
+                          Row(
+                            children: filteredNotifications.map((notification) {
+                              return buildNotificationCard2(notification);
+                            }).toList(),
+                          ),
+                        ],)
                       ),
                     ],
                   ))),
@@ -274,13 +254,13 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     );
   }
   Widget buildNotificationCard2(Map<String, dynamic> notification2) {
-    final int ReaderId = notification2['ReaderId'] ?? '';
-    final int WriterId = notification2['WriterId'] ?? '';
-    final String WriterName = notification2['WriterName'] ?? '';
-    final String MovieTitle = notification2['MovieTitle'] ?? '';
-    final String Director = notification2['Director'] ?? '';
-    final double WriterRating = notification2['WriterRating'] ?? 0;
-    final double MovieRating=notification2['MovieRating']??0;
+    final int Reader_ID = notification2['Reader_ID'] ?? '';
+    final String Email = notification2['Email'] ?? '';
+    final int Balance = notification2['Balance'] ?? 0;
+    final String Subscription = notification2['Subscription'] ?? '';
+    final String Interest = notification2['Interest'] ?? '';
+    final String UserName = notification2['UserName'] ?? '';
+
     final String imagePath = notification2['imagePath'] ?? '';
 
     return Padding(
@@ -325,7 +305,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 child: Column(
                   children: [
                     Text(
-                      MovieTitle,
+                      UserName,
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -346,7 +326,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           ),
                         ),
                         Text(
-                          WriterName,
+                          Subscription,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
@@ -370,7 +350,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          Director,
+                          Interest,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
@@ -384,7 +364,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                     Row(
                       children: [
                         Text(
-                          '  Writer Rating:',
+                          '  Balance:',
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -394,7 +374,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          WriterRating.toString(),
+                          Balance.toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
@@ -405,29 +385,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                       ],
                     ),
                     SizedBox(height: 5),
-                    Row(
-                      children: [
-                        Text(
-                          '  Movie Rating:',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          MovieRating.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
-                          ),
-                        ),
-                      ],
-                    ),
+
 
 
 

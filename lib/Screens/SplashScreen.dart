@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:finalsemproject/Screens/LoginChioceScreen.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class _SplashscreenState extends State<Splashscreen> {
     // TODO: implement initState
     Timer(Duration(seconds: 5), () {
 
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Dashboard()));
     });
     super.initState();
   }

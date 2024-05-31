@@ -25,8 +25,34 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
   TextEditingController reapasscount = TextEditingController();
   TextEditingController reaconpasscount = TextEditingController();
   bool _passwordsMatch = true;
+  bool isSignup=false;
   File? _imageFile;
   final picker = ImagePicker();
+  List<String> _selectedCategories = [];
+  List<String> _selectedCategories1 = [];
+  List<String> _categories = [
+    'Action',
+    'Comedy',
+    'Romantic',
+    'Horror',
+    'Sci-Fi',
+    'Adventure',
+    'Drama',
+  ];
+
+  void _toggleCategory(String category) {
+    setState(() {
+      if (_selectedCategories.contains(category)) {
+        _selectedCategories.remove(category);
+      } else {
+        _selectedCategories.add(category);
+      }
+    });
+
+    // Call fetchWriters when categories are toggled
+    // Pass selected categories as comma-separated string
+  }
+
 
   Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -40,7 +66,7 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
   }
 
 
-  Future<void> signUp(String role, String email, String userName, String password, File? imagePath) async {
+  Future<void> signUp(String role, String email, String userName, String password, File? imagePath,String Interests) async {
     //String baseurl=APIHandler().base_url;
     //final String apiUrl = baseurl+"User/SignUp";
 
@@ -54,6 +80,7 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
         'Email': email,
         'UserName': userName,
         'Password': password,
+        'Interest':Interests,
       });
 
       if (imagePath != null) { // Check if imagePath is not null
@@ -65,9 +92,14 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
       var response = await request.send();
 
       if (response.statusCode == 200) {
+        isSignup=true;
         // User signed up successfully
         var responseData = await response.stream.bytesToString();
         print('User signed up successfully: $responseData');
+        if(isSignup){
+          Navigator.push(context, MaterialPageRoute(builder: (cintext)=>ReaderLoginScreen()));
+          print('Signing up...');
+        }
       } else {
         // Failed to sign up user
         print('Failed to sign up user: ${response.statusCode}');
@@ -123,7 +155,7 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
               ),
               Container(
                 width: 350,
-                height: 400,
+                height: 440,
                 decoration: BoxDecoration(
                   color: Color(0xFFFFFFFF).withOpacity(0.8),
                   borderRadius: BorderRadius.circular(20),
@@ -188,25 +220,25 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: TextFormField(
-                    //     controller: reaconpasscount,
-                    //     obscureText: false,
-                    //     onChanged: (value) {
-                    //       setState(() {
-                    //         _passwordsMatch = reapasscount == value;
-                    //       });
-                    //     },
-                    //     decoration: InputDecoration(
-                    //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-                    //       hintText: 'Confirm Password',
-                    //       labelText: 'Confirm Password',
-                    //       errorText: reaconpasscount==reapasscount?null:'Password do not Match',
-                    //       prefixIcon: Icon(Icons.lock),
-                    //     ),
-                    //   ),
-                    // ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Categories',
+                        labelStyle:TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        prefixIcon: IconButton(
+                          icon: Icon(Icons.category),
+                          onPressed: () {
+                            _showCategoryDialog(context);
+                          },
+                        ),
+                      ),
+                      controller: TextEditingController(
+                        text: _selectedCategories.isNotEmpty
+                            ? _selectedCategories.join(', ')
+                            : null,
+                      ),style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      readOnly: true,
+                    ),
                     SizedBox(
                       height: 10,
                     ),
@@ -287,7 +319,7 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
     );
   }
   void _signUp() {
-    signUp(_selectedRole.toString().split('.').last, reaemailcont.text, reanamecon.text, reapasscount.text,_imageFile);
+    signUp(_selectedRole.toString().split('.').last, reaemailcont.text, reanamecon.text, reapasscount.text,_imageFile,_selectedCategories.join(','));
 
     // Implement sign up logic here
     // if(_selectedRole.toString().split('.').last=='Reader')
@@ -298,13 +330,55 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
     //   {
     //     Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
     //   }
-    Navigator.push(context, MaterialPageRoute(builder: (cintext)=>ReaderLoginScreen()));
-    print('Signing up...');
+    // if(isSignup){
+    //   Navigator.push(context, MaterialPageRoute(builder: (cintext)=>ReaderLoginScreen()));
+    //   print('Signing up...');
+    // }
+
   }
   @override
   void dispose() {
     reapasscount.dispose();
     reaconpasscount.dispose();
     super.dispose();
+  }
+
+
+  void _showCategoryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Categories'),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _categories.length,
+              itemBuilder: (BuildContext context, int index) {
+                final category = _categories[index];
+                return CheckboxListTile(
+                  title: Text(category),
+                  value: _selectedCategories.contains(category),
+                  onChanged: (bool? value) {
+                    _toggleCategory(category);
+                  },
+                );
+              },
+            ),
+          ),
+
+
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

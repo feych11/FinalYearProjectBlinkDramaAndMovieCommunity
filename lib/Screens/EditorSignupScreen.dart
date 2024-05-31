@@ -28,6 +28,31 @@ class _EditorSignUpScreenState extends State<EditorSignUpScreen> {
   bool _passwordsMatch = true;
   File? _imageFile;
   final picker = ImagePicker();
+  List<String> _selectedCategories = [];
+  List<String> _selectedCategories1 = [];
+  List<String> _categories = [
+    'Action',
+    'Comedy',
+    'Romantic',
+    'Horror',
+    'Sci-Fi',
+    'Adventure',
+    'Drama',
+  ];
+
+  void _toggleCategory(String category) {
+    setState(() {
+      if (_selectedCategories.contains(category)) {
+        _selectedCategories.remove(category);
+      } else {
+        _selectedCategories.add(category);
+      }
+    });
+
+    // Call fetchWriters when categories are toggled
+    // Pass selected categories as comma-separated string
+  }
+
 
   Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -41,7 +66,7 @@ class _EditorSignUpScreenState extends State<EditorSignUpScreen> {
   }
 
 
-  Future<void> signUp(String role, String email, String userName, String password) async {
+  Future<void> signUp(String role, String email, String userName, String password,String Interests) async {
     //String baseurl=APIHandler().base_url;
     //final String apiUrl = baseurl+"User/SignUp";
 
@@ -55,6 +80,7 @@ class _EditorSignUpScreenState extends State<EditorSignUpScreen> {
         'Email': email,
         'UserName': userName,
         'Password': password,
+        'Interest':Interests,
       });
 
 
@@ -112,7 +138,7 @@ class _EditorSignUpScreenState extends State<EditorSignUpScreen> {
                   padding: const EdgeInsets.all(12.0),
                   child: Container(
                     width: 350,
-                    height: 400,
+                    height: 440,
                     decoration: BoxDecoration(
                       color: Color(0xFFFFFFFF).withOpacity(0.8),
                       borderRadius: BorderRadius.circular(20),
@@ -177,25 +203,25 @@ class _EditorSignUpScreenState extends State<EditorSignUpScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: TextFormField(
-                        //     controller: reaconpasscount,
-                        //     obscureText: false,
-                        //     onChanged: (value) {
-                        //       setState(() {
-                        //         _passwordsMatch = reapasscount == value;
-                        //       });
-                        //     },
-                        //     decoration: InputDecoration(
-                        //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
-                        //       hintText: 'Confirm Password',
-                        //       labelText: 'Confirm Password',
-                        //       errorText: reaconpasscount==reapasscount?null:'Password do not Match',
-                        //       prefixIcon: Icon(Icons.lock),
-                        //     ),
-                        //   ),
-                        // ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Categories',
+                            labelStyle:TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                            hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                            prefixIcon: IconButton(
+                              icon: Icon(Icons.category),
+                              onPressed: () {
+                                _showCategoryDialog(context);
+                              },
+                            ),
+                          ),
+                          controller: TextEditingController(
+                            text: _selectedCategories.isNotEmpty
+                                ? _selectedCategories.join(', ')
+                                : null,
+                          ),style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                          readOnly: true,
+                        ),
                         SizedBox(
                           height: 10,
                         ),
@@ -264,24 +290,54 @@ class _EditorSignUpScreenState extends State<EditorSignUpScreen> {
     );
   }
   void _signUp() {
-    signUp(_selectedRole.toString().split('.').last, reaemailcont.text, reanamecon.text, reapasscount.text);
+    signUp(_selectedRole.toString().split('.').last, reaemailcont.text, reanamecon.text, reapasscount.text,_selectedCategories.join(','));
 
-    // Implement sign up logic here
-    // if(_selectedRole.toString().split('.').last=='Reader')
-    // {
-    //   Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
-    // }
-    // else if(_selectedRole.toString().split('.').last=='Writer')
-    //   {
-    //     Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
-    //   }
-    Navigator.push(context, MaterialPageRoute(builder: (cintext)=>AdminLoginScreen()));
-    print('Signing up...');
+
+    print('ADD EDITOR');
   }
   @override
   void dispose() {
     reapasscount.dispose();
     reaconpasscount.dispose();
     super.dispose();
+  }
+
+
+  void _showCategoryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Categories'),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _categories.length,
+              itemBuilder: (BuildContext context, int index) {
+                final category = _categories[index];
+                return CheckboxListTile(
+                  title: Text(category),
+                  value: _selectedCategories.contains(category),
+                  onChanged: (bool? value) {
+                    _toggleCategory(category);
+                  },
+                );
+              },
+            ),
+          ),
+
+
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
