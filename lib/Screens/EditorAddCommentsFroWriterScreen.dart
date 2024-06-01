@@ -240,7 +240,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
                   child: QuillEditor.basic(
                     configurations: QuillEditorConfigurations(
                       controller: _controller,
-                      readOnly: false,
+                      //readOnly: false,
                       sharedConfigurations: const QuillSharedConfigurations(
                         locale: Locale('de'),
                       ),

@@ -107,7 +107,7 @@ class _WriterRewriteSummaryScreenState extends State<WriterRewriteSummaryScreen>
                   child: QuillEditor.basic(
                     configurations: QuillEditorConfigurations(
                       controller: _controller,
-                      readOnly: false,
+                      //readOnly: false,
                       sharedConfigurations: const QuillSharedConfigurations(
                         locale: Locale('de'),
                       ),

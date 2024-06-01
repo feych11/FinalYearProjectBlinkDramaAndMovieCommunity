@@ -242,7 +242,7 @@ print(data);
                   child: QuillEditor.basic(
                     configurations: QuillEditorConfigurations(
                       controller: _controller,
-                      readOnly: false,
+                      //readOnly: false,
                       sharedConfigurations: const QuillSharedConfigurations(
                         locale: Locale('de'),
                       ),

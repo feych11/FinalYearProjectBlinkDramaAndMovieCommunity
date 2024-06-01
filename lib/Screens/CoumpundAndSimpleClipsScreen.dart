@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:finalsemproject/API.dart';
+import 'package:finalsemproject/Screens/WriterMakingClipsScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart'as http;
@@ -8,6 +9,10 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:finalsemproject/Screens/VideoClip.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+
+
+List<VideoClip1> clips = [];
 class VideoClip1 {
   final String videoUrl;
   final Duration StartTime;
@@ -58,8 +63,9 @@ class CoumpundAndSimpleClipsScreen extends StatefulWidget {
 class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScreen> {
   final List<Map<String,dynamic>>ClipsInfoList2=[];
   int currentClipIndex = 0;
-  bool init=false;
-  List<VideoClip1> clips = [];
+
+  bool isClipInitialized = false;
+
   late YoutubePlayerController controller;
   final Color Green  = Color(0xFF4FAA6D);
 
@@ -67,6 +73,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
   @override
   void initState() {
     super.initState();
+
     if(widget.ClipsInfoList!=null)
     {
       for (var isCompoundclip in widget.ClipsInfoList!)
@@ -81,8 +88,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
         int startTimeInSeconds = startTimeDouble.toInt();
         int endTimeInSeconds = endTimeDouble.toInt();
 
-        Duration startTime = Duration(seconds: startTimeInSeconds);
-        Duration endTime = Duration(seconds: endTimeInSeconds);
+
         clips.add(VideoClip1(videoUrl: videoUrl, StartTime: Duration(seconds: startTimeInSeconds), EndTime: Duration(seconds: endTimeInSeconds)));
 
       }
@@ -93,7 +99,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
           initialVideoId: YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
           flags: YoutubePlayerFlags(
             // autoPlay: true,
-            autoPlay: false,
+            autoPlay: true,
             startAt: clips[currentClipIndex].StartTime.inSeconds,
           ),
         )..addListener(_onControllerStateChanged);
@@ -144,7 +150,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     required int? sentProposalId,
     required String? writerId,
     required int? movieId,
-     String? title1,
+    String? title1,
     required String? summary,
     required String? type,
     required int? editorId,
@@ -167,7 +173,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
         'Episode':Episode,
         'Clips': clips, // Pass the clips directly
       };
-print('DataAAAAAA: $data');
+      print('DataAAAAAA: $data');
       final http.Response response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -264,11 +270,11 @@ print('DataAAAAAA: $data');
               controller: YoutubePlayerController(
                 initialVideoId: YoutubePlayer.convertUrlToId(widget.videoId.toString()) ?? '',
                 flags: YoutubePlayerFlags(
-                  autoPlay: true,
-                  mute: false,
-                  endAt: clip.end_time.toInt(),
-                  startAt: clip.start_time.toInt()// Convert to int
-                       // Convert to int
+                    autoPlay: true,
+                    mute: false,
+                    endAt: clip.end_time.toInt(),
+                    startAt: clip.start_time.toInt()// Convert to int
+                  // Convert to int
                 ),
               ),
               showVideoProgressIndicator: true,
@@ -283,6 +289,7 @@ print('DataAAAAAA: $data');
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     List<VideoClip> compoundClips = widget.videoClips.where((clip) => clip.isCompoundClip).toList();
@@ -292,10 +299,20 @@ print('DataAAAAAA: $data');
       backgroundColor: Colors.grey,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'Making Clips',
-          style: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.white),
-        ),
+        title:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              'Making Clips',
+              style: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen()));
+                },
+                child: Icon(Icons.backspace,size: 20,color:Colors.white,)),
+          ],),
         backgroundColor: Colors.black,
       ),
       body:
@@ -550,37 +567,22 @@ print('DataAAAAAA: $data');
   void _onControllerStateChanged() {
     final currentTime = controller.value.position;
     final endTime = clips[currentClipIndex].EndTime;
-    print('current :${currentTime} end: ${endTime}');
 
-    if (currentTime >= endTime) {
-      controller.pause();
-      print('Matched :: Index ${currentClipIndex}:: start ${clips[currentClipIndex].StartTime.inSeconds} :: end ${clips[currentClipIndex].EndTime.inSeconds}');
-      if (init) {
-        return;
-      }
-      init = true;
+    if (currentTime >= endTime && !isClipInitialized) {
+      isClipInitialized = true;
 
-      // Current clip ended, load next clip
       if (currentClipIndex < clips.length - 1) {
         currentClipIndex++;
-        controller.load(clips[currentClipIndex].videoUrl);
-        controller.seekTo(clips[currentClipIndex].StartTime);
-        controller.play();
-
-
-
-        init = false;
       } else {
-        controller.pause();
-        // currentClipIndex = 0;
-        // controller.load(clips[currentClipIndex].videoUrl);
-        // controller.seekTo(clips[currentClipIndex].StartTime);
-        // init = false;
-        // All clips played
-        // You can add logic here for what to do when all clips are played
+        currentClipIndex = 0;
       }
+
+      controller.load(YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
+          startAt: clips[currentClipIndex].StartTime.inSeconds);
+      isClipInitialized = false;
     }
   }
+
 
   @override
   void dispose1() {

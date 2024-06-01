@@ -8,6 +8,7 @@ import 'package:finalsemproject/Screens/ReadingScreen.dart';
 import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 class VideoClip {
   final String videoUrl;
   final Duration StartTime;
@@ -83,14 +84,19 @@ class _WatchingScreenState extends State<WatchingScreen> {
       //    // Add more clips as needed
       //  ];
       if (clips.isNotEmpty) {
-        controller = YoutubePlayerController(
-          initialVideoId: YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
-          flags: YoutubePlayerFlags(
-            // autoPlay: true,
-            autoPlay: false,
-            startAt: clips[currentClipIndex].StartTime.inSeconds,
-          ),
-        )..addListener(_onControllerStateChanged);
+        try {
+          controller = YoutubePlayerController(
+            initialVideoId: YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
+            flags: YoutubePlayerFlags(
+              autoPlay: false,
+              startAt: clips[currentClipIndex].StartTime.inSeconds,
+            ),
+          )..addListener(_onControllerStateChanged);
+        } catch (e) {
+          print('Error initializing YouTube player: $e');
+        }
+
+
       }
 
     }
