@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:finalsemproject/Screens/VideoClip.dart';
 import 'package:finalsemproject/Screens/WriterMakingClipsScreen.dart';
 import 'package:http/http.dart'as http;
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:finalsemproject/API.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -39,6 +39,7 @@ class WriterAcceptedProjectScreen extends StatefulWidget {
 class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScreen> {
   QuillController _controller = QuillController.basic();
 
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +56,39 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
     // int wId=int.parse(widget.Writer_ID!);
     // updateWriterNotifications(wId);
   }
+  Future<void> setSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('Episode', widget.Episode ?? 0);
+    await prefs.setInt('id', widget.id ?? 0);
+    await prefs.setString('Writer_ID', widget.Writer_ID ?? '');
+    await prefs.setInt('Movie_ID', widget.Movie_ID ?? 0);
+    await prefs.setString('summary', _controller.document.toPlainText());
+    await prefs.setString('title', widget.title ?? '');
+    await prefs.setInt('Editor_ID', widget.Editor_ID ?? 0);
+    await prefs.setString('Type', widget.Type ?? '');
+  }
+
+  Future<void> printSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? episode = prefs.getInt('Episode');
+    int? id = prefs.getInt('id');
+    String? writerID = prefs.getString('Writer_ID');
+    int? movieID = prefs.getInt('Movie_ID');
+    String? summary = prefs.getString('summary');
+    String? title = prefs.getString('title');
+    int? editorID = prefs.getInt('Editor_ID');
+    String? type = prefs.getString('Type');
+
+    print('Episodeeee: $episode');
+    print('IDeee: $id');
+    print('Writer_IDeee: $writerID');
+    print('Movie_IDeee: $movieID');
+    print('Summary: $summary');
+    print('Title: $title');
+    print('Editor_ID: $editorID');
+    print('Type: $type');
+  }
+
 
   // Future<void> updateWriterNotifications(int writerId) async {
   //   try {
@@ -282,7 +316,10 @@ print(data);
                     fontFamily: 'BigshotOne'),)
                 ),
               ),
-              ElevatedButton(onPressed: () {
+              ElevatedButton(onPressed: ()async {
+                await setSharedPreferences();
+                printSharedPreferences();
+
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen(Episode: widget.Episode,id: widget.id,Writer_ID: widget.Writer_ID,Movie_ID: widget.Movie_ID,summary: _controller.document.toPlainText(),title: widget.title,Editor_ID: widget.Editor_ID,Type: widget.Type,)));
               },
                 style: ButtonStyle(

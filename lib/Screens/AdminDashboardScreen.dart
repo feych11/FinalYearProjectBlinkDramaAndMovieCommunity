@@ -30,6 +30,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   bool _isSearching = false;
   String _searchQuery = "";
   List<Map<String,dynamic>>notifications2=[];
+  List<Map<String,dynamic>>notifications3=[];
 
 
   Future<void> fetchProposals() async {
@@ -61,12 +62,42 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       print('Error fetching proposals: $error');
     }
   }
+  Future<void> fetchWriters() async {
+    const String baseurl2=APIHandler.baseUrl1;
+    const String baseurl3=APIHandler.baseUrl2;
+    final url = Uri.parse('$baseurl2/Admin/ShowAllWriters');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        setState(() {
+          notifications3 = data.map((proposal) {
+            return {
+              'Writer_ID': proposal['Writer_ID'],
+
+              'Balance': proposal['Balance'],
+
+              'Interest':proposal['Interest'],
+              'UserName': proposal['UserName'],
+              'imagePath': '$baseurl3/Images/${proposal['Image']}',
+
+            };
+          }).toList();
+        });
+      } else {
+        throw Exception('Failed to load proposals');
+      }
+    } catch (error) {
+      print('Error fetching proposals: $error');
+    }
+  }
 
 
   @override
   void initState() {
     super.initState();
     fetchProposals();
+    fetchWriters();
 
     //getSentProposalsIdsWithEditorNotification(2);
 
@@ -229,6 +260,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
                   child:
                   SafeArea(child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -244,7 +276,25 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                               return buildNotificationCard2(notification);
                             }).toList(),
                           ),
+
                         ],)
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child:
+                          Column(
+
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('ALL Writers',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),),
+                              SizedBox(height: 10,),
+                              Row(
+                                children:  notifications3.map((notification3) {
+                                  return buildNotificationCard3(notification3);
+                                }).toList(),
+                              ),
+
+                            ],)
                       ),
                     ],
                   ))),
@@ -261,7 +311,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     final String Interest = notification2['Interest'] ?? '';
     final String UserName = notification2['UserName'] ?? '';
 
-    final String imagePath = notification2['imagePath'] ?? '';
+    final String imagePath = notification2['imagePath'] ?? Image.asset('Images/DP.jpeg');
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -317,7 +367,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     Row(
                       children: [
                         Text(
-                          '  Writer Name:   ',
+                          '  Subscription:   ',
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -340,7 +390,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     Row(
                       children: [
                         Text(
-                          '  Director:',
+                          '  Interests:',
                           style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
@@ -361,6 +411,128 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       ],
                     ),
                     SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          '  Balance:',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          Balance.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5),
+
+
+
+
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget buildNotificationCard3(Map<String, dynamic> notification3) {
+
+    final String Email = notification3['Email'] ?? '';
+    final int Balance = notification3['Balance'] ?? 0;
+
+    final String Interest = notification3['Interest'] ?? '';
+    final String UserName = notification3['UserName'] ?? '';
+
+    final String imagePath = notification3['imagePath'] ?? '';
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AnimatedContainer(
+        duration:Duration(milliseconds: 500),
+        height: 200,
+        width: 420,
+        decoration: BoxDecoration(
+          color: Colors.amber,
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+          //borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration:Duration(milliseconds: 500),
+              height: 150,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.network(imagePath), // Use Image.network for remote images
+            ),
+            SizedBox(width: 10),
+            Container(
+              height: 210,
+              width: 300,
+
+              decoration: BoxDecoration(
+
+                color:mateBlack,
+
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Column(
+                  children: [
+                    Text(
+                      UserName,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'Rye'
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          '   Interests:   ',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        Text(
+                          Interest,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5),
+
                     Row(
                       children: [
                         Text(

@@ -36,8 +36,10 @@ class WatchingScreen extends StatefulWidget {
 class _WatchingScreenState extends State<WatchingScreen> {
   late List<Widget> nonCompoundVideoWidgets;
   late YoutubePlayerController controller;
-  bool isPlayerReady = false;
   int currentClipIndex = 0;
+  bool isClipInitialized = false;
+  bool isPlayerReady = false;
+
   bool init=false;
   List<VideoClip> clips = [];
   @override
@@ -88,7 +90,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
           controller = YoutubePlayerController(
             initialVideoId: YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
             flags: YoutubePlayerFlags(
-              autoPlay: false,
+              autoPlay: true,
               startAt: clips[currentClipIndex].StartTime.inSeconds,
             ),
           )..addListener(_onControllerStateChanged);
@@ -168,345 +170,329 @@ class _WatchingScreenState extends State<WatchingScreen> {
       ),
     );
     return Scaffold(
-      backgroundColor: Colors.grey,
-      drawer: Drawer(
         backgroundColor: Colors.grey,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: AssetImage('Images/man2.webp'),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          'Faizan Mustafa',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white),
-                        ),
-                        Text(
-                          'Balance:2000',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context); // Close the drawer
-                      },
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ],
-                )),
-
-            ListTile(
-              title: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
-                },
-                child: Text(
-                  'Home',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
-                },
-                child: Text(
-                  'Subscription:Free',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
-                },
-                child: Text(
-                  'Update Interest',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Recharge Balance',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
-                },
-                child: Text(
-                  'Account Setting',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
-              },
-              child: ListTile(
-                title: Container(
-                  height: 40,
-                  width: 50,
+        drawer: Drawer(
+          backgroundColor: Colors.grey,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.black,
-                    border: Border.all(color: Colors.red, width: 2),
                   ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: AssetImage('Images/man2.webp'),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            'Faizan Mustafa',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                          Text(
+                            'Balance:2000',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context); // Close the drawer
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ],
+                  )),
+
+              ListTile(
+                title: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+                  },
                   child: Text(
-                    'LOGOUT',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.red),
+                    'Home',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
                 ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
               ),
-            ),
-            // Add more ListTiles for additional items in the drawer
-          ],
-        ),
-      ),
-      appBar: AppBar(title: Text('Watching',style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 30,
-          color: Colors.white,
-          fontFamily: 'BigShotone'),),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
-      body: Stack(children: [
-
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('Images/bgimg1.png'), // Your background image
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(children: [
-            SizedBox(height: 10,),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 350,
-                  height: 200,
-                  decoration: BoxDecoration(
+              ListTile(
+                title: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
+                  },
+                  child: Text(
+                    'Subscription:Free',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
+                  },
+                  child: Text(
+                    'Update Interest',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Recharge Balance',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
+                  },
+                  child: Text(
+                    'Account Setting',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                },
+                child: ListTile(
+                  title: Container(
+                    height: 40,
+                    width: 50,
+                    decoration: BoxDecoration(
                       color: Colors.black,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 4,
-                      ),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Stack(
-                      children: [
-                        //Image
-
-                        // isPlayerReady
-                        //     ?
-                        YoutubePlayer(
-                          controller: controller,
-                          showVideoProgressIndicator: true,
-                          // // onReady: () {
-                          // //   setState(() {
-                          // //     isPlayerReady = true;
-                          // //   });
-                          //   print('Player is ready.');
-                          // },
-                        )
-                        // : loadingTextWidget,
-
-
-
-                        // Text in the right bottom corner
-                        // Column(
-                        //   mainAxisAlignment: MainAxisAlignment.end,
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: [
-                        //     Text(
-                        //       'WAAR',
-                        //       style: TextStyle(
-                        //           color: Colors.white, // Set your desired text color
-                        //           fontSize: 16,
-                        //           fontWeight:
-                        //           FontWeight.bold // Set your desired text size
-                        //       ),
-                        //     ),
-                        //     Text(
-                        //       'Bilal Lashari',
-                        //       style: TextStyle(
-                        //           color: Colors.yellow,
-                        //           fontSize: 10,
-                        //           fontWeight: FontWeight.bold),
-                        //     ),
-                        //     Text(
-                        //       'Writer: Amman',
-                        //       style: TextStyle(
-                        //           color: Colors.yellow,
-                        //           fontSize: 10,
-                        //           fontWeight: FontWeight.bold),
-                        //     ),
-                        //   ],
-                        // ),
-                      ],
+                      border: Border.all(color: Colors.red, width: 2),
+                    ),
+                    child: Text(
+                      'LOGOUT',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.red),
                     ),
                   ),
                 ),
               ),
-            ),
-
-
-            Container(
-              height: 50,
-              width: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white,
-                  width: 4,
-                ),
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [Colors.black, Colors.black, Colors.yellow, Colors.yellow],
-                  stops: [0.0, 0.5, 0.5, 1.0],
-                ),
-                borderRadius: BorderRadius.circular(20),
-
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                        onTap: (){
-                          Navigator.pop(context);
-                        },
-                        child: Text('Read',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                        onTap: (){
-
-                        },
-                        child: Text('Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),)),
-                  )
-                ],),
-
-            ),
-            SizedBox(height: 30,),
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(20), // Adjust padding as needed
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children:
-
-                  nonCompoundVideoWidgets,
-                ),
-              ),
-            ),
-
-            SizedBox(height: 10,),
-
-
-          ],),
+              // Add more ListTiles for additional items in the drawer
+            ],
+          ),
         ),
-      ],)
+        appBar: AppBar(title: Text('Watching',style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+            color: Colors.white,
+            fontFamily: 'BigShotone'),),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+        ),
+        body: Stack(children: [
+
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('Images/bgimg1.png'), // Your background image
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(children: [
+              SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 350,
+                    height: 200,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 4,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Stack(
+                        children: [
+                          //Image
+
+                          // isPlayerReady
+                          //     ?
+                          YoutubePlayer(
+                            controller: controller,
+                            showVideoProgressIndicator: true,
+                            // // onReady: () {
+                            // //   setState(() {
+                            // //     isPlayerReady = true;
+                            // //   });
+                            //   print('Player is ready.');
+                            // },
+                          )
+                          // : loadingTextWidget,
+
+
+
+                          // Text in the right bottom corner
+                          // Column(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     Text(
+                          //       'WAAR',
+                          //       style: TextStyle(
+                          //           color: Colors.white, // Set your desired text color
+                          //           fontSize: 16,
+                          //           fontWeight:
+                          //           FontWeight.bold // Set your desired text size
+                          //       ),
+                          //     ),
+                          //     Text(
+                          //       'Bilal Lashari',
+                          //       style: TextStyle(
+                          //           color: Colors.yellow,
+                          //           fontSize: 10,
+                          //           fontWeight: FontWeight.bold),
+                          //     ),
+                          //     Text(
+                          //       'Writer: Amman',
+                          //       style: TextStyle(
+                          //           color: Colors.yellow,
+                          //           fontSize: 10,
+                          //           fontWeight: FontWeight.bold),
+                          //     ),
+                          //   ],
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+
+              Container(
+                height: 50,
+                width: 200,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 4,
+                  ),
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [Colors.black, Colors.black, Colors.yellow, Colors.yellow],
+                    stops: [0.0, 0.5, 0.5, 1.0],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
+                          child: Text('Read',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                          onTap: (){
+
+                          },
+                          child: Text('Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),)),
+                    )
+                  ],),
+
+              ),
+              SizedBox(height: 30,),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(20), // Adjust padding as needed
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children:
+
+                    nonCompoundVideoWidgets,
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 10,),
+
+
+            ],),
+          ),
+        ],)
     );
   }
   void _onControllerStateChanged() {
     final currentTime = controller.value.position;
     final endTime = clips[currentClipIndex].EndTime;
-    print('current :${currentTime} end: ${endTime}');
 
-    if (currentTime >= endTime) {
-      controller.pause();
-      print('Matched :: Index ${currentClipIndex}:: start ${clips[currentClipIndex].StartTime.inSeconds} :: end ${clips[currentClipIndex].EndTime.inSeconds}');
-      if (init) {
-        return;
-      }
-      init = true;
+    if (currentTime >= endTime && !isClipInitialized) {
+      isClipInitialized = true;
 
-      // Current clip ended, load next clip
       if (currentClipIndex < clips.length - 1) {
         currentClipIndex++;
-        controller.load(clips[currentClipIndex].videoUrl);
-        controller.seekTo(clips[currentClipIndex].StartTime);
-        controller.play();
-
-
-
-        init = false;
       } else {
-        controller.pause();
-        // currentClipIndex = 0;
-        // controller.load(clips[currentClipIndex].videoUrl);
-        // controller.seekTo(clips[currentClipIndex].StartTime);
-        // init = false;
-        // All clips played
-        // You can add logic here for what to do when all clips are played
+        currentClipIndex = 0;
       }
+
+      controller.load(YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
+          startAt: clips[currentClipIndex].StartTime.inSeconds);
+      isClipInitialized = false;
     }
   }
 

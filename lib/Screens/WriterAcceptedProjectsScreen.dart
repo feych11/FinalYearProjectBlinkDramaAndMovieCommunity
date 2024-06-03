@@ -98,139 +98,139 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(WriterImage.toString()),
-
-                    ),
-                    SizedBox(width: 10,),
-
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(WriterName.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white,fontFamily: 'BigShotone'),
-                        ),
-                        SizedBox(height: 20,),
-                        Text(WriterBalance.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigShotone'),)
-                      ],),
-                    SizedBox(width: 5,),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context); // Close the drawer
-                      },
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ],)
-            ),
-
-            ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-
-              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: 'BigShotone'),),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-
-            ),
-            ListTile(
-              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
-                // Add your action when the item is tapped
-                // Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: Container(height: 40,
-                width: 50,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                      color: Colors.red,
-                      width: 2
+        backgroundColor: Colors.grey,
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
                   ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(WriterImage.toString()),
 
-                ),
-                child:
+                      ),
+                      SizedBox(width: 10,),
 
-                InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
-                  },
-                  child: Center(
-                    child: Text
-                      ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red,fontFamily: 'BigShotone'),),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(WriterName.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white,fontFamily: 'BigShotone'),
+                          ),
+                          SizedBox(height: 20,),
+                          Text(WriterBalance.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigShotone'),)
+                        ],),
+                      SizedBox(width: 5,),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context); // Close the drawer
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ],)
+              ),
+
+              ListTile(
+                title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+
+                title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: 'BigShotone'),),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+
+              ),
+              ListTile(
+                title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                  // Add your action when the item is tapped
+                  // Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: Container(height: 40,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: Colors.red,
+                        width: 2
+                    ),
+
+                  ),
+                  child:
+
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
+                    },
+                    child: Center(
+                      child: Text
+                        ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red,fontFamily: 'BigShotone'),),
+                    ),
                   ),
                 ),
               ),
-            ),
-            // Add more ListTiles for additional items in the drawer
-          ],
-        ),
-      ),
-      appBar: AppBar(title: Text('ACCEPTED PROPOSALS',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white,fontFamily: 'BigshotOne'),),
-      backgroundColor: Colors.black,
-      ),
-      body:Stack(children: [
-
-
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('Images/SplashScreen45.png'), // Your background image
-              fit: BoxFit.cover,
-            ),
+              // Add more ListTiles for additional items in the drawer
+            ],
           ),
         ),
-        SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: notifications.map((notification) {
-                return buildNotificationCard(notification);
-              }).toList(),
+        appBar: AppBar(title: Text('ACCEPTED PROPOSALS',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white,fontFamily: 'BigshotOne'),),
+          backgroundColor: Colors.black,
+        ),
+        body:Stack(children: [
+
+
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('Images/SplashScreen45.png'), // Your background image
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-      ],)
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: notifications.map((notification) {
+                  return buildNotificationCard(notification);
+                }).toList(),
+              ),
+            ),
+          ),
+        ],)
     );
   }
 
@@ -285,10 +285,10 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                     Text(
                       title,
                       style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontFamily: 'BigshotOne'
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'BigshotOne'
                       ),
                     ),
                     SizedBox(height: 5),
@@ -297,19 +297,19 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                         Text(
                           'Writer Name:',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                         Text(
                           writerName,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                       ],
@@ -320,19 +320,19 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                         Text(
                           'Director:',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Rye'
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
                           ),
                         ),
                         SizedBox(width: 10),
                         Text(
                           director,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                              color: Colors.white,
                               fontFamily: 'Rye'
                           ),
                         ),
@@ -344,9 +344,9 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                         Text(
                           'Rating:',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                               fontFamily: 'Rye'
                           ),
                         ),
@@ -375,18 +375,18 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                                 Writer_ID:userId,
                                 imagePath:imagePath,
                                 Editor_ID:Editor_ID,
-                              Type:Type
+                                Type:Type
                               };
 
                               print(data);
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectScreen(id:id,
-                                  title: title,
-                                  Writer_ID:userId,
-                                  Movie_ID:Movie_ID,
-                                  imagePath:imagePath,
-                                  Editor_ID:Editor_ID,
-                                  Episode:episode,
-                              Type: Type,)));
+                                title: title,
+                                Writer_ID:userId,
+                                Movie_ID:Movie_ID,
+                                imagePath:imagePath,
+                                Editor_ID:Editor_ID,
+                                Episode:episode,
+                                Type: Type,)));
                             });
                           },
                           child: Container(height: 25,

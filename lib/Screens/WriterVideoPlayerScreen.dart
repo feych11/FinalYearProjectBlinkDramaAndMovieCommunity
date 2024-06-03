@@ -7,6 +7,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:finalsemproject/Screens/VideoClip.dart';
 import 'dart:math';
 
+
+List<VideoClip> videoClips = [];
+
 class VideoPlayerScreen extends StatefulWidget {
   final String videoId;
   final String thumbnailUrl;
@@ -41,7 +44,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   bool _isPlayerReady = false;
   RangeValues _currentRangeValues = const RangeValues(0.0, 0.0);
   TextEditingController DesCon = TextEditingController();
-  List<VideoClip> videoClips = [];
+
   bool isCompound = true;
   bool SimpleClip=true;
   List<Map<String, String>> clipsInfoList = [];
@@ -87,18 +90,18 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   void _onCompoundClip()  {
     videoClips.add(VideoClip(
-      start_time: _currentRangeValues.start.toDouble(),
-      end_time: _currentRangeValues.end.toDouble(),
-      url: widget.videoId,
-      isCompoundClip: isCompound,
-      SimpleClip:false,
-      thumbnailUrl: widget.thumbnailUrl,
-      title: widget.title,
-      Description: DesCon.text
+        start_time: _currentRangeValues.start.toDouble(),
+        end_time: _currentRangeValues.end.toDouble(),
+        url: widget.videoId,
+        isCompoundClip: isCompound,
+        SimpleClip:false,
+        thumbnailUrl: widget.thumbnailUrl,
+        title: widget.title,
+        Description: DesCon.text
 
 
     ));
-    print('COde ok');
+    print('COMPOUND CLIP TRUE');
   }
   void Addingclipinfo(){
 
@@ -118,18 +121,18 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   void _onSimpleClip()  {
     videoClips.add(VideoClip(
-      start_time: _currentRangeValues.start.toDouble(),
-      end_time: _currentRangeValues.end.toDouble(),
-      url: widget.videoId,
-      isCompoundClip: false,
-      SimpleClip:SimpleClip,
-      thumbnailUrl: widget.thumbnailUrl,
-      title: widget.title,
-      Description: DesCon.text
+        start_time: _currentRangeValues.start.toDouble(),
+        end_time: _currentRangeValues.end.toDouble(),
+        url: widget.videoId,
+        isCompoundClip: false,
+        SimpleClip:SimpleClip,
+        thumbnailUrl: widget.thumbnailUrl,
+        title: widget.title,
+        Description: DesCon.text
 
 
     ));
-    print('COde ok');
+    print('SPECIFIC CLIP TRUE');
   }
   String _formatDuration(int seconds) {
     Duration duration = Duration(seconds: seconds);

@@ -9,6 +9,7 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:finalsemproject/Screens/VideoClip.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -22,6 +23,7 @@ class VideoClip1 {
 }
 class CoumpundAndSimpleClipsScreen extends StatefulWidget {
   final List<VideoClip> videoClips;
+
   final List<Map<String,dynamic>>?ClipsInfoList;
   final String? videoId;
   final int? id;
@@ -40,6 +42,7 @@ class CoumpundAndSimpleClipsScreen extends StatefulWidget {
 
 
   const CoumpundAndSimpleClipsScreen({Key? key, required this.videoClips,
+
     this.videoId,
     this.id,
     this.Movie_ID,
@@ -68,12 +71,45 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
 
   late YoutubePlayerController controller;
   final Color Green  = Color(0xFF4FAA6D);
+  int? episode1;
+  int? id1;
+  String? writerID1;
+  int? movieID1;
+  String? summary1;
+  String? title2;
+  int? editorID1;
+  String? type1;
 
+
+
+
+
+
+  Future<void> printSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+     episode1 = prefs.getInt('Episode');
+    id1 = prefs.getInt('id');
+    writerID1 = prefs.getString('Writer_ID');
+    movieID1 = prefs.getInt('Movie_ID');
+    summary1 = prefs.getString('summary');
+    title2 = prefs.getString('title');
+    editorID1 = prefs.getInt('Editor_ID');
+    type1 = prefs.getString('Type');
+
+    print('Episodeeee: $episode1');
+    print('IDeee: $id1');
+    print('Writer_IDeee: $writerID1');
+    print('Movie_IDeee: $movieID1');
+    print('Summary: $summary1');
+    print('Title: $title2');
+    print('Editor_ID: $editorID1');
+    print('Type: $type1');
+  }
 
   @override
   void initState() {
     super.initState();
-
+    printSharedPreferences();
     if(widget.ClipsInfoList!=null)
     {
       for (var isCompoundclip in widget.ClipsInfoList!)
@@ -99,7 +135,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
           initialVideoId: YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
           flags: YoutubePlayerFlags(
             // autoPlay: true,
-            autoPlay: true,
+            autoPlay: false,
             startAt: clips[currentClipIndex].StartTime.inSeconds,
           ),
         )..addListener(_onControllerStateChanged);
@@ -146,15 +182,16 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     print('Episode No: ${widget.Episode}');
 
   }
+
   Future<void> sendProject({
-    required int? sentProposalId,
-    required String? writerId,
-    required int? movieId,
+    required int? id1,
+    required String? writerID1,
+    required int? movieID1,
     String? title1,
-    required String? summary,
-    required String? type,
-    required int? editorId,
-    required int?Episode,
+    required String? summary1,
+    required String? type1,
+    required int? editorID1,
+    required int?episode1,
 
     required List<Map<String, dynamic>> clips, // Directly accept the list of clips
   }) async {
@@ -164,13 +201,13 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     try {
       final Uri url = Uri.parse('$endpoint');
       final Map<String, dynamic> data = {
-        'SentProposal_ID': sentProposalId,
-        'Writer_ID': writerId,
-        'Movie_ID': movieId,
-        'Type':type,
-        'Summary': summary,
-        'Editor_ID': editorId,
-        'Episode':Episode,
+        'SentProposal_ID': id1,
+        'Writer_ID': writerID1,
+        'Movie_ID': movieID1,
+        'Type':type1,
+        'Summary': summary1,
+        'Editor_ID': editorID1,
+        'Episode':episode1,
         'Clips': clips, // Pass the clips directly
       };
       print('DataAAAAAA: $data');
@@ -472,7 +509,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                                   children: [
 
                                     SizedBox(height: 13),
-                                    Text('Title:   ${widget.title1}',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),
+                                    Text('Title:   ${title2}',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),
                                       maxLines: 2, // Adjust the number of lines as needed
                                       overflow: TextOverflow.ellipsis,),
                                     SizedBox(height: 13),
@@ -530,13 +567,13 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                     print('Clips Data: $clipsData');
 
                     sendProject(
-                      sentProposalId: widget.id,
-                      writerId: widget.Writer_ID,
-                      movieId: widget.Movie_ID,
-                      type: widget.Type,
-                      summary: widget.summary,
-                      editorId: widget.Editor_ID,
-                      Episode:widget.Episode,
+                      id1: id1,
+                      writerID1: writerID1,
+                      movieID1: movieID1,
+                      type1: type1,
+                      summary1: summary1,
+                      editorID1: editorID1,
+                      episode1:episode1,
 
                       clips: clipsData,
                     );
