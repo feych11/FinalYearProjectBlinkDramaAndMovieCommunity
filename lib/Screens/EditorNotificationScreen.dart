@@ -220,6 +220,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
   }
   Widget buildNotificationCard(Map<String, dynamic> notification) {
     final String id = notification['id'].toString()?? '';
+    final String writerId=notification['writerId'].toString()??'';
     final String sentProjectID = notification['sentProjectID'].toString()?? '';
     final String title = notification['title'] ?? '';
     final String writerName = notification['writerId'].toString() ?? 'Unknown';
@@ -315,7 +316,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                         onTap: (){
                           print('MovieID: $id');
                           print('SENTPROJECT ID: $sentProjectID');
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorReadingScreen(moviename: title,MovieID: id,sentProjectID: sentProjectID,)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorReadingScreen(writerId: writerId,moviename: title,MovieID: id,sentProjectID: sentProjectID,)));
                         },
                         child: Container(
                           height: 30,

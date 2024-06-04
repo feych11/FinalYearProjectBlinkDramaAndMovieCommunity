@@ -40,9 +40,9 @@ class _ViewFreeMovieSummaryScreenState
   bool hasRatedWriter = false;
   bool hasRatedMovie = false;
 
-  Future<void> viewSentProject(int movieId) async {
+  Future<void> viewSentProject(int movieId,int WriterID) async {
     const String baseUrl = APIHandler.baseUrl1; // Update with your API base URL
-    final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId';
+    final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId&WriterID=$WriterID';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -123,7 +123,7 @@ class _ViewFreeMovieSummaryScreenState
   @override
   void initState() {
     super.initState();
-    viewSentProject(widget.MovieID!);
+    viewSentProject(widget.MovieID!,widget.FreeWriter_ID!);
     print('Movie ID: ${widget.MovieID}');
     print('Title::${widget.moviename}');
     print('Free Writer_ID::::: ${widget.FreeWriter_ID}');

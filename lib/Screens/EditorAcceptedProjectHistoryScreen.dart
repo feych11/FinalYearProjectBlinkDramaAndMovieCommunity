@@ -69,7 +69,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
               'Movieid':project['Movie_ID'],
               'id': project['SentProject_ID'],
               'title': project['ProposalData']['Movie_Name'],
-              'writerName': project['Writer_ID'],
+              'Writer_ID': project['Writer_ID'],
               'director': project['ProposalData']['Director'],
               'type': project['ProposalData']['Type'],
               'rating': 4,
@@ -229,6 +229,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
   }
   Widget buildNotificationCard(Map<String, dynamic> notification) {
     final int Movieid = notification['Movieid'] ?? '';
+    final int Writer_ID=notification['Writer_ID']?? 0;
     final int Sentperposalid = notification['id'] ?? '';
     final String title = notification['title'] ?? '';
     final String type = notification['type'] ?? '';
@@ -362,7 +363,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                       child: GestureDetector(
                         onTap: (){
 
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorViewAcceptedSummary(MovieID: Movieid,sentProjectID: Sentperposalid,moviename: title,)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorViewAcceptedSummary(Writer_ID:Writer_ID.toString(),MovieID: Movieid,sentProjectID: Sentperposalid,moviename: title,)));
 
                         },
                         child: Container(

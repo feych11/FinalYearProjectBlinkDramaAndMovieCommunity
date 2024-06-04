@@ -38,9 +38,9 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
   int currentClipIndex = 0;
   bool init = false;
 
-  Future<void> viewSentProject(int movieId) async {
+  Future<void> viewSentProject(int movieId,int WriterID) async {
     const String baseUrl = APIHandler.baseUrl1; // Update with your API base URL
-    final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId';
+    final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId&WriterID=$WriterID';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -121,7 +121,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
   @override
   void initState() {
     super.initState();
-    viewSentProject(widget.MovieID!);
+    viewSentProject(widget.MovieID!,widget.FreeWriter_ID!);
     print('Movie ID: ${widget.MovieID}');
     print('Title::${widget.moviename}');
     print('Free Writer_ID::::: ${widget.FreeWriter_ID}');

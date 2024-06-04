@@ -259,7 +259,7 @@ class _SendPerposalState extends State<SendPerposal> {
         'Genre': _selectedCategories1.join(','), // Assuming genre is a comma-separated string
         'Type': _selectedType!,
         'Writer_ID': _selectedWriter!,
-        'Editor_ID': "2",
+        'Editor_ID': userId.toString(),
         'Movie_Name': _moviesconController.text,
         'Episode': EpiCon.text.isEmpty ? '0' : EpiCon.text, // Handle empty episode input
         'Amount': CharCon.text,

@@ -10,12 +10,14 @@ class EditorReadingScreen extends StatefulWidget {
   final String ?MovieID;
   final String ?sentProjectID;
   final String?moviename;
+  final String ?writerId;
 
 
   const EditorReadingScreen({Key? key ,
     this.MovieID,
     this.sentProjectID,
-    this.moviename
+    this.moviename,
+    this.writerId,
   }) : super(key: key);
 
   @override
@@ -126,9 +128,9 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
     }
 
   }
-  Future<void> viewSentProject(String movieId) async {
+  Future<void> viewSentProject(String movieId,String writerId) async {
     const String baseUrl = APIHandler.baseUrl1; // Update with your API base URL
-    final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId';
+    final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId&WriterID=$writerId';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -179,7 +181,7 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
     super.initState();
     print('Title::${widget.moviename}');
     fetchSummary(widget.sentProjectID.toString());
-    viewSentProject(widget.MovieID.toString());
+    viewSentProject(widget.MovieID.toString(),widget.writerId.toString());
 
   }
   void refreshPage () {

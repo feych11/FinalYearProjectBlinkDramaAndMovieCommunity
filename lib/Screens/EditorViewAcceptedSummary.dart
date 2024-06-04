@@ -11,12 +11,14 @@ class EditorViewAcceptedSummary extends StatefulWidget {
   final int ?MovieID;
   final int ?sentProjectID;
   final String?moviename;
+  final String?Writer_ID;
 
 
   const EditorViewAcceptedSummary({Key? key ,
     this.MovieID,
     this.sentProjectID,
-    this.moviename
+    this.moviename,
+    this.Writer_ID,
   }) : super(key: key);
 
   @override
@@ -42,9 +44,9 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
   bool init=false;
 
 
-  Future<void> viewSentProject(int movieId) async {
+  Future<void> viewSentProject(int movieId ,String WriterID) async {
     const String baseUrl = APIHandler.baseUrl1; // Update with your API base URL
-    final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId';
+    final String apiUrl = '$baseUrl/Editor/ViewSentProject?Movie_ID=$movieId&WriterID=$WriterID';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -92,7 +94,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
   void initState() {
     super.initState();
 
-    viewSentProject(widget.MovieID!);
+    viewSentProject(widget.MovieID!,widget.Writer_ID.toString());
     print('Title::${widget.moviename}');
   }
   void refreshPage () {

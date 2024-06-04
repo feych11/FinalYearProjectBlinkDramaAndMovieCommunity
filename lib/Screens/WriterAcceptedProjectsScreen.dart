@@ -318,7 +318,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                     Row(
                       children: [
                         Text(
-                          'Director:',
+                          'Editor:',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
@@ -328,7 +328,7 @@ class _WriterAcceptedProjectsScreen1State extends State<WriterAcceptedProjectsSc
                         ),
                         SizedBox(width: 10),
                         Text(
-                          director,
+                          Editor_ID.toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,

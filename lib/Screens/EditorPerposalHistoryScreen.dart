@@ -20,6 +20,26 @@ class _EditorPerposalHistoryScreenState extends State<EditorPerposalHistoryScree
   List<Map<String, dynamic>> notifications = [];
   final Color mateBlack = Color(0xFF242424);
   final Color parotgreen=Color(0xFFADE338);
+
+  String? userId;
+  String? WriterName;
+  String? WriterBalance;
+  String? WriterImage;
+
+
+
+  Future<void> getEditorId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString('Editor_ID');
+    setState(() {
+      userId = user;
+      print('EditorIDDDDDD: ${userId}');
+    });
+    if(userId!=null)
+    {
+      fetchProposals(userId.toString());
+    }
+  }
   // String?userId;
   // Future<void> getUserIdFromSharedPreferences() async {
   //   final prefs = await SharedPreferences.getInstance();
@@ -31,11 +51,11 @@ class _EditorPerposalHistoryScreenState extends State<EditorPerposalHistoryScree
   //     fetchProposals();
   //   }
   // }
-String userId='2';
-  Future<void> fetchProposals() async {
+
+  Future<void> fetchProposals(String WriterID) async {
     const String baseurl2=APIHandler.baseUrl1;
     const String baseurl3=APIHandler.baseUrl2;
-    final url = Uri.parse('$baseurl2/Editor/ShowSentProposals?editorId=${userId}');
+    final url = Uri.parse('$baseurl2/Editor/ShowSentProposals?editorId=${WriterID}');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -43,7 +63,7 @@ String userId='2';
         setState(() {
           notifications = data.map((proposal) {
             return {
-              'id': proposal['ID'],
+              'id': proposal['SentProposal_ID'],
               'title': proposal['Movie_Name'],
               'writerName': proposal['Write_ID'],
               'director': proposal['Director'],
@@ -83,7 +103,7 @@ String userId='2';
   @override
   void initState() {
     super.initState();
-    fetchProposals();
+    getEditorId();
     updateEditorNotifications(2);
     //getSentProposalsIdsWithEditorNotification(2);
 
@@ -199,7 +219,7 @@ String userId='2';
 
         iconTheme: IconThemeData(color: Colors.white),
         centerTitle: true,
-        title: Text('History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
+        title: Text('Sent Proposal',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,
       ),
       body: SafeArea(
@@ -215,8 +235,8 @@ String userId='2';
           ),
           SingleChildScrollView(
           child: Column(
-            children: notifications.map((notification) {
-              return buildNotificationCard(notification);
+            children: notifications.map((notifications) {
+              return buildNotificationCard(notifications);
             }).toList(),
           ),
         ),],)
@@ -224,7 +244,7 @@ String userId='2';
     );
   }
   Widget buildNotificationCard(Map<String, dynamic> notification) {
-    final String id = notification['id'] ?? '';
+    final int id = notification['id'] ?? 0;
     final String title = notification['title'] ?? '';
     final String type = notification['type'] ?? '';
     final String director = notification['director'] ?? '';
