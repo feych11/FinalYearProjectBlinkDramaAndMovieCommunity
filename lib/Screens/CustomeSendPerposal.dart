@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart'as http;
 class CustomeSendPerposal extends StatefulWidget {
   const CustomeSendPerposal({super.key});
@@ -161,6 +162,15 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
   //     print('Error updating editor notifications: $error');
   //   }
   // }
+  String? userId;
+  Future<void> getEditorId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString('Editor_ID');
+    setState(() {
+      userId = user;
+      print('EditorIDDDDDD: ${userId}');
+    });
+  }
   Future<void> fetchWriters(String genre) async {
     const String baseurl2=APIHandler.baseUrl1;
     print(genre);
@@ -261,7 +271,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
         'Genre': _selectedCategories.join(','), // Assuming genre is a comma-separated string
         'Type': _selectedType!,
         'Writer_ID': _selectedWriter!,
-        'Editor_ID': "2",
+        'Editor_ID': userId.toString(),
         'Movie_Name': _moviesconController.text,
         'Episode': EpiCon.text.isEmpty ? '0' : EpiCon.text, // Handle empty episode input
         'Amount': CharCon.text,
@@ -336,6 +346,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
   @override
   void initState() {
     super.initState();
+    getEditorId();
     //fetchWriters();
     //fetchWriters(_selectedCategories1.join(','));
     //fetchMovies();
@@ -346,6 +357,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
   void dispose() {
     _moviesconController.dispose();
     super.dispose();
+
   }
   @override
   Widget build(BuildContext context) {
