@@ -1,14 +1,11 @@
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:finalsemproject/API.dart';
 import 'dart:convert';
-import 'package:badges/badges.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class FavouriteScreen extends StatefulWidget {
@@ -20,8 +17,8 @@ class FavouriteScreen extends StatefulWidget {
 
 class _FavouriteScreenState extends State<FavouriteScreen> {
   List<Map<String, dynamic>> notifications = [];
-  final Color mateBlack = Color(0xFF242424);
-  final Color parotgreen=Color(0xFFADE338);
+  final Color mateBlack = const Color(0xFF242424);
+  final Color parotgreen=const Color(0xFFADE338);
   String ?userId;
   String? ReaderName;
   String ?Subscription;
@@ -43,11 +40,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
       Subscription=Subscription1;
       ReaderBalance=userbalance;
       ReaderImage=userImage;
-      print('jskksd: ${userId}');
-      print('ReaderName: ${ReaderName}');
+      print('jskksd: $userId');
+      print('ReaderName: $ReaderName');
       print('Subscription::: $Subscription');
-      print('Reader Balance: ${ReaderBalance}');
-      print('ReaderImageL ${ReaderImage}');
+      print('Reader Balance: $ReaderBalance');
+      print('ReaderImageL $ReaderImage');
     });
     if (userId != null) {
       fetchProposals();
@@ -55,17 +52,17 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
 
       // print('Getrewrtedata:${getRewriteData}');
 
-      print('ghjk:${userId}');
-      print('ReaderName: ${ReaderName}');
-      print('Reader Balance: ${ReaderBalance}');
-      print('ReaderImageL ${ReaderImage}');
+      print('ghjk:$userId');
+      print('ReaderName: $ReaderName');
+      print('Reader Balance: $ReaderBalance');
+      print('ReaderImageL $ReaderImage');
     }
   }
 
   Future<void> fetchProposals() async {
     const String baseurl2=APIHandler.baseUrl1;
     const String baseurl3=APIHandler.baseUrl2;
-    final url = Uri.parse('$baseurl2/Reader/GetFavoriteDetails?Reader_ID=${userId}');
+    final url = Uri.parse('$baseurl2/Reader/GetFavoriteDetails?Reader_ID=$userId');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -102,7 +99,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     //getSentProposalsIdsWithEditorNotification(2);
 
   }
-  int _notificationCount = 3;
+  final int _notificationCount = 3;
   @override
   Widget build(BuildContext context) {
     final filteredNotifications = notifications2
@@ -116,29 +113,29 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
 
                     ),
-                    SizedBox(width: 10,),
-                    Column(children: [
+                    const SizedBox(width: 10,),
+                    const Column(children: [
                       Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                       ),
                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -148,7 +145,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -156,31 +153,31 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             ),
             ListTile(
 
-              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: const Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterNotificationScreen()));
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
 
             ),
             ListTile(
-              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAcceptedProjectsScreen1()));
                 // Add your action when the item is tapped
                 // Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -201,9 +198,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
 
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterLoginscreen()));
                   },
-                  child: Text
+                  child: const Text
                     ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
                 ),
               ),
@@ -220,13 +217,13 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               _searchQuery = query;
             });
           },
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
-          decoration: InputDecoration(
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
+          decoration: const InputDecoration(
             hintText: 'Search...',
             hintStyle: TextStyle(color: Colors.white),
           ),
         )
-            : Center(child: Text('Favourite Screen',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
+            : const Center(child: Text('Favourite Screen',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
         actions: [
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
@@ -246,7 +243,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           child: Stack(children: [
 
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('Images/SplashScreen45.png'), // Your background image
                   fit: BoxFit.cover,
@@ -286,7 +283,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedContainer(
-        duration:Duration(milliseconds: 500),
+        duration:const Duration(milliseconds: 500),
         height: 200,
         width: 420,
         decoration: BoxDecoration(
@@ -301,7 +298,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedContainer(
-              duration:Duration(milliseconds: 500),
+              duration:const Duration(milliseconds: 500),
               height: 150,
               width: 100,
               decoration: BoxDecoration(
@@ -310,7 +307,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 210,
               width: 300,
@@ -326,17 +323,17 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   children: [
                     Text(
                       MovieTitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontFamily: 'Rye'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Writer Name:   ',
                           style: TextStyle(
                               fontSize: 12,
@@ -347,7 +344,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                         Text(
                           WriterName,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -356,10 +353,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Director:',
                           style: TextStyle(
                               fontSize: 13,
@@ -368,10 +365,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           Director,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -380,10 +377,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Writer Rating:',
                           style: TextStyle(
                               fontSize: 12,
@@ -392,10 +389,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           WriterRating.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -404,10 +401,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Movie Rating:',
                           style: TextStyle(
                               fontSize: 12,
@@ -416,10 +413,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           MovieRating.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,

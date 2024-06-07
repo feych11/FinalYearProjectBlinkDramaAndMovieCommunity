@@ -1,11 +1,7 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/WriterMakingClipsScreen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart'as http;
-import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:finalsemproject/Screens/VideoClip.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -41,7 +37,7 @@ class CoumpundAndSimpleClipsScreen extends StatefulWidget {
 
 
 
-  const CoumpundAndSimpleClipsScreen({Key? key, required this.videoClips,
+  const CoumpundAndSimpleClipsScreen({super.key, required this.videoClips,
 
     this.videoId,
     this.id,
@@ -57,7 +53,7 @@ class CoumpundAndSimpleClipsScreen extends StatefulWidget {
     this.summary,
     this.Episode,
     //this.imagePath,
-  }) : super(key: key);
+  });
 
   @override
   State<CoumpundAndSimpleClipsScreen> createState() => _CoumpundAndSimpleClipsScreenState();
@@ -70,7 +66,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
   bool isClipInitialized = false;
 
   late YoutubePlayerController controller;
-  final Color Green  = Color(0xFF4FAA6D);
+  final Color Green  = const Color(0xFF4FAA6D);
   int? episode1;
   int? id1;
   String? writerID1;
@@ -129,7 +125,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
 
       }
       print('CLIPS LIST :');
-      clips.forEach((element) {print('start ${element.StartTime.inSeconds} end :: ${element.EndTime.inSeconds}');});
+      for (var element in clips) {print('start ${element.StartTime.inSeconds} end :: ${element.EndTime.inSeconds}');}
       if (clips.isNotEmpty) {
         controller = YoutubePlayerController(
           initialVideoId: YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
@@ -142,7 +138,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
       }
     }
     String videoIdAsString = widget.videoId.toString();
-    print('Data: ' + widget.videoClips.toString());
+    print('Data: ${widget.videoClips}');
     print('Clipf Info: ${widget.ClipsInfoList}');
     for (var clip in widget.videoClips)
     {
@@ -170,7 +166,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
             });
       }
     }
-    print('ClipsInfo List 2: ${ClipsInfoList2}');
+    print('ClipsInfo List 2: $ClipsInfoList2');
     print('ID: ${widget.id}');
     print('URL: ${widget.videoId}');
     print('Writer ID: ${widget.Writer_ID}');
@@ -195,11 +191,11 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
 
     required List<Map<String, dynamic>> clips, // Directly accept the list of clips
   }) async {
-    final String baseUrl2 = APIHandler.baseUrl1; // Replace with your API base URL
-    final String endpoint = '$baseUrl2/Writer/SentProject'; // Replace with your API endpoint
+    const String baseUrl2 = APIHandler.baseUrl1; // Replace with your API base URL
+    const String endpoint = '$baseUrl2/Writer/SentProject'; // Replace with your API endpoint
 
     try {
-      final Uri url = Uri.parse('$endpoint');
+      final Uri url = Uri.parse(endpoint);
       final Map<String, dynamic> data = {
         'SentProposal_ID': id1,
         'Writer_ID': writerID1,
@@ -228,8 +224,8 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              title: Text('Sent Project',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
-              content: Row(
+              title: const Text('Sent Project',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+              content: const Row(
                 children: [
                   Icon(Icons.check, color: Colors.black,size: 30,),
                   SizedBox(width: 8),
@@ -243,7 +239,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                       Navigator.of(context).pop();
                     });
                   },
-                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                  child: const Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
                 ),
               ],
             );
@@ -268,7 +264,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Container(
+          content: SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
             height: MediaQuery.of(context).size.height * 0.6,
             child: YoutubePlayer(
@@ -300,7 +296,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Container(
+          content: SizedBox(
             width: MediaQuery.of(context).size.width * 0.8,
             height: MediaQuery.of(context).size.height * 0.6,
             child: YoutubePlayer(
@@ -340,15 +336,15 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
+            const Text(
               'Making Clips',
               style: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.white),
             ),
             InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterMakingClipsScreen()));
                 },
-                child: Icon(Icons.backspace,size: 20,color:Colors.white,)),
+                child: const Icon(Icons.backspace,size: 20,color:Colors.white,)),
           ],),
         backgroundColor: Colors.black,
       ),
@@ -356,14 +352,14 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
 
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Container(
+        child: SizedBox(
 
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
 
             children: [
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Center(
                   child: Container(
 
@@ -372,10 +368,10 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(20)
                     ),
-                    child: Center(child: Text('Compound Clip',style: TextStyle(fontFamily: 'BigshotOne',color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
+                    child: const Center(child: Text('Compound Clip',style: TextStyle(fontFamily: 'BigshotOne',color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
                   )
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Padding(
@@ -445,7 +441,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                 ),
               ),
 
-              SizedBox(height: 70,),
+              const SizedBox(height: 70,),
               Center(
                   child: Container(
 
@@ -454,10 +450,10 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(20)
                     ),
-                    child: Center(child: Text('Simple Clip',style: TextStyle(fontFamily: 'BigshotOne',color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
+                    child: const Center(child: Text('Simple Clip',style: TextStyle(fontFamily: 'BigshotOne',color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),)),
                   )
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               // Add some gap between compoundClips and simpleClips
               Expanded(
 
@@ -466,12 +462,12 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                   itemBuilder: (context, index) {
                     final VideoClip clip = simpleClips[index];
                     return Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
 
                       ),
-                      margin: EdgeInsets.symmetric(horizontal: 8.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.black,
                           //borderRadius: BorderRadius.all(Radius.circular(20))
                         ),
@@ -482,12 +478,12 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                             children: [
                               GestureDetector(
                                 onTap:(){
-                                  print('CLips KI info: '+clip.start_time.toString());
-                                  print('CLIPS KI Zaida Info:  '+clip.end_time.toString());
-                                  print('CLIPS KI URL Info:  '+clip.thumbnailUrl);
-                                  print('CLIPS KI URL Infoooooo:  '+clip.title);
+                                  print('CLips KI info: ${clip.start_time}');
+                                  print('CLIPS KI Zaida Info:  ${clip.end_time}');
+                                  print('CLIPS KI URL Info:  ${clip.thumbnailUrl}');
+                                  print('CLIPS KI URL Infoooooo:  ${clip.title}');
                                   print('Clips Ki Description: ${clip.Description}');
-                                  print('CLIPS KI URL Info:  '+widget.VideoIDAsString.toString());
+                                  print('CLIPS KI URL Info:  ${widget.VideoIDAsString}');
                                   print('URL: ${widget.videoId}');
 
 
@@ -500,22 +496,22 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                                   fit: BoxFit.fill,
                                 ),
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Colors.black,
                                 ),
                                 child: Column(
                                   children: [
 
-                                    SizedBox(height: 13),
-                                    Text('Title:   ${title2}',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),
+                                    const SizedBox(height: 13),
+                                    Text('Title:   $title2',style: const TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),
                                       maxLines: 2, // Adjust the number of lines as needed
                                       overflow: TextOverflow.ellipsis,),
-                                    SizedBox(height: 13),
+                                    const SizedBox(height: 13),
                                     Text(
                                       'Is Simple Clip: ${clip.SimpleClip}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
 
                                         fontFamily: 'BigshotOne',
                                         color: Colors.white,
@@ -523,10 +519,10 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                                       ),
                                       textAlign: TextAlign.start,
                                     ),
-                                    SizedBox(height: 13),
+                                    const SizedBox(height: 13),
                                     Text(
                                       'Description: ${clip.Description}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
 
                                         fontFamily: 'BigshotOne',
                                         color: Colors.white,
@@ -537,7 +533,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 40,), // Add some gap here
+                              const SizedBox(height: 40,), // Add some gap here
                             ],
                           ),
                         ),
@@ -578,7 +574,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
                       clips: clipsData,
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'Sent Project',
                     style: TextStyle(
                       fontSize: 20,

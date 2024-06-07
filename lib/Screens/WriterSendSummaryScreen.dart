@@ -1,6 +1,4 @@
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
-import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
-import 'package:finalsemproject/Screens/WriterWriteSummaryScreen.dart';
 import 'package:flutter/material.dart';
 class WeiterSendSummaryScreen extends StatefulWidget {
   const WeiterSendSummaryScreen({super.key});
@@ -23,20 +21,20 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Text(
                           'Faizan Mustafa',
@@ -54,14 +52,14 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -71,7 +69,7 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
                 )),
 
             ListTile(
-              title: Text(
+              title: const Text(
                 'Home',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -81,7 +79,7 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Subscription:Free',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
@@ -91,7 +89,7 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Update Interest',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -101,7 +99,7 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -111,7 +109,7 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Account Setting',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -128,7 +126,7 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
                   color: Colors.black,
                   border: Border.all(color: Colors.red, width: 2),
                 ),
-                child: Text(
+                child: const Text(
                   'LOGOUT',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -143,7 +141,7 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
       ),
       appBar: AppBar(
 
-        title: Center(
+        title: const Center(
           child: Text(
             'Send Summary',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.black),
@@ -160,7 +158,7 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-            Column(children: [
+            const Column(children: [
               Text('Editor Email:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
               Text('Chfaizan671@gmail.com',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
               SizedBox(height: 7,),
@@ -176,22 +174,22 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
         
             Container(height: 150,
             width: 100,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.black
             ),
               child: Image.asset('Images/parwaz1.jpg'),
             )
           ],),
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             TextFormField(controller: urlcont,
               decoration: InputDecoration(
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
                 hintText: 'URL',
                 labelText: 'URL',
-                prefixIcon: Icon(Icons.link)
+                prefixIcon: const Icon(Icons.link)
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
               height: 50,
               width: 100,
@@ -203,9 +201,9 @@ class _WeiterSendSummaryScreenState extends State<WeiterSendSummaryScreen> {
               ),child: Center(child: InkWell(
 
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAcceptedProjectsScreen1()));
                 },
-                child: Text('Send',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.yellow),))),
+                child: const Text('Send',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.yellow),))),
             )
         ],),
       ),

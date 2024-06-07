@@ -1,5 +1,4 @@
 import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
-import 'package:finalsemproject/Screens/ReaderHomePageScreen.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
@@ -24,20 +23,20 @@ class _ReadingScreenState extends State<ReadingScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Text(
                           'Faizan Mustafa',
@@ -55,14 +54,14 @@ class _ReadingScreenState extends State<ReadingScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -74,9 +73,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Home',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -89,9 +88,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSubcriptionScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Subscription:Free',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
@@ -104,9 +103,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSelectInterestsScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Update Interest',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -117,7 +116,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -129,9 +128,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAccountSettingScreen1()));
                 },
-                child: Text(
+                child: const Text(
                   'Account Setting',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -143,7 +142,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
             ),
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
               },
               child: ListTile(
                 title: Container(
@@ -153,7 +152,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                     color: Colors.black,
                     border: Border.all(color: Colors.red, width: 2),
                   ),
-                  child: Text(
+                  child: const Text(
                     'LOGOUT',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -173,13 +172,13 @@ class _ReadingScreenState extends State<ReadingScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
            children: [
-          Text('Reading',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black)),
-           SizedBox(width: 5,),
+          const Text('Reading',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black)),
+           const SizedBox(width: 5,),
            InkWell(
                onTap: (){
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen()));
                },
-               child: Icon(Icons.backspace))
+               child: const Icon(Icons.backspace))
 
            ],
         ),
@@ -191,7 +190,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
          
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
           Padding(
             padding: const EdgeInsets.all(20),
             child: Padding(
@@ -216,7 +215,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                       ),
 
                       // Text in the right bottom corner
-                      Column(
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [Positioned(
                         bottom: 8, // Adjust the bottom margin as needed
@@ -262,12 +261,12 @@ class _ReadingScreenState extends State<ReadingScreen> {
               ),
             ),
           ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Container(
               height: 50,
               width: 200,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: Alignment.centerRight,
                   end: Alignment.centerLeft,
                   colors: [Colors.black, Colors.black, Colors.yellow, Colors.yellow],
@@ -285,7 +284,7 @@ class _ReadingScreenState extends State<ReadingScreen> {
                       onTap: (){
         
                       },
-                      child: Text('Read',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.black),)),
+                      child: const Text('Read',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.black),)),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -299,12 +298,12 @@ class _ReadingScreenState extends State<ReadingScreen> {
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>WatchingScreen()));
                             });
                           },
-                          child: Text('Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),))),
+                          child: const Text('Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),))),
                 )
               ],),
         
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Container(
               height: 400,
               width: 300,
@@ -312,9 +311,9 @@ class _ReadingScreenState extends State<ReadingScreen> {
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(10)
               ),
-              child: Column(children: [
+              child: const Column(children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text('Waar is a Pakistani action thriller film that was'
                       ' released in 2013. Directed by Bilal Lashari, the movie revolves around the theme '
                       'of terrorism and political corruption in Pakistan. It follows the story of a retired '

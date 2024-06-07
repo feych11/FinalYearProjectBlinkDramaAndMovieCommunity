@@ -23,20 +23,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Text(
                           'Faizan Mustafa',
@@ -54,14 +54,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -73,9 +73,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Home',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -88,9 +88,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSubcriptionScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Subscription:Free',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
@@ -103,9 +103,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSelectInterestsScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Update Interest',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -116,7 +116,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -128,9 +128,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAccountSettingScreen1()));
                 },
-                child: Text(
+                child: const Text(
                   'Account Setting',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -142,7 +142,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
               },
               child: ListTile(
                 title: Container(
@@ -152,7 +152,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     color: Colors.black,
                     border: Border.all(color: Colors.red, width: 2),
                   ),
-                  child: Text(
+                  child: const Text(
                     'LOGOUT',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -167,7 +167,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ),
       ),
 
-      appBar: AppBar(title: Text('History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black),),
+      appBar: AppBar(title: const Text('History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.black),),
     centerTitle: true,
       backgroundColor: Colors.grey,
     ),
@@ -196,13 +196,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
                 child: Image.asset('Images/parwaz1.jpg'),
               ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Container(
                   height: 150,
                   width: 150,
-                  decoration: BoxDecoration(color: Colors.black),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
+                  decoration: const BoxDecoration(color: Colors.black),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 30),
                     child: Column(children: [
                       Text('Parwaz Hai Janoon',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
                       ),
@@ -302,7 +302,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 )
             ],),
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Container(
             height: 200,
             width: 300,
@@ -322,13 +322,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                   child: Image.asset('Images/actorinlaw1.jpg'),
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Container(
                   height: 150,
                   width: 150,
-                  decoration: BoxDecoration(color: Colors.black),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
+                  decoration: const BoxDecoration(color: Colors.black),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 30),
                     child: Column(children: [
                       Text('Actor In Law',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
                       ),

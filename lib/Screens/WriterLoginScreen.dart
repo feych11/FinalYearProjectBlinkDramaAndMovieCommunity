@@ -1,13 +1,8 @@
-import 'package:finalsemproject/Screens/EditorBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSignUpScreen.dart';
-import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
-import 'package:finalsemproject/Screens/SendPerposal.dart';
 import 'package:finalsemproject/Screens/WriterBottomNavScreen.dart';
-import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:finalsemproject/API.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:convert';
 class WriterLoginscreen extends StatefulWidget {
@@ -23,7 +18,7 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
   bool islogin=false;
   Future<void> loginUser(String email, String password) async {
     const String baseurl2=APIHandler.baseUrl1;
-    final Uri apiUrl = Uri.parse('$baseurl2/User/Login?password='+password+'&email='+email); // Replace with your API URL
+    final Uri apiUrl = Uri.parse('$baseurl2/User/Login?password=$password&email=$email'); // Replace with your API URL
     print(email.toString()+password);
     try {
       final response = await http.post(
@@ -53,12 +48,12 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
         showDialog(context: context, builder: (BuildContext context)
         {
           return AlertDialog(
-            title: Text('ERROR',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-            content: Text('Email And Passowrd MissMatch',style: TextStyle(fontSize: 15),),
+            title: const Text('ERROR',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+            content: const Text('Email And Passowrd MissMatch',style: TextStyle(fontSize: 15),),
             actions: [
               TextButton(onPressed: (){
                 Navigator.of(context).pop();
-              }, child: Text('Ok'))
+              }, child: const Text('Ok'))
             ],
           );
         });
@@ -69,12 +64,12 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
         showDialog(context: context, builder: (BuildContext context)
         {
           return AlertDialog(
-            title: Text('ERROR',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-            content: Text('Email And Passowrd MissMatch',style: TextStyle(fontSize: 15),),
+            title: const Text('ERROR',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+            content: const Text('Email And Passowrd MissMatch',style: TextStyle(fontSize: 15),),
             actions: [
               TextButton(onPressed: (){
                 Navigator.of(context).pop();
-              }, child: Text('Ok'))
+              }, child: const Text('Ok'))
             ],
           );
         });
@@ -85,12 +80,12 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
         showDialog(context: context, builder: (BuildContext context)
         {
           return AlertDialog(
-            title: Text('ERROR',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-            content: Text('Email And Passowrd MissMatch',style: TextStyle(fontSize: 15),),
+            title: const Text('ERROR',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+            content: const Text('Email And Passowrd MissMatch',style: TextStyle(fontSize: 15),),
             actions: [
               TextButton(onPressed: (){
                 Navigator.of(context).pop();
-              }, child: Text('Ok'))
+              }, child: const Text('Ok'))
             ],
           );
         });
@@ -108,7 +103,7 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'WRITER LOGIN SCREEN',
           style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),
         ),
@@ -118,7 +113,7 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Center(
+            const Center(
                 child: Text(
                   'LOGIN',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),
@@ -129,14 +124,14 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                 hintText: 'Email',
-                hintStyle: TextStyle(fontFamily: 'Rye'),
+                hintStyle: const TextStyle(fontFamily: 'Rye'),
                 labelText: 'Email',
-                labelStyle: TextStyle(fontFamily: 'Rye'),
+                labelStyle: const TextStyle(fontFamily: 'Rye'),
 
-                prefixIcon: Icon(Icons.email),
+                prefixIcon: const Icon(Icons.email),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextFormField(
@@ -144,13 +139,13 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                 hintText: 'Password',
-                hintStyle: TextStyle(fontFamily: 'Rye'),
+                hintStyle: const TextStyle(fontFamily: 'Rye'),
                 labelText: 'Password',
-                labelStyle: TextStyle(fontFamily: 'Rye'),
-                prefixIcon: Icon(Icons.lock),
+                labelStyle: const TextStyle(fontFamily: 'Rye'),
+                prefixIcon: const Icon(Icons.lock),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Center(
@@ -169,17 +164,17 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
                        // loginUser( Wriemailcon.text,Wripasscount.text);
 
                       },
-                      child: Text('LOGIN',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigshotOne')))),
+                      child: const Text('LOGIN',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigshotOne')))),
                 )
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(children: [
-              Text('Dont have an account?',style: TextStyle(fontFamily: 'Rye'),),
+              const Text('Dont have an account?',style: TextStyle(fontFamily: 'Rye'),),
               InkWell(
                   onTap: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSignUpScreen()));
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSignUpScreen()));
                   },
-                  child: Text('Sign up',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),))
+                  child: const Text('Sign up',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),))
             ],)
           ],
         ),
@@ -190,7 +185,7 @@ class _WriterLoginscreenState extends State<WriterLoginscreen> {
     loginUser( Wriemailcon.text,Wripasscount.text);
 
     if(islogin){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen11()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen11()));
     }
   }
 }

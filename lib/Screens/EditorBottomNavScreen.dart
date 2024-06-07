@@ -4,8 +4,6 @@ import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/EditorAcceptedProjectHistoryScreen.dart';
 import 'package:finalsemproject/Screens/EditorNotificationScreen.dart';
 import 'package:finalsemproject/Screens/EditorPerposalHistoryScreen.dart';
-import 'package:finalsemproject/Screens/EditorReadingScreen.dart';
-import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/SendPerposal.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
@@ -88,10 +86,10 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
   }
   final List<Widget> _pages = [
     // Replace these with your actual content widgets for each tab
-    SendPerposal(),
-    EditorNotificationScreen(),
-    EditorPerposalHistoryScreen(),
-    EditorAcceptedProjectHistoryScreen()
+    const SendPerposal(),
+    const EditorNotificationScreen(),
+    const EditorPerposalHistoryScreen(),
+    const EditorAcceptedProjectHistoryScreen()
 
 
   ];
@@ -116,7 +114,7 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
           });
         },
         items: [
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home,color: Colors.white,),
             label: 'Home',
 
@@ -127,7 +125,7 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
             // label: 'Details',
             icon: Stack(
               children: [
-                Icon(Icons.notifications,size: 30,),
+                const Icon(Icons.notifications,size: 30,),
                 if(_notificationCount>0)
                   Positioned(
 
@@ -136,19 +134,19 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
                       left: 14,
 
                       child: Container(
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        constraints: BoxConstraints(
+                        constraints: const BoxConstraints(
                           minWidth: 16,
                           minHeight: 16,
                         ),
                         child: Text(
 
                           '$_notificationCount',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 10,
                           ),
@@ -158,12 +156,12 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
             ),
             label: 'Notification'
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.history,color: Colors.white,),
             label: 'History',
 
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.note_add,color: Colors.white,),
             label: 'Acc Projects',
 

@@ -3,7 +3,6 @@ import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
 import 'package:finalsemproject/Screens/ReadingScreen.dart';
-import 'package:finalsemproject/Screens/WriterAccountSettingScreen.dart';
 import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
 
@@ -32,20 +31,20 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Text(
                           'Faizan Mustafa',
@@ -63,14 +62,14 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -82,9 +81,9 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Home',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -97,9 +96,9 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSubcriptionScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Subscription:Free',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
@@ -112,9 +111,9 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSelectInterestsScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Update Interest',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -125,7 +124,7 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -137,9 +136,9 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAccountSettingScreen1()));
                 },
-                child: Text(
+                child: const Text(
                   'Account Setting',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -151,7 +150,7 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
             ),
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
               },
               child: ListTile(
                 title: Container(
@@ -161,7 +160,7 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
                     color: Colors.black,
                     border: Border.all(color: Colors.red, width: 2),
                   ),
-                  child: Text(
+                  child: const Text(
                     'LOGOUT',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -177,7 +176,7 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text(
+        title: const Text(
           'Movies & Darama',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.black),
 
@@ -186,12 +185,12 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          Card(
+          const Card(
             elevation: 10,
             color: Colors.black,
             child: Center(child: Text('movies And Darama',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white),)),
           ),
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
@@ -201,10 +200,10 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
 
                 ),
                 hintText: 'Search',
-                hintStyle: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                hintStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                 labelText: 'Search',
-                labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
-                suffixIcon: Icon(Icons.search),
+                labelStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+                suffixIcon: const Icon(Icons.search),
               ),
             ),
           ),
@@ -218,20 +217,20 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
                 items: categoriesList.map((e) {
                   return DropdownMenuItem<String>(
                     value: e,
-                    child: Text(e,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                    child: Text(e,style: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                   );
                 }).toList(),
                 onChanged: ( selectedCategory) {
                   // Handle selection
                   setState(() {
-                    this.seleted=selectedCategory!;
+                    seleted=selectedCategory!;
                   });
                 },
               ) ,
               )
 
             ),
-            SizedBox(width: 5,),
+            const SizedBox(width: 5,),
             Expanded(
               child: Card(elevation: 10,
               color: Colors.black,
@@ -240,13 +239,13 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
                 items: filterList.map((e) {
                   return DropdownMenuItem<String>(
                     value: e,
-                    child: Text(e,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
+                    child: Text(e,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
                   );
                 }).toList(),
                 onChanged: (selectedfil)
                 {
                   setState(() {
-                    this.selectedfliter=selectedfil!;
+                    selectedfliter=selectedfil!;
                   });
                 },
 
@@ -254,7 +253,7 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
               )
             ),
           ],),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
@@ -263,30 +262,30 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
               Container(
                 height: 130,
                 width: 80,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.black
                 ),
                 child: InkWell(
                     onTap: (){
                       setState(() {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ReadingScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReadingScreen()));
                       });
                     },
                     child: Image.asset('Images/parwaz2.jpg')),
               ),
-              SizedBox(width: 20,),
+              const SizedBox(width: 20,),
               Container(
                 height: 130,
                 width: 80,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.black
                 ),
                 child: Image.asset('Images/Dukhtar1.png'),
               ),
             ],),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -304,24 +303,24 @@ class _MoviesAndDaramaState extends State<MoviesAndDarama> {
                 Container(
                   height: 130,
                   width: 80,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Colors.black
                   ),
                   child: Image.asset('Images/waar1.jpg'),
                 ),
-                SizedBox(width: 20,),
+                const SizedBox(width: 20,),
                 Container(
                   height: 130,
                   width: 80,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Colors.black
                   ),
                   child: Image.asset('Images/actorinlaw1.jpg'),
                 ),
               ],),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

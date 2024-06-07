@@ -16,7 +16,7 @@ class HistoryOfWriterSentProject extends StatefulWidget {
 
 class _HistoryOfWriterSentProjectState extends State<HistoryOfWriterSentProject> {
   List<Map<String, dynamic>> notifications = [];
-  final Color mateBlack = Color(0xFF242424);
+  final Color mateBlack = const Color(0xFF242424);
   String? userId;
   String? WriterName;
   String? WriterBalance;
@@ -34,19 +34,19 @@ class _HistoryOfWriterSentProjectState extends State<HistoryOfWriterSentProject>
       WriterName=username;
       WriterBalance=userbalance;
       WriterImage=userImage;
-      print('jskksd: ${userId}');
-      print('WriterName: ${WriterName}');
-      print('Writer Balance: ${WriterBalance}');
-      print('WriterImageL ${WriterImage}');
+      print('jskksd: $userId');
+      print('WriterName: $WriterName');
+      print('Writer Balance: $WriterBalance');
+      print('WriterImageL $WriterImage');
     });
     if (userId != null) {
 
       // print('Getrewrtedata:${getRewriteData}');
 
-      print('ghjk:${userId}');
-      print('WriterName: ${WriterName}');
-      print('Writer Balance: ${WriterBalance}');
-      print('WriterImageL ${WriterImage}');
+      print('ghjk:$userId');
+      print('WriterName: $WriterName');
+      print('Writer Balance: $WriterBalance');
+      print('WriterImageL $WriterImage');
 
 
       HistoryWriterSentproject(userId.toString());
@@ -59,9 +59,9 @@ class _HistoryOfWriterSentProjectState extends State<HistoryOfWriterSentProject>
 
   Future<void>HistoryWriterSentproject(String WriterID)async
   {
-    final String Baseurl=APIHandler.baseUrl1;
-    final String Baseurl1=APIHandler.baseUrl2;
-    final responce=await http.get(Uri.parse('$Baseurl/Writer/HistorySentProject?Writer_ID=${WriterID}'));
+    const String Baseurl=APIHandler.baseUrl1;
+    const String Baseurl1=APIHandler.baseUrl2;
+    final responce=await http.get(Uri.parse('$Baseurl/Writer/HistorySentProject?Writer_ID=$WriterID'));
     try
     {
       if(responce.statusCode==200)
@@ -89,7 +89,7 @@ class _HistoryOfWriterSentProjectState extends State<HistoryOfWriterSentProject>
     }
     catch(error)
     {
-      print('Failed To load Writer History of Sent Project ${error}');
+      print('Failed To load Writer History of Sent Project $error');
     }
   }
 
@@ -109,7 +109,7 @@ backgroundColor: Colors.grey,
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
@@ -120,22 +120,22 @@ backgroundColor: Colors.grey,
                       backgroundImage: NetworkImage(WriterImage.toString()),
 
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
 
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(WriterName.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white,fontFamily: 'BigShotone'),
+                        Text(WriterName.toString(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white,fontFamily: 'BigShotone'),
                         ),
-                        SizedBox(height: 20,),
-                        Text(WriterBalance.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigShotone'),)
+                        const SizedBox(height: 20,),
+                        Text(WriterBalance.toString(),style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigShotone'),)
                       ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -145,7 +145,7 @@ backgroundColor: Colors.grey,
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -153,31 +153,31 @@ backgroundColor: Colors.grey,
             ),
             ListTile(
 
-              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: 'BigShotone'),),
+              title: const Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: 'BigShotone'),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterNotificationScreen()));
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
 
             ),
             ListTile(
-              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+              title: const Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAcceptedProjectsScreen1()));
                 // Add your action when the item is tapped
                 // Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -199,9 +199,9 @@ backgroundColor: Colors.grey,
 
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
                   },
-                  child: Center(
+                  child: const Center(
                     child: Text
                       ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red,fontFamily: 'BigShotone'),),
                   ),
@@ -214,7 +214,7 @@ backgroundColor: Colors.grey,
       ),
       appBar: AppBar(
 
-        title: Text('Writer History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
+        title: const Text('Writer History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,
       ),
       body:
@@ -223,7 +223,7 @@ backgroundColor: Colors.grey,
 
 
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('Images/SplashScreen45.png'), // Your background image
               fit: BoxFit.cover,
@@ -244,7 +244,7 @@ backgroundColor: Colors.grey,
   Widget buildNotificationCard(Map<String, dynamic> notification) {
     final int id = notification['SentProject_ID'] ?? '';
     final String Status = notification['Status'] ?? '';
-    final String Send_at = notification['Send_at'] ?? '';
+    final String sendAt = notification['Send_at'] ?? '';
     final String MovieName = notification['MovieName'] ?? '';
     final String Images = notification['Image'] ?? '';
 
@@ -274,7 +274,7 @@ backgroundColor: Colors.grey,
               ),
               child: Image.network(Images), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 200,
               width: 200,
@@ -285,17 +285,17 @@ backgroundColor: Colors.grey,
                   children: [
                     Text(
                       MovieName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontFamily: 'BigshotOne'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '      Send At:',
                           style: TextStyle(
                               fontSize: 12,
@@ -305,8 +305,8 @@ backgroundColor: Colors.grey,
                           ),
                         ),
                         Text(
-                          "   $Send_at",
-                          style: TextStyle(
+                          "   $sendAt",
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -315,10 +315,10 @@ backgroundColor: Colors.grey,
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '      Status:',
                           style: TextStyle(
                               fontSize: 13,
@@ -327,10 +327,10 @@ backgroundColor: Colors.grey,
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           "   $Status",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -339,9 +339,9 @@ backgroundColor: Colors.grey,
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // Row(
                     //   children: [
                     //     Padding(

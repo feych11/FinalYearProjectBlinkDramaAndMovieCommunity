@@ -1,16 +1,10 @@
 import 'dart:convert';
 
 import 'package:finalsemproject/API.dart';
-import 'package:finalsemproject/Screens/FavouriteScreen.dart';
 import 'package:finalsemproject/Screens/HistoryOfWriterSentProject.dart';
-import 'package:finalsemproject/Screens/HistoryScreen.dart';
-import 'package:finalsemproject/Screens/MoviesandDarama.dart';
-import 'package:finalsemproject/Screens/ReaderHomePageScreen.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
-import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
-import 'package:finalsemproject/Screens/WriterWriteSummaryScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
 class ReaderBottomNavScreen11 extends StatefulWidget {
@@ -22,7 +16,7 @@ class ReaderBottomNavScreen11 extends StatefulWidget {
 
 class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
   int _currentIndex = 0;
-  int _notificationCount=3;
+  final int _notificationCount=3;
   Future<void> getWriterNotificationsSentProject(int writerId) async {
     try {
        const String baseurl2 =APIHandler.baseUrl1;  // Replace with your API base URL
@@ -47,9 +41,9 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
 
   final List<Widget> _pages = [
     // Replace these with your actual content widgets for each tab
-    WriterNotificationScreen(),
-    WriterAcceptedProjectsScreen1(),
-    HistoryOfWriterSentProject(),
+    const WriterNotificationScreen(),
+    const WriterAcceptedProjectsScreen1(),
+    const HistoryOfWriterSentProject(),
 
   ];
   @override
@@ -75,7 +69,7 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
           BottomNavigationBarItem(
               icon: Stack(
                 children: [
-                  Icon(Icons.notifications,size: 30,),
+                  const Icon(Icons.notifications,size: 30,),
                   if(_notificationCount>0)
                     Positioned(
 
@@ -84,18 +78,18 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
                       left: 14,
 
                       child: Container(
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        constraints: BoxConstraints(
+                        constraints: const BoxConstraints(
                           minWidth: 16,
                           minHeight: 16,
                         ),
                         child: Text(
                           '$_notificationCount',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 10,
                           ),
@@ -105,11 +99,11 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
               ),
               label: 'Notification'
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.details),
             label: 'Details',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: 'History',
           ),
@@ -117,10 +111,10 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
             icon: InkWell(
                 onTap: (){
                   setState(() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
                   });
                 },
-                child: Icon(Icons.logout)),
+                child: const Icon(Icons.logout)),
             label: 'Logout',
           ),
           

@@ -18,20 +18,20 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Text(
                           'Faizan Mustafa',
@@ -49,14 +49,14 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -66,7 +66,7 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
                 )),
 
             ListTile(
-              title: Text(
+              title: const Text(
                 'Home',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -76,7 +76,7 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Subscription:Free',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
@@ -86,7 +86,7 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Update Interest',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -96,7 +96,7 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -106,7 +106,7 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Account Setting',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -123,7 +123,7 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
                   color: Colors.black,
                   border: Border.all(color: Colors.red, width: 2),
                 ),
-                child: Text(
+                child: const Text(
                   'LOGOUT',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -137,14 +137,14 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
         ),
       ),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Balance Recharge',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
         ),
       ),
       body: Column(
         children: [
-          Center(
+          const Center(
               child: Text(
             'Enter Ammount To Recharge',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -157,12 +157,12 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
               hintText: 'Email',
               labelText: 'Email',
               //suffixIcon: Icon(Icons.email),
-              prefixIcon: Icon(Icons.email)
+              prefixIcon: const Icon(Icons.email)
 
             ),
 
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           TextFormField(
             controller: emailconut,
             decoration: InputDecoration(
@@ -171,12 +171,12 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
                 hintText: 'Recharge Ammount',
                 labelText: 'Recharge Ammount',
                 //suffixIcon: Icon(Icons.email),
-                prefixIcon: Icon(Icons.money)
+                prefixIcon: const Icon(Icons.money)
 
             ),
 
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
 
           Container(height: 40,
             width: 100,
@@ -188,7 +188,7 @@ class _BalanceRequestScreenState extends State<BalanceRequestScreen> {
               ),
 
             ),
-            child: Text('Recharge',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.yellow),),
+            child: const Text('Recharge',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.yellow),),
           ),
         ],
       ),

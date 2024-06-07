@@ -1,6 +1,4 @@
-import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
-import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
 import 'package:flutter/material.dart';
 class WriterInterestScreen extends StatefulWidget {
   const WriterInterestScreen({super.key});
@@ -17,7 +15,7 @@ class _WriterInterestScreenState extends State<WriterInterestScreen> {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'Select Inetrests',
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.white),
         ),
@@ -36,92 +34,92 @@ class _WriterInterestScreenState extends State<WriterInterestScreen> {
                   checked=value!;
                 });
               }),
-              Text('Horror',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Horror',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Fantasy',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Fantasy',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Action',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Action',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Comedy',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Comedy',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Sci-Fi',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Sci-Fi',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Darama',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Darama',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Thriller',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Thriller',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Crime',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Crime',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Romantic',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Romantic',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Animation',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 10,),
+              const Text('Animation',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 10,),
               Checkbox(value: checked, onChanged: ( value)
               {
                 setState(() {
                   checked=value!;
                 });
               }),
-              Text('Historical',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              SizedBox(height: 30,),
+              const Text('Historical',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              const SizedBox(height: 30,),
               Center(
                   child: InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAcceptedProjectsScreen1()));
                     },
                     child: Container(
                       height: 40,
@@ -130,7 +128,7 @@ class _WriterInterestScreenState extends State<WriterInterestScreen> {
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(10)
                       ),
-                      child: Center(child: Text('SUBMIT',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white))),
+                      child: const Center(child: Text('SUBMIT',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white))),
                     ),
                   )
               ),

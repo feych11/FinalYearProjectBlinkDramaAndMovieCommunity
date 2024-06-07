@@ -14,7 +14,7 @@ class EditorNotificationScreen extends StatefulWidget {
 
 class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
   List<dynamic> projects = [];
-  final Color mateBlack = Color(0xFF242424);
+  final Color mateBlack = const Color(0xFF242424);
   String ?userId;
 
 
@@ -23,7 +23,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
     final user = prefs.getString('Editor_ID');
     setState(() {
       userId = user;
-      print('EditorIDDDDDD: ${userId}');
+      print('EditorIDDDDDD: $userId');
     });
     if(userId!=null)
     {
@@ -34,7 +34,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
   Future<void> fetchProjects(String editorid) async {
     const String baseurl2 = APIHandler.baseUrl1;
     const String baseurl3 = APIHandler.baseUrl2;
-    final response = await http.get(Uri.parse('$baseurl2/Editor/ReceiveSentProject?Editor_ID='+editorid));
+    final response = await http.get(Uri.parse('$baseurl2/Editor/ReceiveSentProject?Editor_ID=$editorid'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body)['Project'];
@@ -99,29 +99,29 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
 
                     ),
-                    SizedBox(width: 10,),
-                    Column(children: [
+                    const SizedBox(width: 10,),
+                    const Column(children: [
                       Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                       ),
                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -131,7 +131,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -139,7 +139,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
             ),
             ListTile(
 
-              title: Text('Subscription:Free',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: const Text('Subscription:Free',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -147,21 +147,21 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
 
             ),
             ListTile(
-              title: Text('Update Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Update Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -178,7 +178,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                   ),
 
                 ),
-                child: Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
+                child: const Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
               ),
             ),
             // Add more ListTiles for additional items in the drawer
@@ -187,12 +187,12 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
 
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         // actions: [
         //   IconButton(onPressed: (){}, icon: Icon(Icons.notifications))
         // ],
         centerTitle: true,
-        title: Text('Notification',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigshotOne',color: Colors.white),),
+        title: const Text('Notification',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigshotOne',color: Colors.white),),
         backgroundColor: Colors.black,
 
       ),
@@ -200,7 +200,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
         child: Stack(children: [
 
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('Images/SplashScreen45.png'), // Your background image
                 fit: BoxFit.cover,
@@ -232,7 +232,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child:AnimatedContainer(
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         height: 200,
         width: 320,
         decoration: BoxDecoration(
@@ -247,7 +247,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedContainer(
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               height: 150,
               width: 100,
               decoration: BoxDecoration(
@@ -259,7 +259,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                 fit: BoxFit.cover,
               ), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 210,
               width: 200,
@@ -272,7 +272,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                     Center(
                       child: Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -280,37 +280,37 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       '  Director: $director',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                           color: Colors.white,
                           fontFamily: 'Rye'
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       '  Status: $Status',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                           color: Colors.white,
                           fontFamily: 'Rye'
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       '  Type: $type',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                           color: Colors.white,
                           fontFamily: 'Rye'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Center(
                       child: GestureDetector(
                         onTap: (){
@@ -325,7 +325,7 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
                               color: Colors.amber,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
+                          child: const Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
                         ),
                       ),
                     )

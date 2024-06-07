@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:finalsemproject/API.dart';
 import 'dart:convert';
-import 'package:badges/badges.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class EditorBalanceRequestScreen extends StatefulWidget {
@@ -19,8 +17,8 @@ class EditorBalanceRequestScreen extends StatefulWidget {
 
 class _EditorBalanceRequestScreenState extends State<EditorBalanceRequestScreen> {
   List<Map<String, dynamic>> notifications = [];
-  final Color mateBlack = Color(0xFF242424);
-  final Color parotgreen=Color(0xFFADE338);
+  final Color mateBlack = const Color(0xFF242424);
+  final Color parotgreen=const Color(0xFFADE338);
   String?Admin_ID;
   String?AdminName;
   String?AdminEmail;
@@ -46,9 +44,9 @@ class _EditorBalanceRequestScreenState extends State<EditorBalanceRequestScreen>
       AdminName=UserName;
       AdminEmail=Email;
 
-      print('Admin ID: ${Admin_ID}');
-      print('AdminName: ${AdminName}');
-      print('AdminEMail: ${AdminEmail}');
+      print('Admin ID: $Admin_ID');
+      print('AdminName: $AdminName');
+      print('AdminEMail: $AdminEmail');
 
     });
 
@@ -97,11 +95,11 @@ int ? id;
   }
   Future<void>AcceptBalanceRequest()async
   {
-    final String baseurl=APIHandler.baseUrl1;
+    const String baseurl=APIHandler.baseUrl1;
     final Responce=await http.put(Uri.parse('$baseurl/Admin/AcceptBalanceRequest?id=$id'));
     if(Responce.statusCode==200)
       {
-        final snackBar = SnackBar(content: Text('Balance request accepted and reader\'s balance updated.', style: TextStyle(
+        const snackBar = SnackBar(content: Text('Balance request accepted and reader\'s balance updated.', style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -110,7 +108,7 @@ int ? id;
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     else{
-      final snackBar = SnackBar(content: Text('Failed to accept balance request.', style: TextStyle(
+      const snackBar = SnackBar(content: Text('Failed to accept balance request.', style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
           color: Colors.black,
@@ -121,11 +119,11 @@ int ? id;
   }
   Future<void>RejectBalanceRequest()async
   {
-    final String baseurl=APIHandler.baseUrl1;
+    const String baseurl=APIHandler.baseUrl1;
     final Responce=await http.put(Uri.parse('$baseurl/Admin/RejectBalanceRequest?id=$id'));
     if(Responce.statusCode==200)
     {
-      final snackBar = SnackBar(content: Text('Reject Balance Request', style: TextStyle(
+      const snackBar = SnackBar(content: Text('Reject Balance Request', style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
           color: Colors.black,
@@ -134,7 +132,7 @@ int ? id;
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     else{
-      final snackBar = SnackBar(content: Text('Failed To Reject Balance Request.', style: TextStyle(
+      const snackBar = SnackBar(content: Text('Failed To Reject Balance Request.', style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
           color: Colors.black,
@@ -154,7 +152,7 @@ int ? id;
     //getSentProposalsIdsWithEditorNotification(2);
 
   }
-  int _notificationCount = 3;
+  final int _notificationCount = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,29 +162,29 @@ int ? id;
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
 
                     ),
-                    SizedBox(width: 10,),
-                    Column(children: [
+                    const SizedBox(width: 10,),
+                    const Column(children: [
                       Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                       ),
                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -196,7 +194,7 @@ int ? id;
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -204,31 +202,31 @@ int ? id;
             ),
             ListTile(
 
-              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: const Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterNotificationScreen()));
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
 
             ),
             ListTile(
-              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAcceptedProjectsScreen1()));
                 // Add your action when the item is tapped
                 // Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -249,9 +247,9 @@ int ? id;
 
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterLoginscreen()));
                   },
-                  child: Text
+                  child: const Text
                     ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
                 ),
               ),
@@ -263,16 +261,16 @@ int ? id;
       appBar: AppBar(
 
 
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        title: Text('Balance Request',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
+        title: const Text('Balance Request',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,
       ),
       body: SafeArea(
           child: Stack(children: [
 
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('Images/SplashScreen45.png'), // Your background image
                   fit: BoxFit.cover,
@@ -303,7 +301,7 @@ int ? id;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedContainer(
-        duration:Duration(milliseconds: 500),
+        duration:const Duration(milliseconds: 500),
         height: 200,
         width: 320,
         decoration: BoxDecoration(
@@ -318,7 +316,7 @@ int ? id;
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedContainer(
-              duration:Duration(milliseconds: 500),
+              duration:const Duration(milliseconds: 500),
               height: 150,
               width: 100,
               decoration: BoxDecoration(
@@ -327,7 +325,7 @@ int ? id;
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 210,
               width: 200,
@@ -341,7 +339,7 @@ int ? id;
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       ('Balance Request'),
                       style: TextStyle(
                           fontSize: 15,
@@ -350,12 +348,12 @@ int ? id;
                           fontFamily: 'Rye'
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
                           '  Name: $name  ',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -365,26 +363,26 @@ int ? id;
 
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         Text(
                           '  Baalnce: $Balance',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
 
                       ],
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Status:',
                           style: TextStyle(
                               fontSize: 12,
@@ -393,10 +391,10 @@ int ? id;
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           status,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -405,7 +403,7 @@ int ? id;
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
                         Padding(
@@ -421,7 +419,7 @@ int ? id;
                                 color: Colors.yellow,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   'Accept',
                                   style: TextStyle(
@@ -447,7 +445,7 @@ int ? id;
                                 color: Colors.yellow,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   'Reject',
                                   style: TextStyle(

@@ -14,7 +14,7 @@ class _WriterAccountSettingScreenState1
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Account Setting',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
@@ -24,19 +24,19 @@ class _WriterAccountSettingScreenState1
           //mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 70,
               backgroundImage: AssetImage('Images/man2.webp'),
 
             ),
-            SizedBox(height: 10,),
-            Text('Faizanchaudhry671@gmail.com',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+            const SizedBox(height: 10,),
+            const Text('Faizanchaudhry671@gmail.com',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
 
-            SizedBox(height: 30,),
-            Text('Name:Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-            Text('Password:dj**nkdk*****',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-            Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-            SizedBox(height: 40,),
+            const SizedBox(height: 30,),
+            const Text('Name:Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+            const Text('Password:dj**nkdk*****',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+            const Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+            const SizedBox(height: 40,),
 
 
             Container(height: 40,
@@ -49,7 +49,7 @@ class _WriterAccountSettingScreenState1
                 ),
 
               ),
-              child: Text('Recharge',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.yellow),),
+              child: const Text('Recharge',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.yellow),),
             ),
           ],),
       ),

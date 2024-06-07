@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:finalsemproject/API.dart';
-import 'package:finalsemproject/Screens/EditorAddCommentsFroWriterScreen.dart';
 import 'package:finalsemproject/Screens/WatchingScreen.dart';
-import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -14,12 +12,12 @@ class EditorViewAcceptedSummary extends StatefulWidget {
   final String?Writer_ID;
 
 
-  const EditorViewAcceptedSummary({Key? key ,
+  const EditorViewAcceptedSummary({super.key ,
     this.MovieID,
     this.sentProjectID,
     this.moviename,
     this.Writer_ID,
-  }) : super(key: key);
+  });
 
   @override
   State<EditorViewAcceptedSummary> createState() => _EditorViewAcceptedSummaryState();
@@ -30,7 +28,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
   String? writerName = '';
   Duration? endtime;
   Duration? startTime;
-  final Color Green  = Color(0xFF4FAA6D);
+  final Color Green  = const Color(0xFF4FAA6D);
   late final Map<String, dynamic> data;
   //late List<dynamic> clipsData;
   List<Map<String, dynamic>> clipsData = [];
@@ -108,8 +106,8 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
 
   @override
   Widget build(BuildContext context) {
-    Widget loadingTextWidget = Padding(
-      padding: const EdgeInsets.all(8.0),
+    Widget loadingTextWidget = const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Text(
         'Loading Video...',
         style: TextStyle(
@@ -127,20 +125,20 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.black,
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 30,
                     backgroundImage: AssetImage('Images/man2.webp'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Column(
+                  const Column(
                     children: [
                       Text(
                         'Faizan Mustafa',
@@ -158,14 +156,14 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context); // Close the drawer
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.close,
                       color: Colors.white,
                       size: 30,
@@ -175,7 +173,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
               ),
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Home',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -185,7 +183,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Subscription:Free',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
@@ -195,7 +193,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Update Interest',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -205,7 +203,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -215,7 +213,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Account Setting',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -232,7 +230,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
                   color: Colors.black,
                   border: Border.all(color: Colors.red, width: 2),
                 ),
-                child: Text(
+                child: const Text(
                   'LOGOUT',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -245,7 +243,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
         ),
       ),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Reading',
           style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -259,7 +257,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
       body: Stack(children: [
 
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('Images/SplashScreen45.png'), // Your background image
               fit: BoxFit.cover,
@@ -271,11 +269,11 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -286,7 +284,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
                     color: Colors.white,
                     width: 4,
                   ),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     begin: Alignment.centerRight,
                     end: Alignment.centerLeft,
                     colors: [
@@ -311,7 +309,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
                             //     MaterialPageRoute(
                             //         builder: (context) => EditorReadingScreen()));
                           },
-                          child: Text(
+                          child: const Text(
                             'Read',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -335,7 +333,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
                                               )));
                                 });
                               },
-                              child: Text(
+                              child: const Text(
                                 'Watch',
                                 style: TextStyle(
                                     fontSize: 20,
@@ -346,7 +344,7 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Center(
@@ -366,14 +364,14 @@ class _EditorViewAcceptedSummaryState extends State<EditorViewAcceptedSummary> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           summaryText ?? 'Loading summary...',
-                          style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'BigshotOne',fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'BigshotOne',fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],

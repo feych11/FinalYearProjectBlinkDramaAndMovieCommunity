@@ -20,7 +20,7 @@ class _DashboardState extends State<Dashboard> {
      Scaffold(
        backgroundColor: Colors.grey,
        appBar: AppBar(
-         title: Text(
+         title: const Text(
            'BLINK DRAMA AND MOVIE',
            style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'BigshotOne'),
          ),
@@ -43,7 +43,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
@@ -56,13 +56,13 @@ class _DashboardState extends State<Dashboard> {
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 120),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 120),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             '    WELCOME TO BLINK \n DRAMA AND MOVIE APP',
                             style: TextStyle(
@@ -83,7 +83,7 @@ class _DashboardState extends State<Dashboard> {
                   Padding(
                     padding: const EdgeInsets.only(top: 50.0),
                     child: Center(
-                      child: Container(
+                      child: SizedBox(
                         width: 240,
                         height: 120,
                         child: Image.asset('Images/splash1.png'),
@@ -92,12 +92,12 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 70.0),
-                      padding: EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 70.0),
+                      padding: const EdgeInsets.all(10.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20.0),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black26,
                             blurRadius: 10.0,
@@ -121,13 +121,13 @@ class _DashboardState extends State<Dashboard> {
                                   'ADMIN',
                                   Icons.admin_panel_settings,
 
-                                  AdminLoginScreen(),
+                                  const AdminLoginScreen(),
                                 ),
                                 _buildSlide(
                                   context,
                                   'OTHERS',
                                   Icons.verified_user,
-                                  ReaderLoginScreen(),
+                                  const ReaderLoginScreen(),
                                 ),
                               ],
                             ),
@@ -136,7 +136,7 @@ class _DashboardState extends State<Dashboard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: List.generate(2, (index) {
                               return Container(
-                                margin: EdgeInsets.symmetric(horizontal: 4.0, vertical: 15.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 15.0),
                                 width: 12.0,
                                 height: 12.0,
                                 decoration: BoxDecoration(
@@ -152,7 +152,7 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                   ),
-                  Padding(padding: const EdgeInsets.only(top: 30.0)),
+                  const Padding(padding: EdgeInsets.only(top: 30.0)),
                 ],
               ),
             ),
@@ -166,7 +166,7 @@ class _DashboardState extends State<Dashboard> {
 
   Widget _buildSlide(BuildContext context, String buttonText, IconData icon, Widget nextPage) {
     return Center(
-      child: Container(
+      child: SizedBox(
         height: 150,
         width: 300,
         child: GestureDetector(
@@ -181,15 +181,15 @@ class _DashboardState extends State<Dashboard> {
               color: Colors.black,
               borderRadius: BorderRadius.circular(20),
             ),
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(icon, color: Colors.white),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(
                   buttonText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),

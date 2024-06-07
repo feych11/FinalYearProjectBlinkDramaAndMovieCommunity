@@ -1,8 +1,8 @@
 //import 'package:http/http.dart' as http;
 
 class APIHandler {
-  static const String baseUrl1 = 'http://192.168.43.218/BlinkBackend/api';
-  static const String baseUrl2 = 'http://192.168.43.218/BlinkBackend';
+  static const String baseUrl1 = 'http://192.168.0.102/BlinkBackend/api';
+  static const String baseUrl2 = 'http://192.168.0.102/BlinkBackend';
   static const String signUp1 = '$baseUrl1/User/Signup';
 
 // String base_url='http://192.168.18.13/BlinkBackend/api';

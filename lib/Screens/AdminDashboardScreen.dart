@@ -1,14 +1,10 @@
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:finalsemproject/API.dart';
 import 'dart:convert';
-import 'package:badges/badges.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -20,8 +16,8 @@ class AdminDashboardScreen extends StatefulWidget {
 
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   List<Map<String, dynamic>> notifications = [];
-  final Color mateBlack = Color(0xFF242424);
-  final Color parotgreen=Color(0xFFADE338);
+  final Color mateBlack = const Color(0xFF242424);
+  final Color parotgreen=const Color(0xFFADE338);
   String ?userId;
   String? ReaderName;
   String ?Subscription;
@@ -102,7 +98,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     //getSentProposalsIdsWithEditorNotification(2);
 
   }
-  int _notificationCount = 3;
+  final int _notificationCount = 3;
   @override
   Widget build(BuildContext context) {
     final filteredNotifications = notifications2
@@ -116,29 +112,29 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
 
                     ),
-                    SizedBox(width: 10,),
-                    Column(children: [
+                    const SizedBox(width: 10,),
+                    const Column(children: [
                       Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                       ),
                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -148,7 +144,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -156,31 +152,31 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             ),
             ListTile(
 
-              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: const Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterNotificationScreen()));
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
 
             ),
             ListTile(
-              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAcceptedProjectsScreen1()));
                 // Add your action when the item is tapped
                 // Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -201,9 +197,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterLoginscreen()));
                   },
-                  child: Text
+                  child: const Text
                     ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
                 ),
               ),
@@ -220,13 +216,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               _searchQuery = query;
             });
           },
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
-          decoration: InputDecoration(
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
+          decoration: const InputDecoration(
             hintText: 'Search...',
             hintStyle: TextStyle(color: Colors.white),
           ),
         )
-            : Center(child: Text('DASHBOARD',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
+            : const Center(child: Text('DASHBOARD',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
         actions: [
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
@@ -246,7 +242,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           child: Stack(children: [
 
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('Images/SplashScreen45.png'), // Your background image
                   fit: BoxFit.cover,
@@ -269,8 +265,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                          Text('ALL READER',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),),
-                          SizedBox(height: 10,),
+                          const Text('ALL READER',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),),
+                          const SizedBox(height: 10,),
                           Row(
                             children: filteredNotifications.map((notification) {
                               return buildNotificationCard2(notification);
@@ -286,8 +282,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('ALL Writers',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),),
-                              SizedBox(height: 10,),
+                              const Text('ALL Writers',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),),
+                              const SizedBox(height: 10,),
                               Row(
                                 children:  notifications3.map((notification3) {
                                   return buildNotificationCard3(notification3);
@@ -304,7 +300,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     );
   }
   Widget buildNotificationCard2(Map<String, dynamic> notification2) {
-    final int Reader_ID = notification2['Reader_ID'] ?? '';
+    final int readerId = notification2['Reader_ID'] ?? '';
     final String Email = notification2['Email'] ?? '';
     final int Balance = notification2['Balance'] ?? 0;
     final String Subscription = notification2['Subscription'] ?? '';
@@ -316,7 +312,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedContainer(
-        duration:Duration(milliseconds: 500),
+        duration:const Duration(milliseconds: 500),
         height: 200,
         width: 420,
         decoration: BoxDecoration(
@@ -331,7 +327,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedContainer(
-              duration:Duration(milliseconds: 500),
+              duration:const Duration(milliseconds: 500),
               height: 150,
               width: 100,
               decoration: BoxDecoration(
@@ -340,7 +336,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 210,
               width: 300,
@@ -356,17 +352,17 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   children: [
                     Text(
                       UserName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontFamily: 'Rye'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Subscription:   ',
                           style: TextStyle(
                               fontSize: 12,
@@ -377,7 +373,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                         Text(
                           Subscription,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -386,10 +382,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Interests:',
                           style: TextStyle(
                               fontSize: 13,
@@ -398,10 +394,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           Interest,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -410,10 +406,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Balance:',
                           style: TextStyle(
                               fontSize: 12,
@@ -422,10 +418,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           Balance.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -434,7 +430,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
 
 
 
@@ -461,7 +457,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedContainer(
-        duration:Duration(milliseconds: 500),
+        duration:const Duration(milliseconds: 500),
         height: 200,
         width: 420,
         decoration: BoxDecoration(
@@ -476,7 +472,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedContainer(
-              duration:Duration(milliseconds: 500),
+              duration:const Duration(milliseconds: 500),
               height: 150,
               width: 100,
               decoration: BoxDecoration(
@@ -485,7 +481,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 210,
               width: 300,
@@ -501,17 +497,17 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   children: [
                     Text(
                       UserName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontFamily: 'Rye'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '   Interests:   ',
                           style: TextStyle(
                               fontSize: 12,
@@ -522,7 +518,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                         Text(
                           Interest,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -531,11 +527,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
 
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Balance:',
                           style: TextStyle(
                               fontSize: 12,
@@ -544,10 +540,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           Balance.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -556,7 +552,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
 
 
 

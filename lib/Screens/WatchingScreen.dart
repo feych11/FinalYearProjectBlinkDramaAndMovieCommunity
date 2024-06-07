@@ -1,14 +1,11 @@
-import 'package:finalsemproject/API.dart';
-import 'package:finalsemproject/Screens/EditorReadingScreen.dart';
 import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
-import 'package:finalsemproject/Screens/ReadingScreen.dart';
 import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'dart:async';
 class VideoClip {
   final String videoUrl;
   final Duration StartTime;
@@ -39,7 +36,8 @@ class _WatchingScreenState extends State<WatchingScreen> {
   int currentClipIndex = 0;
   bool isClipInitialized = false;
   bool isPlayerReady = false;
-
+  Timer? timer;
+  Timer?timer1;
   bool init=false;
   List<VideoClip> clips = [];
   @override
@@ -49,7 +47,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
     print('MovieName::: ${widget.moviename}');
     nonCompoundVideoWidgets = _buildNonCompoundVideos();
     //refreshPage();
-    print('INFO  CLIPSSSSS:'+widget.clipsData.toString());
+    print('INFO  CLIPSSSSS:${widget.clipsData}');
     for(var clip in widget.clipsData!)
     {
       print('CLips isCompund:');
@@ -77,7 +75,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
 
       }
       print('CLIPS LIST :');
-      clips.forEach((element) {print('start ${element.StartTime.inSeconds} end :: ${element.EndTime.inSeconds}');});
+      for (var element in clips) {print('start ${element.StartTime.inSeconds} end :: ${element.EndTime.inSeconds}');}
       //  clips.clear();
       // clips = [
       //    VideoClip(videoUrl: 'https://www.youtube.com/watch?v=72eQ0seOP1k', StartTime: Duration(seconds: 10), EndTime: Duration(seconds: 30)),
@@ -97,7 +95,11 @@ class _WatchingScreenState extends State<WatchingScreen> {
         } catch (e) {
           print('Error initializing YouTube player: $e');
         }
-
+        timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+          if (controller.value.isReady && controller.value.isPlaying) {
+            print('Current position: ${controller.value.position}');
+          }
+        });
 
       }
 
@@ -126,7 +128,14 @@ class _WatchingScreenState extends State<WatchingScreen> {
             startAt: startAt.toInt(),
             endAt: endAt.toInt(),
           ),
+
         );
+        timer1 = Timer.periodic(Duration(seconds: 1), (Timer t) {
+          if (controllerr.value.isReady && controllerr.value.isPlaying) {
+            print('Current position: ${controllerr.value.position}');
+          }
+        });
+
 
         // Add padding around each video widget and add a text widget after each clip
         widgets.add(
@@ -135,10 +144,10 @@ class _WatchingScreenState extends State<WatchingScreen> {
             child: Column(
               children: [
                 YoutubePlayer(controller: controllerr),
-                SizedBox(height: 10), // Add gap between video and text
+                const SizedBox(height: 10), // Add gap between video and text
                 Text(
-                  '${description} - Part ${i + 1}', // Display movie name
-                  style: TextStyle(
+                  '$description - Part ${i + 1}', // Display movie name
+                  style: const TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'BigshotOne'
@@ -158,8 +167,8 @@ class _WatchingScreenState extends State<WatchingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget loadingTextWidget = Padding(
-      padding: const EdgeInsets.all(8.0),
+    Widget loadingTextWidget = const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Text(
         'Loading Video...',
         style: TextStyle(
@@ -177,20 +186,20 @@ class _WatchingScreenState extends State<WatchingScreen> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.black,
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 30,
                         backgroundImage: AssetImage('Images/man2.webp'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Column(
+                      const Column(
                         children: [
                           Text(
                             'Faizan Mustafa',
@@ -208,14 +217,14 @@ class _WatchingScreenState extends State<WatchingScreen> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pop(context); // Close the drawer
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.close,
                           color: Colors.white,
                           size: 30,
@@ -227,9 +236,9 @@ class _WatchingScreenState extends State<WatchingScreen> {
               ListTile(
                 title: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen()));
                   },
-                  child: Text(
+                  child: const Text(
                     'Home',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
@@ -242,9 +251,9 @@ class _WatchingScreenState extends State<WatchingScreen> {
               ListTile(
                 title: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSubcriptionScreen()));
                   },
-                  child: Text(
+                  child: const Text(
                     'Subscription:Free',
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
@@ -257,9 +266,9 @@ class _WatchingScreenState extends State<WatchingScreen> {
               ListTile(
                 title: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSelectInterestsScreen()));
                   },
-                  child: Text(
+                  child: const Text(
                     'Update Interest',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
@@ -270,7 +279,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
                 },
               ),
               ListTile(
-                title: Text(
+                title: const Text(
                   'Recharge Balance',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -282,9 +291,9 @@ class _WatchingScreenState extends State<WatchingScreen> {
               ListTile(
                 title: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAccountSettingScreen1()));
                   },
-                  child: Text(
+                  child: const Text(
                     'Account Setting',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
@@ -296,7 +305,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
               ),
               InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
                 },
                 child: ListTile(
                   title: Container(
@@ -306,7 +315,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
                       color: Colors.black,
                       border: Border.all(color: Colors.red, width: 2),
                     ),
-                    child: Text(
+                    child: const Text(
                       'LOGOUT',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -320,7 +329,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
             ],
           ),
         ),
-        appBar: AppBar(title: Text('Watching',style: TextStyle(
+        appBar: AppBar(title: const Text('Watching',style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 30,
             color: Colors.white,
@@ -331,7 +340,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
         body: Stack(children: [
 
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('Images/bgimg1.png'), // Your background image
                 fit: BoxFit.cover,
@@ -342,7 +351,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(children: [
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Padding(
@@ -425,7 +434,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
                     color: Colors.white,
                     width: 4,
                   ),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [Colors.black, Colors.black, Colors.yellow, Colors.yellow],
@@ -443,7 +452,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
                           onTap: (){
                             Navigator.pop(context);
                           },
-                          child: Text('Read',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),)),
+                          child: const Text('Read',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),)),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -451,15 +460,15 @@ class _WatchingScreenState extends State<WatchingScreen> {
                           onTap: (){
 
                           },
-                          child: Text('Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),)),
+                          child: const Text('Watch',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),)),
                     )
                   ],),
 
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(20), // Adjust padding as needed
+                  padding: const EdgeInsets.all(20), // Adjust padding as needed
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children:
@@ -469,7 +478,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
                 ),
               ),
 
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
 
 
             ],),

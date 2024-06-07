@@ -38,29 +38,29 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
 
                     ),
-                    SizedBox(width: 10,),
-                    Column(children: [
+                    const SizedBox(width: 10,),
+                    const Column(children: [
                       Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                       ),
                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -70,7 +70,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -78,7 +78,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
             ),
             ListTile(
 
-              title: Text('Subscription:Free',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: const Text('Subscription:Free',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -86,21 +86,21 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
 
             ),
             ListTile(
-              title: Text('Update Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Update Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -117,7 +117,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
                   ),
 
                 ),
-                child: Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
+                child: const Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
               ),
             ),
             // Add more ListTiles for additional items in the drawer
@@ -126,11 +126,11 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
       ),
       appBar: AppBar(
         centerTitle: false,
-        title: Text('Rewrite Summary',textAlign: TextAlign.start,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'Rye'),),
+        title: const Text('Rewrite Summary',textAlign: TextAlign.start,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'Rye'),),
       backgroundColor: Colors.black,),
       body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: SafeArea(
             child: Row(
 
@@ -146,30 +146,30 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
               ],),
           ),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Card(
           elevation: 10,
           color: Colors.amber,
 
-          child: Center(child: Text(widget.MovieName.toString(),style: TextStyle(fontSize: 30,fontFamily: 'BigshotOne'),)),
+          child: Center(child: Text(widget.MovieName.toString(),style: const TextStyle(fontSize: 30,fontFamily: 'BigshotOne'),)),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
             height: 300,
             width: 350,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.black
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(widget.Editorcomments.toString(),style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),
+              child: Text(widget.Editorcomments.toString(),style: const TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),
               ),
             ),
           ),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         InkWell(
           onTap: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterRewriteSummaryScreen(SentprojectID: widget.SentprojectID,Summary: widget.Summary,Title: widget.MovieName,)));
@@ -185,7 +185,7 @@ class _AcceptedToRewriteScreen3State extends State<AcceptedToRewriteScreen3> {
               ),
 
             ),
-            child: Center(child: Text('REWRITE',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.yellow,fontFamily: 'BigshotOne'),)),
+            child: const Center(child: Text('REWRITE',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.yellow,fontFamily: 'BigshotOne'),)),
           ),
         )
 

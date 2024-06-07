@@ -1,11 +1,7 @@
-import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/CoumpundAndSimpleClipsScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:finalsemproject/Screens/VideoClip.dart';
-import 'dart:math';
 
 
 List<VideoClip> videoClips = [];
@@ -23,14 +19,14 @@ class VideoPlayerScreen extends StatefulWidget {
   final String ?Type;
   final int ?Episode;
 
-  const VideoPlayerScreen({Key? key, required this.videoId,required this.thumbnailUrl,required this.title,this.id,
+  const VideoPlayerScreen({super.key, required this.videoId,required this.thumbnailUrl,required this.title,this.id,
     this.Movie_ID,
     this.Editor_ID,
     this.Writer_ID,
     this.title1,
     this.Type,
     this.Episode,
-    this.summary}) : super(key: key);
+    this.summary});
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -38,7 +34,7 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late YoutubePlayerController _controller;
-  double _startValue = 0.0;
+  final double _startValue = 0.0;
   double _endValue = 0.0;
   int maxValue = 20;
   bool _isPlayerReady = false;
@@ -63,7 +59,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
     _controller = YoutubePlayerController(
       initialVideoId: videoIdAsString,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
       ),
@@ -74,7 +70,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       if (_controller.value.isReady && !_isPlayerReady) {
         print('Duration: ${_controller.metadata.duration}');
         setState(() {
-          _endValue = _controller.metadata.duration?.inSeconds.toDouble() ?? 0.0;
+          _endValue = _controller.metadata.duration.inSeconds.toDouble() ?? 0.0;
           _currentRangeValues = RangeValues(0.0, _endValue);
           _isPlayerReady = true;
         });
@@ -139,7 +135,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     String formattedDuration = [
       if (duration.inHours > 0) '${duration.inHours}:',
       '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:',
-      '${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
+      ((duration.inSeconds % 60).toString().padLeft(2, '0')),
     ].join('');
     return formattedDuration;
   }
@@ -152,7 +148,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Video Screen',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold,color: Colors.white),),
+        title: const Text('Video Screen',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold,color: Colors.white),),
         backgroundColor: Colors.black,
       ),
       body: Center(
@@ -182,7 +178,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 SliderTheme(
                   // Customization of the SliderTheme
                   // based on individual definitions
@@ -211,32 +207,32 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   ),
                 ),
 
-                SizedBox(height: 20),
-                Container(
+                const SizedBox(height: 20),
+                SizedBox(
                   width: 300,
                   child: TextField(
                     controller: DesCon,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: Colors.black)
+                          borderSide: const BorderSide(color: Colors.black)
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.black),
+                        borderSide: const BorderSide(color: Colors.black),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.black),
+                        borderSide: const BorderSide(color: Colors.black),
                       ),
                       labelText: 'Description',
-                      labelStyle: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.black),
+                      labelStyle: const TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.black),
                       hintText: 'Description',
-                      hintStyle: TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.black),
+                      hintStyle: const TextStyle(fontFamily: 'Rye', fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     ElevatedButton(
@@ -248,9 +244,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.black), // Change the color to red
                       ),
-                      child: Text('Make Clip', style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Rye',color: Colors.white)),
+                      child: const Text('Make Clip', style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Rye',color: Colors.white)),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -261,11 +257,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.black)
                       ),
-                      child: Text('Compound Clip', style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Rye',color: Colors.white)),
+                      child: const Text('Compound Clip', style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Rye',color: Colors.white)),
                     ),
                   ],
                 ),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 ElevatedButton(onPressed: (){
                   print(videoClips);
                   for (var clip in videoClips) {
@@ -280,7 +276,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     print('');
                   }
                   Addingclipinfo();
-                  print('AddingClipinfo: ${clipsInfoList}');
+                  print('AddingClipinfo: $clipsInfoList');
                   print('Sent Perosal id: ${widget.id}');
                   print('MOvie ID: ${widget.Movie_ID}');
                   print('Writer ID: ${widget.Writer_ID}');
@@ -291,7 +287,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>CoumpundAndSimpleClipsScreen(Episode: widget.Episode,ClipsInfoList:clipsInfoList,videoId: widget.videoId,videoClips: videoClips,id: widget.id,Movie_ID: widget.Movie_ID,Writer_ID: widget.Writer_ID,Editor_ID: widget.Editor_ID,title1: widget.title1,Type: widget.Type,summary: widget.summary,)));
                 },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.black)),
-                    child: Text('Clips Screen',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.white),))
+                    child: const Text('Clips Screen',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.white),))
               ],
             ),
           ),

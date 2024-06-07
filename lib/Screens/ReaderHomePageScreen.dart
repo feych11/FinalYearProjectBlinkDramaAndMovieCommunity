@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:finalsemproject/API.dart';
-import 'package:finalsemproject/Screens/EditorViewAcceptedSummary.dart';
 import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
@@ -34,7 +33,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   String?movieName;
   String ?movieImage;
   String?movieType;
-  final Color mateBlack = Color(0xFF242424);
+  final Color mateBlack = const Color(0xFF242424);
   bool _isSearching = false;
   String _searchQuery = "";
   List<Map<String,dynamic>>notifications2=[];
@@ -59,7 +58,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   }
   Future<void>SendBalanceRequest(String newbalance)async
   {
-    final String baseurl=APIHandler.baseUrl1;
+    const String baseurl=APIHandler.baseUrl1;
     final Responce=await http.put(Uri.parse('$baseurl/Reader/SendBalanceRequest?Reader_ID=$userId&Amount=$newbalance'),
 
       headers: <String, String>{
@@ -82,13 +81,13 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     }
     catch(error)
     {
-      print('Unable To Recharge Your Balance ${error}');
+      print('Unable To Recharge Your Balance $error');
     }
   }
 
   
   Future<void> issueFreeMovie() async {
-    final String baseUrl = APIHandler.baseUrl1;
+    const String baseUrl = APIHandler.baseUrl1;
 
     const String baseurl3=APIHandler.baseUrl2;// Replace with your API base URL
     final response = await http.get(Uri.parse('$baseUrl/Reader/IssueFreeMovie?readerId=${userId.toString()}'));
@@ -128,9 +127,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         print('Movie Image: $movieImage');
         print('Movie Type: $movieType');
         print('Writer: $Writer_ID');
-        print('issueDate:${issueDate}');
+        print('issueDate:$issueDate');
         print('Issued Movie: $issuedMovie');
-        print('Free Writer ID:${FreeWriter_ID}');
+        print('Free Writer ID:$FreeWriter_ID');
       } else {
         // Handle other status codes here
         print('Failed to issue free movie: ${response.reasonPhrase}');
@@ -151,27 +150,27 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             dialogBackgroundColor: Colors.grey, // Background color
             dialogTheme: DialogTheme( // Define dialog theme
             shape: RoundedRectangleBorder( // Define border shape
-            side: BorderSide(color: Colors.black,width: 4), // Border color
+            side: const BorderSide(color: Colors.black,width: 4), // Border color
         borderRadius: BorderRadius.circular(20.0), // Border radius
         ),
         ),
         ),
         child: AlertDialog(
-          title: Text('Recharge Balance',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+          title: const Text('Recharge Balance',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
           content: TextField(
             controller: _balanceController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(hintText: "Enter new balance"),
+            decoration: const InputDecoration(hintText: "Enter new balance"),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
+              child: const Text('Cancel',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
             ),
             TextButton(
-              child: Text('Recharge',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
+              child: const Text('Recharge',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
               onPressed: (){
                 SendBalanceRequest(_balanceController.text);
               }
@@ -185,8 +184,8 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
 
   Future<void> issuePaidMovies() async {
-    final String baseUrl2 = APIHandler.baseUrl1;
-    final String baseUrl3 = APIHandler.baseUrl2;
+    const String baseUrl2 = APIHandler.baseUrl1;
+    const String baseUrl3 = APIHandler.baseUrl2;
     try {
       final response = await http.get(Uri.parse('$baseUrl2/Reader/IssuePaidMovie'));
       if (response.statusCode == 200) {
@@ -229,11 +228,11 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
       Subscription=Subscription1;
       ReaderBalance=userbalance;
       ReaderImage=userImage;
-      print('jskksd: ${userId}');
-      print('ReaderName: ${ReaderName}');
+      print('jskksd: $userId');
+      print('ReaderName: $ReaderName');
       print('Subscription::: $Subscription');
-      print('Reader Balance: ${ReaderBalance}');
-      print('ReaderImageL ${ReaderImage}');
+      print('Reader Balance: $ReaderBalance');
+      print('ReaderImageL $ReaderImage');
     });
     if (userId != null) {
       if(Subscription=='Free'){
@@ -247,10 +246,10 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
       print('Movie Image: $movieImage');
       // print('Getrewrtedata:${getRewriteData}');
 
-      print('ghjk:${userId}');
-      print('ReaderName: ${ReaderName}');
-      print('Reader Balance: ${ReaderBalance}');
-      print('ReaderImageL ${ReaderImage}');
+      print('ghjk:$userId');
+      print('ReaderName: $ReaderName');
+      print('Reader Balance: $ReaderBalance');
+      print('ReaderImageL $ReaderImage');
     }
   }
 
@@ -274,7 +273,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
@@ -284,14 +283,14 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                       radius: 30,
                       backgroundImage: NetworkImage(ReaderImage.toString()),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
                       children: [
                         Text(
                           ReaderName.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                               color: Colors.white,
@@ -299,21 +298,21 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ),
                         Text(
                           'Balance:$ReaderBalance',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -325,9 +324,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderBottomNavScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Home',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -340,9 +339,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSubcriptionScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Subscription:Free',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
@@ -355,9 +354,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSelectInterestsScreen()));
                 },
-                child: Text(
+                child: const Text(
                   'Update Interest',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -368,7 +367,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -377,9 +376,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             ListTile(
               title: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAccountSettingScreen1()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAccountSettingScreen1()));
                 },
-                child: Text(
+                child: const Text(
                   'Account Setting',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
@@ -391,7 +390,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             ),
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
               },
               child: ListTile(
                 title: Container(
@@ -401,7 +400,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                     color: Colors.black,
                     border: Border.all(color: Colors.red, width: 2),
                   ),
-                  child: Text(
+                  child: const Text(
                     'LOGOUT',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -423,13 +422,13 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
               _searchQuery = query;
             });
           },
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
-          decoration: InputDecoration(
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
+          decoration: const InputDecoration(
             hintText: 'Search...',
             hintStyle: TextStyle(color: Colors.white),
           ),
         )
-            : Center(child: Text('Home Page',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
+            : const Center(child: Text('Home Page',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
         actions: [
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
@@ -449,7 +448,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
       body: Subscription == 'Free'
           ?Stack(children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('Images/bgimg1.png'), // Your background image
               fit: BoxFit.cover,
@@ -470,7 +469,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
             child: Center(
               child: InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen( )));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ViewFreeMovieSummaryScreen( )));
                 },
                 child: Container(
 
@@ -490,14 +489,14 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                       Row(
                         // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                              'Free Daily',
                               style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontFamily: 'Rye'),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           Padding(
@@ -533,7 +532,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                             color: Colors.black,
                             width: 4,
                           ),),
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -543,26 +542,26 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 children: [
                                 Text(
                                   movieName.toString(),
-                                  style: TextStyle(color: Colors.black,fontSize:15,fontWeight: FontWeight.bold,fontFamily:'BigshotOne'),
+                                  style: const TextStyle(color: Colors.black,fontSize:15,fontWeight: FontWeight.bold,fontFamily:'BigshotOne'),
                                 ),
-                                InkWell
-                                  (
-                                    onTap: (){
-                                      // Assuming userId, FreeWriter_ID, and movieID are nullable types
-
-// Check for nullability and convert to non-nullable types if possible
-                                      int userId1 = userId != null ? int.parse(userId.toString()) : 0;
-                                      int FreeWriter_ID1 = FreeWriter_ID != null ? int.parse(FreeWriter_ID.toString()) : 0;
-                                      int movieID1 = movieID != null ? int.parse(movieID.toString()) : 0;
-
-// Call the addReaderFavorites function with non-nullable integer arguments
-                                      addReaderFavorites(userId1, FreeWriter_ID1, movieID1);
-                                    },
-                                    child: Icon(Icons.favorite,color: Colors.red,size: 30,))
+//                                 InkWell
+//                                   (
+//                                     onTap: (){
+//                                       // Assuming userId, FreeWriter_ID, and movieID are nullable types
+//
+// // Check for nullability and convert to non-nullable types if possible
+//                                       int userId1 = userId != null ? int.parse(userId.toString()) : 0;
+//                                       int FreeWriter_ID1 = FreeWriter_ID != null ? int.parse(FreeWriter_ID.toString()) : 0;
+//                                       int movieID1 = movieID != null ? int.parse(movieID.toString()) : 0;
+//
+// // Call the addReaderFavorites function with non-nullable integer arguments
+//                                       addReaderFavorites(userId1, FreeWriter_ID1, movieID1);
+//                                     },
+//                                     child: Icon(Icons.favorite,color: Colors.red,size: 30,))
                               ],),
                               Text(
                                 '                 Type: ${movieType.toString()}',
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'BigshotOne'),
+                                style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'BigshotOne'),
                               ),
 
                             ],
@@ -582,11 +581,11 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                 elevation: 5,
                 color: Colors.white,
                 shape: RoundedRectangleBorder( // Define border shape
-                  side: BorderSide(color: Colors.black,width: 4), // Border color
+                  side: const BorderSide(color: Colors.black,width: 4), // Border color
                   borderRadius: BorderRadius.circular(20.0), // Border radius
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     'TOP PICK',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro'),
@@ -600,11 +599,11 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                   elevation: 5,
                   color: Colors.white,
                   shape: RoundedRectangleBorder( // Define border shape
-                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                    side: const BorderSide(color: Colors.black,width: 4), // Border color
                     borderRadius: BorderRadius.circular(20.0), // Border radius
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       'SEE ALL',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro'),
@@ -614,7 +613,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
               ),
             ],),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
@@ -633,20 +632,20 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 dialogBackgroundColor: Colors.grey, // Background color
                                 dialogTheme: DialogTheme( // Define dialog theme
                                   shape: RoundedRectangleBorder( // Define border shape
-                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
                                     borderRadius: BorderRadius.circular(20.0), // Border radius
                                   ),
                                 ),
                               ),
                               child: AlertDialog(
-                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
                                   ),
                                 ],
                               ));
@@ -682,7 +681,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               ),
 
                             ),
-                            child: Column(
+                            child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -697,7 +696,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ],)
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   InkWell(
                     onTap: () {
                       // Show alert dialog here
@@ -709,20 +708,20 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 dialogBackgroundColor: Colors.grey, // Background color
                                 dialogTheme: DialogTheme( // Define dialog theme
                                   shape: RoundedRectangleBorder( // Define border shape
-                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
                                     borderRadius: BorderRadius.circular(20.0), // Border radius
                                   ),
                                 ),
                               ),
                               child: AlertDialog(
-                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
                                   ),
                                 ],
                               ));
@@ -754,7 +753,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 borderRadius: BorderRadius.circular(10)
 
                             ),
-                            child: Column(
+                            child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -769,7 +768,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ],)
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   InkWell(
                     onTap: () {
                       // Show alert dialog here
@@ -781,20 +780,20 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 dialogBackgroundColor: Colors.grey, // Background color
                                 dialogTheme: DialogTheme( // Define dialog theme
                                   shape: RoundedRectangleBorder( // Define border shape
-                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
                                     borderRadius: BorderRadius.circular(20.0), // Border radius
                                   ),
                                 ),
                               ),
                               child: AlertDialog(
-                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
                                   ),
                                 ],
                               ));
@@ -831,7 +830,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               // ),
 
                             ),
-                            child: Column(
+                            child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -846,7 +845,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ],)
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   InkWell(
                     onTap: () {
                       // Show alert dialog here
@@ -858,20 +857,20 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 dialogBackgroundColor: Colors.grey, // Background color
                                 dialogTheme: DialogTheme( // Define dialog theme
                                   shape: RoundedRectangleBorder( // Define border shape
-                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
                                     borderRadius: BorderRadius.circular(20.0), // Border radius
                                   ),
                                 ),
                               ),
                               child: AlertDialog(
-                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
                                   ),
                                 ],
                               ));
@@ -903,7 +902,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 borderRadius: BorderRadius.circular(10)
 
                             ),
-                            child: Column(
+                            child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -918,7 +917,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ],)
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   InkWell(
                     onTap: () {
                       // Show alert dialog here
@@ -930,20 +929,20 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 dialogBackgroundColor: Colors.grey, // Background color
                                 dialogTheme: DialogTheme( // Define dialog theme
                                   shape: RoundedRectangleBorder( // Define border shape
-                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
                                     borderRadius: BorderRadius.circular(20.0), // Border radius
                                   ),
                                 ),
                               ),
                               child: AlertDialog(
-                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
                                   ),
                                 ],
                               ));
@@ -975,7 +974,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 borderRadius: BorderRadius.circular(10)
 
                             ),
-                            child: Column(
+                            child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -990,7 +989,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ],)
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   InkWell(
                     onTap: () {
                       // Show alert dialog here
@@ -1002,20 +1001,20 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 dialogBackgroundColor: Colors.grey, // Background color
                                 dialogTheme: DialogTheme( // Define dialog theme
                                   shape: RoundedRectangleBorder( // Define border shape
-                                    side: BorderSide(color: Colors.black,width: 4), // Border color
+                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
                                     borderRadius: BorderRadius.circular(20.0), // Border radius
                                   ),
                                 ),
                               ),
                               child: AlertDialog(
-                                title: Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
                                   ),
                                 ],
                               ));
@@ -1047,7 +1046,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                 borderRadius: BorderRadius.circular(10)
 
                             ),
-                            child: Column(
+                            child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
@@ -1071,7 +1070,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
           :
       Stack(children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('Images/SplashScreen45.png'), // Your background image
               fit: BoxFit.cover,
@@ -1132,7 +1131,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 200,
               width: 200,
@@ -1146,34 +1145,34 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                       children: [
                       Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             fontFamily: 'BigshotOne'
                         ),
                       ),
-                      InkWell
-                        (
-                          onTap: (){
-                            // Assuming userId, FreeWriter_ID, and movieID are nullable types
-
-// Check for nullability and convert to non-nullable types if possible
-                            int userId1 = userId != null ? int.parse(userId.toString()) : 0;
-                            int Writer_ID1 = WriterId != null ? int.parse(WriterId.toString()) : 0;
-                            int movieID1 = Movieid != null ? int.parse(Movieid.toString()) : 0;
-
-// Call the addReaderFavorites function with non-nullable integer arguments
-                            addReaderFavorites(userId1, Writer_ID1, movieID1);
-                          },
-                          child: Icon(Icons.favorite,color: Colors.red,size: 30,)),
+//                       InkWell
+//                         (
+//                           onTap: (){
+//                             // Assuming userId, FreeWriter_ID, and movieID are nullable types
+//
+// // Check for nullability and convert to non-nullable types if possible
+//                             int userId1 = userId != null ? int.parse(userId.toString()) : 0;
+//                             int Writer_ID1 = WriterId != null ? int.parse(WriterId.toString()) : 0;
+//                             int movieID1 = Movieid != null ? int.parse(Movieid.toString()) : 0;
+//
+// // Call the addReaderFavorites function with non-nullable integer arguments
+//                             addReaderFavorites(userId1, Writer_ID1, movieID1);
+//                           },
+//                           child: Icon(Icons.favorite,color: Colors.red,size: 30,)),
                     ],),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
 
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Director:',
                           style: TextStyle(
                               fontSize: 10,
@@ -1182,10 +1181,10 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           director,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -1194,10 +1193,10 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Type:',
                           style: TextStyle(
                               fontSize: 10,
@@ -1206,10 +1205,10 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Text(
                           type,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -1218,11 +1217,11 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     //SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Writer:',
                           style: TextStyle(
                               fontSize: 10,
@@ -1231,10 +1230,10 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Text(
                           UserName,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -1243,7 +1242,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Center(
                       child: GestureDetector(
                         onTap: (){
@@ -1258,7 +1257,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               color: Colors.amber,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
+                          child: const Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
                         ),
                       ),
                     )

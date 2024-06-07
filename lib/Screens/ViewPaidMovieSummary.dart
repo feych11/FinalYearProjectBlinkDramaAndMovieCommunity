@@ -12,12 +12,12 @@ class ViewPaidMovieSummaryScreen extends StatefulWidget {
   final String? FreeWriterName;
 
   const ViewPaidMovieSummaryScreen({
-    Key? key,
+    super.key,
     this.MovieID,
     this.moviename,
     this.FreeWriter_ID,
     this.FreeWriterName,
-  }) : super(key: key);
+  });
 
   @override
   State<ViewPaidMovieSummaryScreen> createState() => _ViewPaidMovieSummaryScreenState();
@@ -28,7 +28,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
   String? writerName = '';
   Duration? endtime;
   Duration? startTime;
-  final Color Green = Color(0xFF4FAA6D);
+  final Color Green = const Color(0xFF4FAA6D);
   late final Map<String, dynamic> data;
   List<Map<String, dynamic>> clipsData = [];
   List<Map<String, String>> clipsInfoList = [];
@@ -79,7 +79,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
   }
 
   Future<void> UpdateWriterRating(int WriterID, int Rating) async {
-    final String BaseUrl = APIHandler.baseUrl1;
+    const String BaseUrl = APIHandler.baseUrl1;
     final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateWriterRating?writerId=$WriterID&rating=$Rating'));
     final Map<String, dynamic> Data = {
       'writerId': WriterID,
@@ -94,12 +94,12 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
         print('Unable To Update Writer Rating: ${responseBody['Message']}');
       }
     } catch (ex) {
-      print('Unable To Upadte Writer Rating ${ex}');
+      print('Unable To Upadte Writer Rating $ex');
     }
   }
 
   Future<void> UpdateMovieRating(int Movieid, int Rating) async {
-    final String BaseUrl = APIHandler.baseUrl1;
+    const String BaseUrl = APIHandler.baseUrl1;
     final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateMovieRating?movieId=$Movieid&rating=$Rating'));
     final Map<String, dynamic> Data = {
       'movieId': Movieid,
@@ -114,7 +114,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
         print('Unable To Update Movie Rating: ${responseBody['Message']}');
       }
     } catch (ex) {
-      print('Unable To Upadte Movie Rating ${ex}');
+      print('Unable To Upadte Movie Rating $ex');
     }
   }
 
@@ -183,7 +183,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
             dialogBackgroundColor: Colors.grey, // Background color
             dialogTheme: DialogTheme( // Define dialog theme
             shape: RoundedRectangleBorder( // Define border shape
-            side: BorderSide(color: Colors.black,width: 4), // Border color
+            side: const BorderSide(color: Colors.black,width: 4), // Border color
         borderRadius: BorderRadius.circular(20.0), // Border radius
         ),
         ),
@@ -191,11 +191,11 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
 
         child:
           AlertDialog(
-          title: Text('Rating Submitted'),
-          content: Text('Your response will be stored.'),
+          title: const Text('Rating Submitted'),
+          content: const Text('Your response will be stored.'),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -208,8 +208,8 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
 
   @override
   Widget build(BuildContext context) {
-    Widget loadingTextWidget = Padding(
-      padding: const EdgeInsets.all(8.0),
+    Widget loadingTextWidget = const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Text(
         'Loading Video...',
         style: TextStyle(
@@ -228,20 +228,20 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.black,
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 30,
                     backgroundImage: AssetImage('Images/man2.webp'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Column(
+                  const Column(
                     children: [
                       Text(
                         'Faizan Mustafa',
@@ -261,14 +261,14 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context); // Close the drawer
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.close,
                       color: Colors.white,
                       size: 30,
@@ -278,7 +278,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
               ),
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Home',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -291,7 +291,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Subscription:Free',
                 style: TextStyle(
                   fontSize: 30,
@@ -304,7 +304,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Update Interest',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -317,7 +317,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -330,7 +330,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Account Setting',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -350,7 +350,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                   color: Colors.black,
                   border: Border.all(color: Colors.red, width: 2),
                 ),
-                child: Text(
+                child: const Text(
                   'LOGOUT',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -364,7 +364,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
         ),
       ),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Reading',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -379,7 +379,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('Images/SplashScreen45.png'), // Your background image
                 fit: BoxFit.cover,
@@ -390,10 +390,10 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -404,7 +404,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                       color: Colors.white,
                       width: 4,
                     ),
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       begin: Alignment.centerRight,
                       end: Alignment.centerLeft,
                       colors: [
@@ -429,7 +429,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                             //     MaterialPageRoute(
                             //         builder: (context) => EditorReadingScreen()));
                           },
-                          child: Text(
+                          child: const Text(
                             'Read',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -459,7 +459,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                                 );
                               });
                             },
-                            child: Text(
+                            child: const Text(
                               'Watch',
                               style: TextStyle(
                                 fontSize: 20,
@@ -474,7 +474,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Center(
@@ -495,7 +495,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             summaryText ?? 'Loading summary...',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20,
                               color: Colors.white,
                               fontFamily: 'BigshotOne',
@@ -503,13 +503,13 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Writer Rate:',
                               style: TextStyle(
                                 fontSize: 17,
@@ -518,7 +518,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: List.generate(5, (index) {
@@ -536,13 +536,13 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Summary Rate:',
                               style: TextStyle(
                                 fontSize: 17,
@@ -551,7 +551,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: List.generate(5, (index) {
@@ -569,7 +569,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                             ),
                           ],
                         ),
-                        SizedBox(height: 100,),
+                        const SizedBox(height: 100,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -586,7 +586,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(child: Text('READ',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
+                              child: const Center(child: Text('READ',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
                             ),
                           ),
                           Padding(
@@ -602,7 +602,7 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(child: Text('BOOKMARK',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
+                              child: const Center(child: Text('BOOKMARK',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
                             ),
                           ),
 

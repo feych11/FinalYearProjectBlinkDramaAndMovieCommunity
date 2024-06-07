@@ -1,6 +1,5 @@
 import 'package:finalsemproject/Screens/WriterVideoPlayerScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:finalsemproject/Models/YouTubeApi.dart';
 import 'dart:convert';
 
@@ -47,7 +46,7 @@ class WriterMakingClipsScreen extends StatefulWidget {
   final String ?summary;
   final int?Episode;
 
-  const WriterMakingClipsScreen({Key? key,
+  const WriterMakingClipsScreen({super.key,
     this.id,
     this.Movie_ID,
     this.Editor_ID,
@@ -58,7 +57,7 @@ class WriterMakingClipsScreen extends StatefulWidget {
     this.status,
     this.summary,
     this.Episode,
-    this.imagePath,}) : super(key: key);
+    this.imagePath,});
 
   @override
   State<WriterMakingClipsScreen> createState() => _WriterMakingClipsScreenState();
@@ -92,7 +91,7 @@ class _WriterMakingClipsScreenState extends State<WriterMakingClipsScreen> {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Making Videos Clips',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.white),),
+        title: const Text('Making Videos Clips',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.white),),
         backgroundColor: Colors.black,
       ),
 
@@ -102,33 +101,33 @@ class _WriterMakingClipsScreenState extends State<WriterMakingClipsScreen> {
 
       Column(
         children: [
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              controller: _searchController,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.black),
+              controller: _searchController,style: const TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.black),
               decoration: InputDecoration(
                 labelText: 'Search Videos',
-                labelStyle: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.black),
+                labelStyle: const TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.black),
                 hintText: 'Search Videos',
-                hintStyle: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.black),
+                hintStyle: const TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.black),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 suffixIcon: IconButton(
                   onPressed: () {
                     _fetchVideos();
                   },
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                 ),
               ),
             ),
           ),
           if (_loading)
 
-            Center(child: CircularProgressIndicator())
+            const Center(child: CircularProgressIndicator())
           else if (_errorMessage.isNotEmpty)
-            Center(child: Text('Error: $_errorMessage',style: TextStyle(fontFamily: 'Rye',fontWeight: FontWeight.bold),))
+            Center(child: Text('Error: $_errorMessage',style: const TextStyle(fontFamily: 'Rye',fontWeight: FontWeight.bold),))
           else if (_videos.isEmpty)
-              Center(child: Text('No videos found',style: TextStyle(fontFamily: 'Rye',fontWeight: FontWeight.bold),))
+              const Center(child: Text('No videos found',style: TextStyle(fontFamily: 'Rye',fontWeight: FontWeight.bold),))
             else
               Expanded(
                 child: ListView.builder(
@@ -176,7 +175,7 @@ class _WriterMakingClipsScreenState extends State<WriterMakingClipsScreen> {
                           children: [
                             Text(
                               truncatedTitle,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'BigshotOne',
                                 fontWeight: FontWeight.bold,
                               ),
@@ -189,20 +188,20 @@ class _WriterMakingClipsScreenState extends State<WriterMakingClipsScreen> {
                                   context: context,
                                   builder: (context) => AlertDialog(
                                     backgroundColor: Colors.blueGrey,
-                                    title: Text("Full Title",style: TextStyle(fontFamily: 'BigshotOne',fontWeight: FontWeight.bold),),
-                                    content: Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
+                                    title: const Text("Full Title",style: TextStyle(fontFamily: 'BigshotOne',fontWeight: FontWeight.bold),),
+                                    content: Text(title,style: const TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
-                                        child: Text('Close',style: TextStyle(fontFamily: 'BigshotOne',fontWeight: FontWeight.bold,color: Colors.black,fontSize: 15),),
+                                        child: const Text('Close',style: TextStyle(fontFamily: 'BigshotOne',fontWeight: FontWeight.bold,color: Colors.black,fontSize: 15),),
                                       ),
                                     ],
                                   ),
                                 );
                               },
-                              child: Text(
+                              child: const Text(
                                 '...Read More',
                                 style: TextStyle(
                                   //color: Colors.blue,

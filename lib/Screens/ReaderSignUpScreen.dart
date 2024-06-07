@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
-import 'package:finalsemproject/Screens/WriterLoginScreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
-import 'dart:convert';
 import 'package:finalsemproject/API.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -24,13 +22,13 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
   TextEditingController reanamecon = TextEditingController();
   TextEditingController reapasscount = TextEditingController();
   TextEditingController reaconpasscount = TextEditingController();
-  bool _passwordsMatch = true;
+  final bool _passwordsMatch = true;
   bool isSignup=false;
   File? _imageFile;
   final picker = ImagePicker();
-  List<String> _selectedCategories = [];
-  List<String> _selectedCategories1 = [];
-  List<String> _categories = [
+  final List<String> _selectedCategories = [];
+  final List<String> _selectedCategories1 = [];
+  final List<String> _categories = [
     'Action',
     'Comedy',
     'Romantic',
@@ -97,7 +95,7 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
         var responseData = await response.stream.bytesToString();
         print('User signed up successfully: $responseData');
         if(isSignup){
-          Navigator.push(context, MaterialPageRoute(builder: (cintext)=>ReaderLoginScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (cintext)=>const ReaderLoginScreen()));
           print('Signing up...');
         }
       } else {
@@ -114,7 +112,7 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: Center(
+        title: const Center(
             child: Text(
           'SIGNUP SCREEN',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.white,fontFamily: 'BigshotONe'),
@@ -128,7 +126,7 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
 
 
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('Images/SplashScreen45.png'), // Your background image
               fit: BoxFit.cover,
@@ -146,18 +144,18 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                     radius: 50,
                     backgroundColor: Colors.white,
                     backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
-                    child: _imageFile == null ? Icon(Icons.person, size: 50,color: Colors.black,) : null,
+                    child: _imageFile == null ? const Icon(Icons.person, size: 50,color: Colors.black,) : null,
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
                 width: 350,
                 height: 440,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFFFFF).withOpacity(0.8),
+                  color: const Color(0xFFFFFFFF).withOpacity(0.8),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: Colors.black,
@@ -175,14 +173,14 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                           hintText: 'Email',
-                          hintStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          hintStyle: const TextStyle(fontFamily: 'BigshotOne'),
                           labelText: 'Email',
-                          labelStyle: TextStyle(fontFamily: 'BigshotOne'),
-                          prefixIcon: Icon(Icons.email),
+                          labelStyle: const TextStyle(fontFamily: 'BigshotOne'),
+                          prefixIcon: const Icon(Icons.email),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -192,14 +190,14 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                           hintText: 'Username',
-                          hintStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          hintStyle: const TextStyle(fontFamily: 'BigshotOne'),
                           labelText: 'Username',
-                          prefixIcon: Icon(Icons.person),
-                          labelStyle: TextStyle(fontFamily: 'BigshotOne')
+                          prefixIcon: const Icon(Icons.person),
+                          labelStyle: const TextStyle(fontFamily: 'BigshotOne')
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -210,23 +208,23 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                           hintText: 'Password',
-                          hintStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          hintStyle: const TextStyle(fontFamily: 'BigshotOne'),
                           labelText: 'Password',
-                          labelStyle: TextStyle(fontFamily: 'BigshotOne'),
-                          prefixIcon: Icon(Icons.lock),
+                          labelStyle: const TextStyle(fontFamily: 'BigshotOne'),
+                          prefixIcon: const Icon(Icons.lock),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Categories',
-                        labelStyle:TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        labelStyle:const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         prefixIcon: IconButton(
-                          icon: Icon(Icons.category),
+                          icon: const Icon(Icons.category),
                           onPressed: () {
                             _showCategoryDialog(context);
                           },
@@ -236,19 +234,19 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                         text: _selectedCategories.isNotEmpty
                             ? _selectedCategories.join(', ')
                             : null,
-                      ),style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      ),style: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                       readOnly: true,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Role:',
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Row(children: [
@@ -261,9 +259,9 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                                 });
                               }),
                           //SizedBox(width: 10,),
-                          Text('Reader',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),)
+                          const Text('Reader',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),)
                         ],),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Row(children: [
@@ -278,12 +276,12 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                                 });
                               }),
                           //SizedBox(width: 5,),
-                          Text('Writer',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'BigshotOne'),)
+                          const Text('Writer',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'BigshotOne'),)
                         ],)
                       ],
                     ),
                   ],),),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Center(
@@ -299,18 +297,18 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)
                       ),
-                      child: Center(child: Text('SIGNUP',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black,fontFamily: 'Jaro'))),
+                      child: const Center(child: Text('SIGNUP',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black,fontFamily: 'Jaro'))),
                     ),
                   )
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(children: [
-                Text('Have an account?'),
+                const Text('Have an account?'),
                 InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
                     },
-                    child: Text('Login',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),))
+                    child: const Text('Login',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),))
               ],)
             ],
           ),
@@ -349,8 +347,8 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Categories'),
-          content: Container(
+          title: const Text('Select Categories'),
+          content: SizedBox(
             width: double.maxFinite,
             child: ListView.builder(
               shrinkWrap: true,
@@ -374,7 +372,7 @@ class _ReaderSignUpScreenState extends State<ReaderSignUpScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );

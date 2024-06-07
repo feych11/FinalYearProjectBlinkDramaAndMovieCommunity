@@ -17,7 +17,7 @@ class EditorAcceptedProjectHistoryScreen extends StatefulWidget {
 
 class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProjectHistoryScreen> {
   List<Map<String, dynamic>> notifications = [];
-  final Color mateBlack = Color(0xFF242424);
+  final Color mateBlack = const Color(0xFF242424);
   String ?userId;
 
 
@@ -29,7 +29,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
     final user = prefs.getString('Editor_ID');
     setState(() {
       userId = user;
-      print('EditorIDDDDDD: ${userId}');
+      print('EditorIDDDDDD: $userId');
     });
     if(userId!=null)
     {
@@ -55,8 +55,8 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
   // }
 
   Future<void> fetchAcceptedProject(String editorID) async {
-    final String baseUrl2 = APIHandler.baseUrl1;
-    final String baseUrl3 = APIHandler.baseUrl2;
+    const String baseUrl2 = APIHandler.baseUrl1;
+    const String baseUrl3 = APIHandler.baseUrl2;
     try {
       final response = await http.get(Uri.parse('$baseUrl2/Editor/HistoryAcceptedprojectByEditor?Editor_ID=$editorID'));
       if (response.statusCode == 200) {
@@ -102,29 +102,29 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
 
                     ),
-                    SizedBox(width: 10,),
-                    Column(children: [
+                    const SizedBox(width: 10,),
+                    const Column(children: [
                       Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                       ),
                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -134,7 +134,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -142,31 +142,31 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
             ),
             ListTile(
 
-              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: const Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterNotificationScreen()));
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
 
             ),
             ListTile(
-              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAcceptedProjectsScreen1()));
                 // Add your action when the item is tapped
                 // Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -187,9 +187,9 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
 
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderLoginScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
                   },
-                  child: Text
+                  child: const Text
                     ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
                 ),
               ),
@@ -201,15 +201,15 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
       appBar: AppBar(
 
 
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        title: Text('History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
+        title: const Text('History',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,
       ),
       body: SafeArea(
         child: Stack(children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('Images/SplashScreen45.png'), // Your background image
                 fit: BoxFit.cover,
@@ -229,7 +229,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
   }
   Widget buildNotificationCard(Map<String, dynamic> notification) {
     final int Movieid = notification['Movieid'] ?? '';
-    final int Writer_ID=notification['Writer_ID']?? 0;
+    final int writerId=notification['Writer_ID']?? 0;
     final int Sentperposalid = notification['id'] ?? '';
     final String title = notification['title'] ?? '';
     final String type = notification['type'] ?? '';
@@ -264,7 +264,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
               ),
               child: Image.network(imagePath,fit: BoxFit.cover,), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 210,
               width: 200,
@@ -280,17 +280,17 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontFamily: 'Rye'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Type:   ',
                           style: TextStyle(
                               fontSize: 12,
@@ -301,7 +301,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                         ),
                         Text(
                           type,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -310,10 +310,10 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Director:',
                           style: TextStyle(
                               fontSize: 13,
@@ -322,10 +322,10 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           director,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -334,10 +334,10 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           '  Status:',
                           style: TextStyle(
                               fontSize: 12,
@@ -346,10 +346,10 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           status,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
                               color: Colors.white,
@@ -358,12 +358,12 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Center(
                       child: GestureDetector(
                         onTap: (){
 
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorViewAcceptedSummary(Writer_ID:Writer_ID.toString(),MovieID: Movieid,sentProjectID: Sentperposalid,moviename: title,)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorViewAcceptedSummary(Writer_ID:writerId.toString(),MovieID: Movieid,sentProjectID: Sentperposalid,moviename: title,)));
 
                         },
                         child: Container(
@@ -373,7 +373,7 @@ class _EditorAcceptedProjectHistoryScreenState extends State<EditorAcceptedProje
                               color: Colors.amber,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
+                          child: const Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
                         ),
                       ),
                     )

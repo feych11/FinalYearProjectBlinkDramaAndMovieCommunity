@@ -1,10 +1,7 @@
 import 'package:finalsemproject/Screens/EditorBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSignUpScreen.dart';
-import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
-import 'package:finalsemproject/Screens/SendPerposal.dart';
 import 'package:finalsemproject/Screens/WriterBottomNavScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:finalsemproject/API.dart';
 import 'package:http/http.dart' as http;
@@ -31,18 +28,18 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
     await prefs.setString('Balance', Balance ?? '');
   }
 
-  Future<void> saveReaderId(String? Reader_ID, String? Username1, String? UserImage1, String? Subscription, String? Balance) async {
+  Future<void> saveReaderId(String? readerId, String? Username1, String? UserImage1, String? Subscription, String? Balance) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('Reader_ID', Reader_ID ?? '');
+    await prefs.setString('Reader_ID', readerId ?? '');
     await prefs.setString('Username1', Username1 ?? '');
     await prefs.setString('UserImage1', UserImage1 ?? '');
     await prefs.setString('Subscription', Subscription ?? '');
     await prefs.setString('Balance', Balance ?? '');
   }
 
-  Future<void> saveEditorId(String? Editor_ID) async {
+  Future<void> saveEditorId(String? editorId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('Editor_ID', Editor_ID ?? '');
+    await prefs.setString('Editor_ID', editorId ?? '');
   }
 
   Future<void> loginUser(String email, String password) async {
@@ -65,16 +62,16 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
         String? Image;
         String? Balance;
 
-        String? Reader_ID;
+        String? readerId;
         String? Username1;
         String? UserImage1;
         String? Subscription;
 
-        String? Editor_ID;
+        String? editorId;
 
         if (role == 'Editor') {
-          Editor_ID = userData['Editor_ID']?.toString();
-          await saveEditorId(Editor_ID);
+          editorId = userData['Editor_ID']?.toString();
+          await saveEditorId(editorId);
         } else if (role == 'Writer') {
           userId = userData['Writer_ID']?.toString();
           UserName = userData['UserName']?.toString();
@@ -82,21 +79,21 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
           Balance = userData['Balance']?.toString();
           await saveUserId(userId, UserName, Image, Balance);
         } else if (role == 'Reader') {
-          Reader_ID = userData['Reader_ID']?.toString();
+          readerId = userData['Reader_ID']?.toString();
           Username1 = userData['UserName']?.toString();
           UserImage1 = '$baseurl3/Images/${userData['Image']}';
           Subscription = userData['Subscription']?.toString();
           Balance = userData['Balance']?.toString();
-          await saveReaderId(Reader_ID, Username1, UserImage1, Subscription, Balance);
+          await saveReaderId(readerId, Username1, UserImage1, Subscription, Balance);
         }
 
         // Navigate to the appropriate screen based on the role
         if (role == 'Writer') {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderBottomNavScreen11()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const ReaderBottomNavScreen11()));
         } else if (role == 'Editor') {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => EditorBottomNavScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const EditorBottomNavScreen()));
         } else if (role == 'Reader') {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderBottomNavScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const ReaderBottomNavScreen()));
         }
 
         islogin = true;
@@ -117,20 +114,20 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
+          title: const Text(
             'ERROR',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           content: Text(
             message,
-            style: TextStyle(fontSize: 15),
+            style: const TextStyle(fontSize: 15),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
         );
@@ -143,7 +140,7 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'LOGIN SCREEN',
           style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'BigshotOne'),
         ),
@@ -153,7 +150,7 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('Images/SplashScreen45.png'), // Your background image
                 fit: BoxFit.cover,
@@ -163,12 +160,12 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
           SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   width: 300,
                   height: 200,
                   decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF).withOpacity(0.8),
+                    color: const Color(0xFFFFFFFF).withOpacity(0.8),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: Colors.black,
@@ -177,35 +174,35 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       TextFormField(
                         controller: reaemailcon,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                           hintText: 'Email',
-                          hintStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          hintStyle: const TextStyle(fontFamily: 'BigshotOne'),
                           labelText: 'Email',
-                          labelStyle: TextStyle(fontFamily: 'BigshotOne'),
-                          prefixIcon: Icon(Icons.email),
+                          labelStyle: const TextStyle(fontFamily: 'BigshotOne'),
+                          prefixIcon: const Icon(Icons.email),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       TextFormField(
                         controller: reapasscount,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                           hintText: 'Password',
-                          hintStyle: TextStyle(fontFamily: 'BigshotOne'),
+                          hintStyle: const TextStyle(fontFamily: 'BigshotOne'),
                           labelText: 'Password',
-                          labelStyle: TextStyle(fontFamily: 'BigshotOne'),
-                          prefixIcon: Icon(Icons.lock),
+                          labelStyle: const TextStyle(fontFamily: 'BigshotOne'),
+                          prefixIcon: const Icon(Icons.lock),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Center(
                   child: Container(
                     height: 40,
@@ -221,7 +218,7 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
                           print(reapasscount.text);
                           _Login();
                         },
-                        child: Text(
+                        child: const Text(
                           'LOGIN',
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: 'BigshotOne'),
                         ),
@@ -229,16 +226,16 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Don\'t have an account?',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.white),),
+                    const Text('Don\'t have an account?',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.white),),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ReaderSignUpScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ReaderSignUpScreen()));
                       },
-                      child: Text(
+                      child: const Text(
                         'Sign up',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.white),
                       ),
                     ),
@@ -256,7 +253,7 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
     loginUser(reaemailcon.text, reapasscount.text);
     if(islogin)
     {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorBottomNavScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const EditorBottomNavScreen()));
     }
   }
 }

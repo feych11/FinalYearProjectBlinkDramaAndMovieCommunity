@@ -16,12 +16,12 @@ class EditorAddCommentsFroWriterScreen extends StatefulWidget {
 }
 class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroWriterScreen> {
   QuillController _controller = QuillController.basic();
-  final Color Green  = Color(0xFF4FAA6D);
+  final Color Green  = const Color(0xFF4FAA6D);
 
   @override
   void initState() {
     super.initState();
-    print('MOVIEEE ID FOR API:'+widget.MovieID.toString());
+    print('MOVIEEE ID FOR API:${widget.MovieID}');
     _controller = QuillController.basic();
     // int wId=int.parse(widget.Writer_ID!);
     // updateWriterNotifications(wId);
@@ -30,7 +30,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
   {
    try{
      const String baseurl2=APIHandler.baseUrl1;
-     final responce=await http.post(Uri.parse('$baseurl2/Editor/RewriteSentProject?SentProject_ID='+SentproID+'&editorsComment='+Comments),);
+     final responce=await http.post(Uri.parse('$baseurl2/Editor/RewriteSentProject?SentProject_ID=$SentproID&editorsComment=$Comments'),);
      if(responce.statusCode==200)
      {
        print('Editor Add Comments Succesfully');
@@ -42,8 +42,8 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
              shape: RoundedRectangleBorder(
                borderRadius: BorderRadius.circular(10),
              ),
-             title: Text('ADD COMMENTS',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
-             content: Row(
+             title: const Text('ADD COMMENTS',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+             content: const Row(
                children: [
                  Icon(Icons.check, color: Colors.black,size: 30,),
                  SizedBox(width: 8),
@@ -55,7 +55,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
                  onPressed: () {
                    Navigator.of(context).pop();
                  },
-                 child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                 child: const Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
                ),
              ],
            );
@@ -74,7 +74,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
    }
    catch(error)
    {
-     print('Error To Add Editor Comments${error} ');
+     print('Error To Add Editor Comments$error ');
    }
   }
 
@@ -190,14 +190,14 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Write Summary', style: TextStyle(
+        title: const Text('Write Summary', style: TextStyle(
             fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SafeArea(
           child: Column(children: [
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
               height: 50,
               width: 300,
@@ -205,7 +205,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10)
               ),
-              child: Center(
+              child: const Center(
                 child: Text('ADD COMMENTS', style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -213,7 +213,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
                     fontFamily: 'BigshotOne'),),
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
 
               child: Column(children: [
@@ -249,7 +249,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
                 ),
               ],),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Center(
               child: ElevatedButton(onPressed: () {
               SendComments(widget.sentProjectID!, _controller.document.toPlainText());
@@ -258,10 +258,10 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
                   backgroundColor: MaterialStateProperty.all<Color>(
                       Colors.black), // Change button color
                   minimumSize: MaterialStateProperty.all<Size>(
-                      Size(10, 50)), // Adjust button size
+                      const Size(10, 50)), // Adjust button size
                   // You can also customize other aspects of the button's appearance here
                 ),
-                child: Center(child: Text('Save', style: TextStyle(
+                child: const Center(child: Text('Save', style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
                     color: Colors.white,
@@ -269,7 +269,7 @@ class _EditorAddCommentsFroWriterScreenState extends State<EditorAddCommentsFroW
                 ),
               ),
             ),
-            SizedBox(height: 20,)
+            const SizedBox(height: 20,)
 
 
           ],),

@@ -1,4 +1,3 @@
-import 'package:finalsemproject/Screens/FavouriteScreen.dart';
 import 'package:finalsemproject/Screens/HistoryScreen.dart';
 import 'package:finalsemproject/Screens/MoviesandDarama.dart';
 import 'package:finalsemproject/Screens/ReaderHomePageScreen.dart';
@@ -15,10 +14,10 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen> {
 
   final List<Widget> _pages = [
     // Replace these with your actual content widgets for each tab
-    ReaderHomePageScreen(),
-    MoviesAndDarama(),
-    HistoryScreen(),
-    FavouriteScreen(),
+    const ReaderHomePageScreen(),
+    const MoviesAndDarama(),
+    const HistoryScreen(),
+    // FavouriteScreen(),
 
   ];
 
@@ -34,7 +33,7 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen> {
             _currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -47,10 +46,10 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen> {
             icon: Icon(Icons.history),
             label: 'History',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favourite',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.favorite),
+          //   label: 'Favourite',
+          // ),
         ],
       ),
 

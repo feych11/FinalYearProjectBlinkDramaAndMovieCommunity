@@ -13,13 +13,13 @@ class WriterNotificationScreen extends StatefulWidget {
   // final String? WriterName;
   // final String? WriterBalance;
   // final String? WriterImage;
-  const WriterNotificationScreen({Key? key
+  const WriterNotificationScreen({super.key
     // this.WriterName,
     // this.WriterBalance,
     // this.WriterImage
 
 
-  }) : super(key: key);
+  });
 
   @override
   State<WriterNotificationScreen> createState() => _WriterNotificationScreenState();
@@ -29,11 +29,11 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   List<Map<String, dynamic>> notifications = [];
   List<Map<String,dynamic>>notifications1=[];
   List<Map<String,dynamic>>notifications2=[];
-  final Color Green  = Color(0xFF4FAA6D);
+  final Color Green  = const Color(0xFF4FAA6D);
   List<String>MovieName=[];
   List<String>EditorComments=[];
   List<String>Summary=[];
-  final Color mateBlack = Color(0xFF242424);
+  final Color mateBlack = const Color(0xFF242424);
   String? userId;
    String? WriterName;
    String? WriterBalance;
@@ -109,10 +109,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       WriterName=username;
       WriterBalance=userbalance;
       WriterImage=userImage;
-      print('jskksd: ${userId}');
-      print('WriterName: ${WriterName}');
-      print('Writer Balance: ${WriterBalance}');
-      print('WriterImageL ${WriterImage}');
+      print('jskksd: $userId');
+      print('WriterName: $WriterName');
+      print('Writer Balance: $WriterBalance');
+      print('WriterImageL $WriterImage');
     });
     if (userId != null) {
       fetchProposals();
@@ -120,18 +120,18 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       getRewriteData();
       // print('Getrewrtedata:${getRewriteData}');
       viewRewriteProject();
-      print('ghjk:${userId}');
-      print('WriterName: ${WriterName}');
-      print('Writer Balance: ${WriterBalance}');
-      print('WriterImageL ${WriterImage}');
+      print('ghjk:$userId');
+      print('WriterName: $WriterName');
+      print('Writer Balance: $WriterBalance');
+      print('WriterImageL $WriterImage');
     }
   }
 
   Future<Map<String, dynamic>> getRewriteData() async {
-    final String baseurl2 = APIHandler.baseUrl1;
+    const String baseurl2 = APIHandler.baseUrl1;
 
     try {
-      final response = await http.get(Uri.parse('$baseurl2/Writer/GetRewriteData?Writer_ID=${userId}'));
+      final response = await http.get(Uri.parse('$baseurl2/Writer/GetRewriteData?Writer_ID=$userId'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
@@ -191,8 +191,8 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
 
 
   Future<void> viewRewriteProject() async {
-    final String baseurl2 = APIHandler.baseUrl1;
-    final String baseurl3 = APIHandler.baseUrl2;
+    const String baseurl2 = APIHandler.baseUrl1;
+    const String baseurl3 = APIHandler.baseUrl2;
     try {
       final response = await http.get(Uri.parse('$baseurl2/Writer/ViewRewriteProject'));
       if (response.statusCode == 200) {
@@ -231,7 +231,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   Future<void> fetchProposals() async {
     const String baseurl2=APIHandler.baseUrl1;
     const String baseurl3=APIHandler.baseUrl2;
-    final url = Uri.parse('$baseurl2/Writer/ShowProposals?Writer_ID=${userId}');
+    final url = Uri.parse('$baseurl2/Writer/ShowProposals?Writer_ID=$userId');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -258,8 +258,8 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
     }
   }
   Future<void> fetchAcceptedProject() async {
-    final String baseUrl2 = APIHandler.baseUrl1;
-    final String baseUrl3 = APIHandler.baseUrl2;
+    const String baseUrl2 = APIHandler.baseUrl1;
+    const String baseUrl3 = APIHandler.baseUrl2;
     try {
       final response = await http.get(Uri.parse('$baseUrl2/Writer/HistoryAcceptedProject?Writer_ID=$userId'));
       if (response.statusCode == 200) {
@@ -290,7 +290,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   }
   Future<void> acceptProposal(String sentProposalId) async {
     const String baseurl2=APIHandler.baseUrl1;
-    final Uri uri = Uri.parse('$baseurl2/Writer/AcceptProposal?SentProposals_ID='+sentProposalId);
+    final Uri uri = Uri.parse('$baseurl2/Writer/AcceptProposal?SentProposals_ID=$sentProposalId');
 
     try {
       final http.Response response = await http.post(
@@ -308,8 +308,8 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              title: Text('Accepted Proposal',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
-              content: Row(
+              title: const Text('Accepted Proposal',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+              content: const Row(
                 children: [
                   Icon(Icons.check, color: Colors.black,size: 30,),
                   SizedBox(width: 8),
@@ -321,7 +321,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                  child: const Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
                 ),
               ],
             );
@@ -341,7 +341,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   }
   Future<void> rejectProposal(String sentProposalId) async {
     const String baseurl2=APIHandler.baseUrl1;
-    final Uri uri = Uri.parse('$baseurl2/Writer/RejectProposal?SentProposals_ID='+sentProposalId);
+    final Uri uri = Uri.parse('$baseurl2/Writer/RejectProposal?SentProposals_ID=$sentProposalId');
 
     try {
       final http.Response response = await http.post(
@@ -359,8 +359,8 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              title: Text('PROPOSAL REJECTED ',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
-              content: Row(
+              title: const Text('PROPOSAL REJECTED ',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+              content: const Row(
                 children: [
                   Icon(Icons.cancel, color: Colors.black,size: 30,),
                   SizedBox(width: 8),
@@ -372,7 +372,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                  child: const Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
                 ),
               ],
             );
@@ -400,7 +400,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
@@ -411,22 +411,22 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                       backgroundImage: NetworkImage(WriterImage.toString()),
 
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
 
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                      Text(WriterName.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white,fontFamily: 'BigShotone'),
+                      Text(WriterName.toString(),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white,fontFamily: 'BigShotone'),
                       ),
-                      SizedBox(height: 20,),
-                      Text(WriterBalance.toString(),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigShotone'),)
+                      const SizedBox(height: 20,),
+                      Text(WriterBalance.toString(),style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white,fontFamily: 'BigShotone'),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -436,7 +436,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -444,31 +444,31 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
             ),
             ListTile(
 
-              title: Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: 'BigShotone'),),
+              title: const Text('Notifiactions',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: 'BigShotone'),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterNotificationScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterNotificationScreen()));
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
 
             ),
             ListTile(
-              title: Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+              title: const Text('Accepted Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterAcceptedProjectsScreen1()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAcceptedProjectsScreen1()));
                 // Add your action when the item is tapped
                 // Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,fontFamily: 'BigShotone'),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -490,9 +490,9 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
 
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterLoginscreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterLoginscreen()));
                   },
-                  child: Center(
+                  child: const Center(
                     child: Text
                       ('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red,fontFamily: 'BigShotone'),),
                   ),
@@ -505,7 +505,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       ),
       appBar: AppBar(
 
-        title: Text('NOTIFICATIONS',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
+        title: const Text('NOTIFICATIONS',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.grey,
@@ -513,7 +513,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
 
 
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('Images/SplashScreen45.png'), // Your background image
               fit: BoxFit.cover,
@@ -585,7 +585,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 200,
               width: 200,
@@ -596,17 +596,17 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontFamily: 'BigshotOne'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Writer Name:',
                           style: TextStyle(
                               fontSize: 10,
@@ -617,7 +617,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                         Text(
                           writerName,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -626,10 +626,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Director:',
                           style: TextStyle(
                               fontSize: 10,
@@ -638,10 +638,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           director,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -650,10 +650,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Rating:',
                           style: TextStyle(
                               fontSize: 10,
@@ -662,11 +662,11 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Row(
                           children: List.generate(
                             rating,
-                                (index) => Icon(
+                                (index) => const Icon(
                               Icons.star,
                               color: Colors.yellow,
                               size: 11,
@@ -675,7 +675,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Padding(
@@ -702,7 +702,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                                 color: Colors.yellow,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   'Accept',
                                   style: TextStyle(
@@ -739,7 +739,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                                 color: Colors.yellow,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   'Reject',
                                   style: TextStyle(
@@ -794,7 +794,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 200,
               width: 200,
@@ -805,17 +805,17 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontFamily: 'BigshotOne'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Movie Name:',
                           style: TextStyle(
                               fontSize: 10,
@@ -826,7 +826,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                         Text(
                           title,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -835,10 +835,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Director:',
                           style: TextStyle(
                               fontSize: 10,
@@ -847,10 +847,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           director,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -859,10 +859,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Type:',
                           style: TextStyle(
                               fontSize: 10,
@@ -871,10 +871,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Text(
                           type,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -883,7 +883,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -902,7 +902,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                                 color: Colors.yellow,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   'Comments',
                                   style: TextStyle(
@@ -964,7 +964,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
               ),
               child: Image.network(imagePath), // Use Image.network for remote images
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Container(
               height: 200,
               width: 200,
@@ -975,19 +975,19 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontFamily: 'BigshotOne'
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Director:',
                           style: TextStyle(
                               fontSize: 10,
@@ -996,10 +996,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           director,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                               color: Colors.white,
@@ -1008,10 +1008,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Type:',
                           style: TextStyle(
                               fontSize: 10,
@@ -1020,10 +1020,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Text(
                           type,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -1032,11 +1032,11 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     //SizedBox(height: 5),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Status:',
                           style: TextStyle(
                               fontSize: 10,
@@ -1045,10 +1045,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               fontFamily: 'Rye'
                           ),
                         ),
-                        SizedBox(width: 6),
+                        const SizedBox(width: 6),
                         Text(
                           status,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -1057,7 +1057,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Center(
                       child: GestureDetector(
                         onTap: (){
@@ -1072,7 +1072,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
                               color: Colors.amber,
                               borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
+                          child: const Center(child: Text('View',style: TextStyle(fontSize: 20,fontFamily: 'Rye',fontWeight: FontWeight.bold),)),
                         ),
                       ),
                     )

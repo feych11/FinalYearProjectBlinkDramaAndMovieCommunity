@@ -18,7 +18,7 @@ class WriterAcceptedProjectScreen extends StatefulWidget {
   final String ?imagePath;
   final int?Episode;
   final List<VideoClip> ? videoClips;
-  const WriterAcceptedProjectScreen({Key? key,
+  const WriterAcceptedProjectScreen({super.key,
     this.id,
     this.Movie_ID,
     this.Editor_ID,
@@ -29,8 +29,7 @@ class WriterAcceptedProjectScreen extends StatefulWidget {
     this.status,
     this.imagePath,
     this.Episode,
-    this.videoClips})
-      : super(key: key);
+    this.videoClips});
 
   @override
   State<WriterAcceptedProjectScreen> createState() => _WriterAcceptedProjectScreenState();
@@ -48,7 +47,7 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
     print('ID: ${widget.id}');
     print('Writer ID: ${widget.Writer_ID}');
     print('Movie ID: ${widget.Movie_ID}');
-   // print('Summary: ${widget.summary}');
+    // print('Summary: ${widget.summary}');
     print('Title: ${widget.title}');
     print('Editor ID: ${widget.Editor_ID}');
     print('Type: ${widget.Type}');
@@ -114,7 +113,7 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
     const String baseurl2 = APIHandler.baseUrl1;
     const String baseurl3 = APIHandler.baseUrl2;
     var url = Uri.parse('$baseurl2/Writer/SentProject');
-print(data);
+    print(data);
     try {
       var response = await http.post(
         url,
@@ -228,28 +227,28 @@ print(data);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Write Summary', style: TextStyle(
+        title: const Text('Write Summary', style: TextStyle(
             fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SafeArea(
           child: Column(children: [
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
               height: 50,
               width: 170,
               decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(10)
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(10)
               ),
-              child: Text('  Movie: ${widget.title}', style: TextStyle(
+              child: Text('  Movie: ${widget.title}', style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                   color: Colors.white,
                   fontFamily: 'BigshotOne'),),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
 
               child: Column(children: [
@@ -285,60 +284,60 @@ print(data);
                 ),
               ],),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
 
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
 
-              ElevatedButton(onPressed: () {
-                var data = {
-                  'SentProposal_ID': widget.id,
-                  'Writer_ID': widget.Writer_ID,
-                  'Movie_ID': widget.Movie_ID,
-                  'Summary': _controller.document.toPlainText(),
-                  'Editor_ID': widget.Editor_ID,
-                };
+                ElevatedButton(onPressed: () {
+                  var data = {
+                    'SentProposal_ID': widget.id,
+                    'Writer_ID': widget.Writer_ID,
+                    'Movie_ID': widget.Movie_ID,
+                    'Summary': _controller.document.toPlainText(),
+                    'Editor_ID': widget.Editor_ID,
+                  };
 
-                sendProject(data);
-              },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.black), // Change button color
-                  minimumSize: MaterialStateProperty.all<Size>(
-                      Size(10, 50)), // Adjust button size
-                  // You can also customize other aspects of the button's appearance here
+                  sendProject(data);
+                },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.black), // Change button color
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        const Size(10, 50)), // Adjust button size
+                    // You can also customize other aspects of the button's appearance here
+                  ),
+                  child: const Center(child: Text('Save', style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontFamily: 'BigshotOne'),)
+                  ),
                 ),
-                child: Center(child: Text('Save', style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: Colors.white,
-                    fontFamily: 'BigshotOne'),)
-                ),
-              ),
-              ElevatedButton(onPressed: ()async {
-                await setSharedPreferences();
-                printSharedPreferences();
+                ElevatedButton(onPressed: ()async {
+                  await setSharedPreferences();
+                  printSharedPreferences();
 
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen(Episode: widget.Episode,id: widget.id,Writer_ID: widget.Writer_ID,Movie_ID: widget.Movie_ID,summary: _controller.document.toPlainText(),title: widget.title,Editor_ID: widget.Editor_ID,Type: widget.Type,)));
-              },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.black), // Change button color
-                  minimumSize: MaterialStateProperty.all<Size>(
-                      Size(10, 50)), // Adjust button size
-                  // You can also customize other aspects of the button's appearance here
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen(Episode: widget.Episode,id: widget.id,Writer_ID: widget.Writer_ID,Movie_ID: widget.Movie_ID,summary: _controller.document.toPlainText(),title: widget.title,Editor_ID: widget.Editor_ID,Type: widget.Type,)));
+                },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.black), // Change button color
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        const Size(10, 50)), // Adjust button size
+                    // You can also customize other aspects of the button's appearance here
+                  ),
+                  child: const Center(child: Text('Make Clips', style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontFamily: 'BigshotOne'),)
+                  ),
                 ),
-                child: Center(child: Text('Make Clips', style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: Colors.white,
-                    fontFamily: 'BigshotOne'),)
-                ),
-              ),
 
-            ],),
-            SizedBox(height: 20,)
+              ],),
+            const SizedBox(height: 20,)
 
 
           ],),

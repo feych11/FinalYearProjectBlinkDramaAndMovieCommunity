@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:finalsemproject/API.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +14,7 @@ class CustomeSendPerposal extends StatefulWidget {
 }
 
 class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
-  TextEditingController _moviesconController =TextEditingController();
+  final TextEditingController _moviesconController =TextEditingController();
 
   TextEditingController Dircon =TextEditingController();
   TextEditingController Deadcon =TextEditingController();
@@ -25,10 +23,10 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
   TextEditingController EpiCon=TextEditingController();
 
   File? _image;
-  final Color Green  = Color(0xFF4FAA6D);
+  final Color Green  = const Color(0xFF4FAA6D);
   List<dynamic> _writers = [];
   String? _selectedWriter;
-  List<dynamic> _movies = [];
+  final List<dynamic> _movies = [];
   String? _selectedmovie;
 
 
@@ -48,7 +46,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark().copyWith(
+            colorScheme: const ColorScheme.dark().copyWith(
               primary: Colors.white, // Change the color to your desired color
             ),
           ),
@@ -57,15 +55,16 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
       },
 
     );
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
         Deadcon.text = "${picked.day}/${picked.month}/${picked.year}";
       });
+    }
   }
-  List<String> _selectedCategories = [];
-  List<String> _selectedCategories1 = [];
-  List<String> _categories = [
+  final List<String> _selectedCategories = [];
+  final List<String> _selectedCategories1 = [];
+  final List<String> _categories = [
     'Action',
     'Comedy',
     'Romantic',
@@ -168,7 +167,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
     final user = prefs.getString('Editor_ID');
     setState(() {
       userId = user;
-      print('EditorIDDDDDD: ${userId}');
+      print('EditorIDDDDDD: $userId');
     });
   }
   Future<void> fetchWriters(String genre) async {
@@ -269,7 +268,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
         'Director': Dircon.text,
         'DueDate': Deadcon.text,
         'Genre': _selectedCategories.join(','), // Assuming genre is a comma-separated string
-        'Type': _selectedType!,
+        'Type': _selectedType,
         'Writer_ID': _selectedWriter!,
         'Editor_ID': userId.toString(),
         'Movie_Name': _moviesconController.text,
@@ -299,8 +298,8 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              title: Text('Send Proposal',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
-              content: Row(
+              title: const Text('Send Proposal',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+              content: const Row(
                 children: [
                   Icon(Icons.check, color: Colors.black,size: 30,),
                   SizedBox(width: 8),
@@ -312,7 +311,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
+                  child: const Text('OK',style: TextStyle(fontFamily: 'BigShotone',fontSize: 20,color: Colors.white,),),
                 ),
               ],
             );
@@ -364,14 +363,14 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
     return Scaffold(
       backgroundColor: Colors.grey,
 
-      appBar: AppBar(title:Text('SEND PERPOSAL',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),
+      appBar: AppBar(title:const Text('SEND PERPOSAL',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),
       ),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
       body:Stack(children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('Images/LoginPagePhoto.png'), // Your background image
               fit: BoxFit.cover,
@@ -429,62 +428,62 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                   ),
 
                   child: Column(children: [
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: _moviesconController,
                       decoration: InputDecoration(
                         labelText: '     Movie Name',
-                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        labelStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         hintText: 'Movie Name',
-                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                       ),
                     ),
-                    SizedBox(height: 30,),
+                    const SizedBox(height: 30,),
                     TextFormField(
                       controller: Dircon,
                       decoration: InputDecoration(
-                        prefix: Icon(Icons.person),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide(color: Colors.black)),
+                        prefix: const Icon(Icons.person),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: const BorderSide(color: Colors.black)),
                         labelText: 'Director Name',
-                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        labelStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         hintText: 'Director Name',
-                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
 
 
 
                       ),
                     ),
-                    SizedBox(height: 30,),
+                    const SizedBox(height: 30,),
                     TextFormField(
                       controller: Deadcon,
                       readOnly: true,
                       decoration: InputDecoration(
                         labelText: '     Select Date',
-                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        labelStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         hintText: 'Select Date',
-                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                         prefix: IconButton(
-                          icon: Icon(Icons.calendar_today),
+                          icon: const Icon(Icons.calendar_today),
                           onPressed: () {
                             _selectDate(context);
                           },
                         ),
                       ),
                     ),
-                    SizedBox(height: 30,),
+                    const SizedBox(height: 30,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('Type',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
-                        SizedBox(width: 10),
+                        const Text('Type',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
+                        const SizedBox(width: 10),
                         DropdownButton<String>(
-                          value: _selectedType,style: TextStyle(fontFamily: 'BigshotOne'),
+                          value: _selectedType,style: const TextStyle(fontFamily: 'BigshotOne'),
                           dropdownColor: Colors.white,
                           onChanged: (String? newValue) {
                             setState(() {
@@ -504,7 +503,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                             return DropdownMenuItem<String>(
                               value: value,
 
-                              child: Center(child: Text(value!,style: TextStyle(fontSize: 20,color: Colors.black),)),
+                              child: Center(child: Text(value!,style: const TextStyle(fontSize: 20,color: Colors.black),)),
                             );
                           }).toList(),
                         ),
@@ -512,51 +511,51 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
 
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     TextFormField(
-                      controller: CharCon,style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      controller: CharCon,style: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                       enabled: _chargesEnabled,
                       decoration: InputDecoration
                         (
                         hintText: 'Charges',
-                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         labelText: 'Charges',
-                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                        prefixIcon: Icon(Icons.money),
+                        labelStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        prefixIcon: const Icon(Icons.money),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     TextFormField(
-                      controller: EpiCon,style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      controller: EpiCon,style: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                       enabled: _episodeEnabled,
                       decoration: InputDecoration
                         (
                         hintText: 'Episode No: ',
-                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         labelText: 'Episode No: ',
-                        labelStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                        prefixIcon: Icon(Icons.movie),
+                        labelStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        prefixIcon: const Icon(Icons.movie),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                         ),
 
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
 
 
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Categories',
-                        labelStyle:TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
-                        hintStyle: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        labelStyle:const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         prefixIcon: IconButton(
-                          icon: Icon(Icons.category),
+                          icon: const Icon(Icons.category),
                           onPressed: () {
                             _showCategoryDialog(context);
                           },
@@ -566,16 +565,16 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                         text: _selectedCategories.isNotEmpty
                             ? _selectedCategories.join(', ')
                             : null,
-                      ),style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      ),style: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                       readOnly: true,
                     ),
 
-                    SizedBox(height:10),
+                    const SizedBox(height:10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('Writer',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'Rye'),),
-                        SizedBox(width: 10),
+                        const Text('Writer',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'Rye'),),
+                        const SizedBox(width: 10),
                         DropdownButton<String>(
                           value: _selectedWriter,
                           dropdownColor: Colors.white,
@@ -585,13 +584,13 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                             });
                           },
                           iconSize: 30,
-                          items: _writers.isEmpty || _writers == null
-                              ? [DropdownMenuItem<String>(
+                          items: _writers.isEmpty
+                              ? [const DropdownMenuItem<String>(
                             value: null,
                             child: Center(child: Text('No writers present',style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black,fontSize: 20),),),
                           )]
                               :[
-                            DropdownMenuItem<String>(
+                            const DropdownMenuItem<String>(
                               value: null,
                               child: Center(child: Text('Select writer')),
                             ),
@@ -601,18 +600,18 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                                 child: Center(
                                   child: Text(
                                     writer['UserName'],
-                                    style: TextStyle(fontSize: 20, color: Colors.black),
+                                    style: const TextStyle(fontSize: 20, color: Colors.black),
                                   ),
                                 ),
                               );
-                            }).toList(),
+                            }),
                           ],
                         ),
                       ],
                     ),
 
                   ],),),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
                 Container(
                   decoration: BoxDecoration(
@@ -622,7 +621,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
 
@@ -639,7 +638,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                         width: 200,
                       ),
                       _image == null
-                          ? Text(
+                          ? const Text(
                         'No image selected.',
                         style: TextStyle(fontFamily: 'BigshotOne',color: Colors.black,fontSize: 20),
                       )
@@ -656,7 +655,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                   ),
 
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 Center(
                   child: ElevatedButton(
@@ -668,13 +667,13 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black, // Background color
                       foregroundColor: Colors.white, // Text color
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Button padding
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Button padding
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10), // Button border radius
                       ),
                       elevation: 3, // Button shadow
                     ),
-                    child: Text(
+                    child: const Text(
                       'SEND PROPOSAL',
                       style: TextStyle(
                           fontSize: 20,
@@ -695,7 +694,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
       floatingActionButton: FloatingActionButton(
         onPressed: getImage,
         tooltip: 'Pick Image',
-        child: Icon(Icons.add_a_photo),
+        child: const Icon(Icons.add_a_photo),
       ),
 
     );
@@ -707,8 +706,8 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Categories'),
-          content: Container(
+          title: const Text('Select Categories'),
+          content: SizedBox(
             width: double.maxFinite,
             child: ListView.builder(
               shrinkWrap: true,
@@ -732,7 +731,7 @@ class _CustomeSendPerposalState extends State<CustomeSendPerposal> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );

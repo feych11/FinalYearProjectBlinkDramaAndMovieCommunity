@@ -15,29 +15,29 @@ class _AcceptedToRewriteScreen2State extends State<AcceptedToRewriteScreen2> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
 
                     ),
-                    SizedBox(width: 10,),
-                    Column(children: [
+                    const SizedBox(width: 10,),
+                    const Column(children: [
                       Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                       ),
                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -47,7 +47,7 @@ class _AcceptedToRewriteScreen2State extends State<AcceptedToRewriteScreen2> {
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -55,7 +55,7 @@ class _AcceptedToRewriteScreen2State extends State<AcceptedToRewriteScreen2> {
             ),
             ListTile(
 
-              title: Text('Subscription:Free',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: const Text('Subscription:Free',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -63,21 +63,21 @@ class _AcceptedToRewriteScreen2State extends State<AcceptedToRewriteScreen2> {
 
             ),
             ListTile(
-              title: Text('Update Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Update Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -94,17 +94,17 @@ class _AcceptedToRewriteScreen2State extends State<AcceptedToRewriteScreen2> {
                   ),
 
                 ),
-                child: Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
+                child: const Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
               ),
             ),
             // Add more ListTiles for additional items in the drawer
           ],
         ),
       ),
-      appBar: AppBar(title: Text('FEEDBACK',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black),),),
+      appBar: AppBar(title: const Text('FEEDBACK',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black),),),
       body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: SafeArea(
             child: Row(
 
@@ -120,23 +120,23 @@ class _AcceptedToRewriteScreen2State extends State<AcceptedToRewriteScreen2> {
               ],),
           ),
         ),
-        SizedBox(height: 10,),
-        Card(
+        const SizedBox(height: 10,),
+        const Card(
           elevation: 10,
           color: Colors.amber,
 
           child: Center(child: Text('WAAR',style: TextStyle(fontSize: 30,),)),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
             height: 300,
             width: 350,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.grey
             ),
-            child: Text('It seems like there might be a slight misunderstanding in your question.'
+            child: const Text('It seems like there might be a slight misunderstanding in your question.'
                 ' Waar is a Pakistani action thriller film directed by Bilal Lashari,'
                 ' released in 2013. The movie revolves around the theme of terrorism '
                 'and militancy in Pakistan. It depicts the efforts of Pakistani security'
@@ -147,7 +147,7 @@ class _AcceptedToRewriteScreen2State extends State<AcceptedToRewriteScreen2> {
                 ' of cinema in the country'),
           ),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Container(height: 40,
           width: 100,
           decoration: BoxDecoration(
@@ -159,7 +159,7 @@ class _AcceptedToRewriteScreen2State extends State<AcceptedToRewriteScreen2> {
             ),
 
           ),
-          child: Center(child: Text('Rewrite',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.yellow),)),
+          child: const Center(child: Text('Rewrite',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.yellow),)),
         )
 
 

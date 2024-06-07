@@ -1,4 +1,3 @@
-import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderHomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
@@ -15,7 +14,7 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
   Future<void> updateInterest(int RID, List<String> newInterest) async {
     try {
       // Replace 'YOUR_API_URL' with the actual API endpoint
-      String url=base_url+"Reader/UpdateInterests";
+      String url="${base_url}Reader/UpdateInterests";
 
       // Create a map with the updated subscription data
       var requestData = {'Interests': newInterest};
@@ -61,7 +60,7 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
       backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'Select Inetrests',
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.white),
         ),
@@ -91,8 +90,8 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                       }
                     });
                   }),
-                  Text('Horror',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
+                  const Text('Horror',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
                   CheckboxListTile(title: Text('$checked1'),
                       value: newInterest.contains(checked1), onChanged: ( value)
                       {
@@ -104,8 +103,8 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           }
                         });
                       }),
-                  Text('Action',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
+                  const Text('Action',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
                   CheckboxListTile(title: Text('$checked2'),
                       value: newInterest.contains(checked2), onChanged: ( value)
                       {
@@ -117,8 +116,8 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           }
                         });
                       }),
-                  Text('Comedy',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
+                  const Text('Comedy',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
                   CheckboxListTile(title: Text('$checked3'),
                       value: newInterest.contains(checked3), onChanged: ( value)
                       {
@@ -130,8 +129,8 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           }
                         });
                       }),
-                  Text('Sci-Fi',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
+                  const Text('Sci-Fi',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
                 ],
               ),
               // SizedBox(height: 10,),
@@ -148,9 +147,9 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           }
                         });
                       }),
-                  Text('Fantasy',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
-                  SizedBox(height: 10,),
+                  const Text('Fantasy',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   CheckboxListTile(title: Text('$checked5'),
                       value: newInterest.contains(checked5), onChanged: ( value)
                       {
@@ -162,9 +161,9 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           }
                         });
                       }),
-                  Text('Darama',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
-                  SizedBox(height: 10,),
+                  const Text('Darama',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   CheckboxListTile(title: Text('$checked6'),
                       value: newInterest.contains(checked6), onChanged: ( value)
                       {
@@ -176,9 +175,9 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           }
                         });
                       }),
-                  Text('Thriller',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
-                  SizedBox(height: 10,),
+                  const Text('Thriller',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   CheckboxListTile(title: Text('$checked7'),
                       value: newInterest.contains(checked7), onChanged: ( value)
                       {
@@ -190,9 +189,9 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           }
                         });
                       }),
-                  Text('Crime',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
-                  SizedBox(height: 10,),
+                  const Text('Crime',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   CheckboxListTile(title: Text('$checked8'),
                       value: newInterest.contains(checked8), onChanged: ( value)
                       {
@@ -204,20 +203,20 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           }
                         });
                       }),
-                  Text('Animation',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 10,),
-                  SizedBox(height: 10,),
+                  const Text('Animation',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
                 ],
               ),
             ],),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
               Center(
                   child: InkWell(
                     onTap: (){
                       int RID=1;
                       updateInterest(RID, newInterest);
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderHomePageScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderHomePageScreen()));
                     },
                     child: Container(
                       height: 40,
@@ -226,7 +225,7 @@ class _ReaderSelectInterestsScreenState extends State<ReaderSelectInterestsScree
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(10)
                       ),
-                      child: Center(child: Text('SUBMIT',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white))),
+                      child: const Center(child: Text('SUBMIT',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white))),
                     ),
                   )
               ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:http/http.dart'as http;
 
-import 'dart:convert';
 class WriterRewriteSummaryScreen extends StatefulWidget {
   String?Summary;
   String?Title;
@@ -21,8 +20,8 @@ class WriterRewriteSummaryScreen extends StatefulWidget {
 class _WriterRewriteSummaryScreenState extends State<WriterRewriteSummaryScreen> {
   QuillController _controller = QuillController.basic();
   Future<void> SendUpdateSummry(String sentId, String updatedSummary) async {
-    final String baseUrl = APIHandler.baseUrl1;
-    final String updateSummaryUrl = '$baseUrl/Writer/UpdateRewriteSummary';
+    const String baseUrl = APIHandler.baseUrl1;
+    const String updateSummaryUrl = '$baseUrl/Writer/UpdateRewriteSummary';
 
     try {
       final response = await http.post(
@@ -59,14 +58,14 @@ class _WriterRewriteSummaryScreenState extends State<WriterRewriteSummaryScreen>
     return  Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Write Summary', style: TextStyle(
+        title: const Text('Write Summary', style: TextStyle(
             fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white,fontFamily: 'BigshotOne'),),
         backgroundColor: Colors.black,),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: SafeArea(
           child: Column(children: [
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
               height: 50,
               width: 250,
@@ -74,13 +73,13 @@ class _WriterRewriteSummaryScreenState extends State<WriterRewriteSummaryScreen>
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10)
               ),
-              child: Text('  Movie: ${widget.Title}', style: TextStyle(
+              child: Text('  Movie: ${widget.Title}', style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                   color: Colors.white,
                   fontFamily: 'BigshotOne'),),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
 
               child: Column(children: [
@@ -116,9 +115,9 @@ class _WriterRewriteSummaryScreenState extends State<WriterRewriteSummaryScreen>
                 ),
               ],),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             ElevatedButton(onPressed: () {
-              print('Sumary updated:'+_controller.document.toPlainText());
+              print('Sumary updated:${_controller.document.toPlainText()}');
               // Assuming widget.SentprojectID is of type int?
                // Use 0 as default value if it's null
 
@@ -129,17 +128,17 @@ class _WriterRewriteSummaryScreenState extends State<WriterRewriteSummaryScreen>
                 backgroundColor: MaterialStateProperty.all<Color>(
                     Colors.black), // Change button color
                 minimumSize: MaterialStateProperty.all<Size>(
-                    Size(10, 50)), // Adjust button size
+                    const Size(10, 50)), // Adjust button size
                 // You can also customize other aspects of the button's appearance here
               ),
-              child: Center(child: Text('RESEND', style: TextStyle(
+              child: const Center(child: Text('RESEND', style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                   color: Colors.white,
                   fontFamily: 'BigshotOne'),)
               ),
             ),
-            SizedBox(height: 20,)
+            const SizedBox(height: 20,)
 
 
           ],),

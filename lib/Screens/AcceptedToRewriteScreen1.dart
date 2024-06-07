@@ -15,29 +15,29 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
 
                     ),
-                    SizedBox(width: 10,),
-                    Column(children: [
+                    const SizedBox(width: 10,),
+                    const Column(children: [
                       Text('Faizan Mustafa',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),
                       ),
                       Text('Balance:2000',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
                     ],),
-                    SizedBox(width: 5,),
+                    const SizedBox(width: 5,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -47,7 +47,7 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
             ),
 
             ListTile(
-              title: Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Home',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -55,7 +55,7 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
             ),
             ListTile(
 
-              title: Text('Subscription:Free',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              title: const Text('Subscription:Free',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -63,21 +63,21 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
 
             ),
             ListTile(
-              title: Text('Update Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Update Interest',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Recharge Balance',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
               },
             ),
             ListTile(
-              title: Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+              title: const Text('Account Setting',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
               onTap: () {
                 // Add your action when the item is tapped
                 Navigator.pop(context); // Close the drawer
@@ -94,19 +94,19 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                   ),
 
                 ),
-                child: Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
+                child: const Text('LOGOUT',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red),),
               ),
             ),
             // Add more ListTiles for additional items in the drawer
           ],
         ),
       ),
-      appBar: AppBar(title: Text('Pending Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),),
+      appBar: AppBar(title: const Text('Pending Project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),),
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Row(
 
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -119,7 +119,7 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                   )
                 ],),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Container(
               height: 200,
               width: 320,
@@ -139,18 +139,18 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                     ),
                     child: Image.asset('Images/parwaz1.jpg'),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Container(
                     height: 200,
                     width: 200,
-                    decoration: BoxDecoration(color: Colors.black),
+                    decoration: const BoxDecoration(color: Colors.black),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       child: Column(children: [
-                        Text('Parwaz Hai Janoon',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
+                        const Text('Parwaz Hai Janoon',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
                         ),
-                        SizedBox(height: 10,),
-                        Row(
+                        const SizedBox(height: 10,),
+                        const Row(
                           children: [
                             Text(
                               'Writer Name:',
@@ -168,10 +168,10 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Text(
                               'Director:',
@@ -192,10 +192,10 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Text(
                               'Rating:',
@@ -248,7 +248,7 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                                 color: Colors.green,
                                 borderRadius: BorderRadius.circular(10),
 
-                              ),child: Center(child: Text('Write Summary',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
+                              ),child: const Center(child: Text('Write Summary',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
                             ),
                           ),
 
@@ -260,7 +260,7 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                   )
                 ],),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Container(
               height: 200,
               width: 320,
@@ -280,18 +280,18 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                     ),
                     child: Image.asset('Images/waar1.jpg'),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Container(
                     height: 200,
                     width: 200,
-                    decoration: BoxDecoration(color: Colors.black),
+                    decoration: const BoxDecoration(color: Colors.black),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       child: Column(children: [
-                        Text('Parwaz Hai Janoon',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
+                        const Text('Parwaz Hai Janoon',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),
                         ),
-                        SizedBox(height: 10,),
-                        Row(
+                        const SizedBox(height: 10,),
+                        const Row(
                           children: [
                             Text(
                               'Writer Name:',
@@ -309,10 +309,10 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Text(
                               'Director:',
@@ -333,10 +333,10 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Row(
+                        const Row(
                           children: [
                             Text(
                               'Rating:',
@@ -389,7 +389,7 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                                 color: Colors.green,
                                 borderRadius: BorderRadius.circular(10),
 
-                              ),child: Center(child: Text('Write',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
+                              ),child: const Center(child: Text('Write',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
                             ),
                           ),
                           Container(height: 25,
@@ -398,7 +398,7 @@ class _AcceptedToRewriteScreen1State extends State<AcceptedToRewriteScreen1> {
                               color: Colors.yellow,
                               borderRadius: BorderRadius.circular(10),
 
-                            ),child: Center(child: Text('Comments',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
+                            ),child: const Center(child: Text('Comments',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
                           ),
                         ],)
 

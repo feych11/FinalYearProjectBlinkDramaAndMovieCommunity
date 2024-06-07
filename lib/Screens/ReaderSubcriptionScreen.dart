@@ -1,7 +1,5 @@
-import 'package:finalsemproject/API.dart';
 import 'package:finalsemproject/Screens/ReaderSelectInterestsScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -17,9 +15,9 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
 
   Future<void> updateSubscription(int RID, String newSubscription) async {
     try {
-      String base_url='http://192.168.18.13/BlinkBackend/api/';
+      String baseUrl='http://192.168.18.13/BlinkBackend/api/';
       // Replace 'YOUR_API_URL' with the actual API endpoint
-      String url=base_url+"Reader/UpdateSubscription";
+      String url="${baseUrl}Reader/UpdateSubscription";
 
       // Create a map with the updated subscription data
       var requestData = {'Subscription': newSubscription};
@@ -52,7 +50,7 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'SUBSCRIPTION',
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.white),
         ),
@@ -62,8 +60,8 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
       body: Column(
 
         children: [
-          Center(child: Text('Choose Your Plan',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),)),
-          SizedBox(height: 10,),
+          const Center(child: Text('Choose Your Plan',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),)),
+          const SizedBox(height: 10,),
           Container(
             height: 150,
             width: 300,
@@ -76,9 +74,9 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
               children: [
               Row(
                 children: [
-                  Text('Free',style: TextStyle(fontWeight: FontWeight.bold,fontSize:
+                  const Text('Free',style: TextStyle(fontWeight: FontWeight.bold,fontSize:
                   20,color: Colors.white),),
-                  SizedBox(
+                  const SizedBox(
                     width: 60,
                   ),
                   ElevatedButton(
@@ -86,9 +84,9 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
                         int RID=0;
                         String newSubscription='free';
                         updateSubscription(RID, newSubscription);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSubcriptionScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSubcriptionScreen()));
                       },
-                      child: Text(
+                      child: const Text(
                         'SUBSCRIBE',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -97,16 +95,16 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
                       ))
                 ],
               ),
-              SizedBox(height: 10,),
-              Text('1 Free Movie/Darama Daily',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
+              const SizedBox(height: 10,),
+              const Text('1 Free Movie/Darama Daily',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)
             ],)
 
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Container(
               height: 150,
               width: 300,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.black,
               ),
               child: Column(
@@ -114,9 +112,9 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
                 children: [
                   Row(
                     children: [
-                      Text('Paid',style: TextStyle(fontWeight: FontWeight.bold,fontSize:
+                      const Text('Paid',style: TextStyle(fontWeight: FontWeight.bold,fontSize:
                       20,color: Colors.white),),
-                      SizedBox(
+                      const SizedBox(
                         width: 60,
                       ),
                       ElevatedButton(
@@ -124,9 +122,9 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
                             int RID=1;
                             String newSubscription='Paid';
                             updateSubscription(RID, newSubscription);
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ReaderSelectInterestsScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSelectInterestsScreen()));
                           },
-                          child: Text(
+                          child: const Text(
                             'SUBSCRIBE',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -135,10 +133,10 @@ class _ReaderSubcriptionScreenState extends State<ReaderSubcriptionScreen> {
                           ))
                     ],
                   ),
-                  SizedBox(height: 10,),
-                  Text('\$30',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
-                  SizedBox(height: 10,),
-                  Text('Access To All Movies/Daramas',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+                  const SizedBox(height: 10,),
+                  const Text('\$30',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+                  const SizedBox(height: 10,),
+                  const Text('Access To All Movies/Daramas',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
                 ],)
 
           ),

@@ -18,20 +18,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('Images/man2.webp'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Text(
                           'Faizan Mustafa',
@@ -49,14 +49,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context); // Close the drawer
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         color: Colors.white,
                         size: 30,
@@ -66,7 +66,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 )),
 
             ListTile(
-              title: Text(
+              title: const Text(
                 'Home',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -76,7 +76,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Subscription:Free',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
@@ -86,7 +86,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Update Interest',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -96,7 +96,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Recharge Balance',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -106,7 +106,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               },
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Account Setting',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -123,7 +123,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   color: Colors.black,
                   border: Border.all(color: Colors.red, width: 2),
                 ),
-                child: Text(
+                child: const Text(
                   'LOGOUT',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         ),
       ),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Details',
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
@@ -149,7 +149,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         children: [
 
 
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
           Padding(
             padding: const EdgeInsets.all(8.0),
 
@@ -165,7 +165,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       color: Colors.black),
                   child: Image.asset('Images/waar1.jpg'),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Container(
@@ -174,7 +174,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.black),
-                  child: Column(
+                  child: const Column(
                     children: [
                       Text(
                         'WAAR',
@@ -302,7 +302,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Container(
@@ -310,7 +310,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             width: 160,
             decoration: BoxDecoration(
                 color: Colors.black, borderRadius: BorderRadius.circular(10)),
-            child: Center(
+            child: const Center(
                 child: Text(
               'Summaries',
               style: TextStyle(
@@ -319,7 +319,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   color: Colors.white),
             )),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -331,7 +331,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(
+                child: const Center(
                     child: Text(
                   '1',
                   style: TextStyle(
@@ -346,10 +346,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(10)),
-                child: Column(
+                child: const Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                           vertical: 10, horizontal: 50),
                       child: Row(
                         children: [
@@ -377,7 +377,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      padding: EdgeInsets.symmetric(horizontal: 50),
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -414,7 +414,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -426,7 +426,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(
+                child: const Center(
                     child: Text(
                   '2',
                   style: TextStyle(
@@ -441,10 +441,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(10)),
-                child: Column(
+                child: const Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                           vertical: 10, horizontal: 50),
                       child: Row(
                         children: [
@@ -472,7 +472,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      padding: EdgeInsets.symmetric(horizontal: 50),
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -509,7 +509,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -521,7 +521,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(
+                child: const Center(
                     child: Text(
                   '3',
                   style: TextStyle(
@@ -536,10 +536,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(10)),
-                child: Column(
+                child: const Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                           vertical: 10, horizontal: 50),
                       child: Row(
                         children: [
@@ -567,7 +567,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      padding: EdgeInsets.symmetric(horizontal: 50),
                       child: Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
