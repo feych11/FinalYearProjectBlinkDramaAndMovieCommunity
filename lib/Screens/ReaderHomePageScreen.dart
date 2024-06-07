@@ -38,7 +38,8 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   String _searchQuery = "";
   List<Map<String,dynamic>>notifications2=[];
   List<dynamic> movieDetails = [];
-
+  String _searchQueryTitle = "";
+  String _searchQueryGenre = "";
 
   Future<void> addReaderFavorites(int readerId, int writerId, int movieId) async {
 
@@ -48,7 +49,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
     final response = await http.post(
       Uri.parse(url),
-);
+    );
 
     if (response.statusCode == 200) {
       print('Added to favorites');
@@ -85,7 +86,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     }
   }
 
-  
+
   Future<void> issueFreeMovie() async {
     const String baseUrl = APIHandler.baseUrl1;
 
@@ -147,36 +148,36 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
       builder: (BuildContext context) {
         return Theme(
             data: ThemeData( // Define custom theme data
-            dialogBackgroundColor: Colors.grey, // Background color
-            dialogTheme: DialogTheme( // Define dialog theme
-            shape: RoundedRectangleBorder( // Define border shape
-            side: const BorderSide(color: Colors.black,width: 4), // Border color
-        borderRadius: BorderRadius.circular(20.0), // Border radius
-        ),
-        ),
-        ),
-        child: AlertDialog(
-          title: const Text('Recharge Balance',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-          content: TextField(
-            controller: _balanceController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(hintText: "Enter new balance"),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
+              dialogBackgroundColor: Colors.grey, // Background color
+              dialogTheme: DialogTheme( // Define dialog theme
+                shape: RoundedRectangleBorder( // Define border shape
+                  side: const BorderSide(color: Colors.black,width: 4), // Border color
+                  borderRadius: BorderRadius.circular(20.0), // Border radius
+                ),
+              ),
             ),
-            TextButton(
-              child: const Text('Recharge',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
-              onPressed: (){
-                SendBalanceRequest(_balanceController.text);
-              }
-            ),
-          ],
-        )
+            child: AlertDialog(
+              title: const Text('Recharge Balance',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+              content: TextField(
+                controller: _balanceController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(hintText: "Enter new balance"),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Cancel',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                ),
+                TextButton(
+                    child: const Text('Recharge',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.black),),
+                    onPressed: (){
+                      SendBalanceRequest(_balanceController.text);
+                    }
+                ),
+              ],
+            )
         );
       },
     );
@@ -199,6 +200,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
               'id': project['SentProject_ID'],
               'title': project['ProposalData']['Movie_Name'],
               'WriterId': project['Writer_ID'],
+              'genre':project['ProposalData']['Genre'],
               'director': project['ProposalData']['Director'],
               'type': project['ProposalData']['Type'],
               'rating': 4,
@@ -239,9 +241,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
         issueFreeMovie();
       }
       else if(Subscription=='Paid')
-        {
-          issuePaidMovies();
-        }
+      {
+        issuePaidMovies();
+      }
 
       print('Movie Image: $movieImage');
       // print('Getrewrtedata:${getRewriteData}');
@@ -262,288 +264,290 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredNotifications = notifications2
-        .where((notification) =>
-        notification['title']!.toLowerCase().startsWith(_searchQuery.toLowerCase()))
-        .toList();
+    final filteredNotifications = notifications2.where((notification) {
+      final title = notification['title'] ?? '';
+      final genre = notification['genre'] ?? '';
+      return title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          genre.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
     return Scaffold(
-      drawer: Drawer(
-        backgroundColor: Colors.grey,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(ReaderImage.toString()),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          ReaderName.toString(),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontFamily: 'Jura'),
-                        ),
-                        Text(
-                          'Balance:$ReaderBalance',
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context); // Close the drawer
-                      },
-                      child: const Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ],
-                )),
-
-            ListTile(
-              title: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen()));
-                },
-                child: const Text(
-                  'Home',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSubcriptionScreen()));
-                },
-                child: const Text(
-                  'Subscription:Free',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSelectInterestsScreen()));
-                },
-                child: const Text(
-                  'Update Interest',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            ListTile(
-              title: const Text(
-                'Recharge Balance',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              ),
-              onTap: _showRechargeDialog, // Show the alert dialog on tap
-            ),
-            ListTile(
-              title: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAccountSettingScreen1()));
-                },
-                child: const Text(
-                  'Account Setting',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                ),
-              ),
-              onTap: () {
-                // Add your action when the item is tapped
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-            InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
-              },
-              child: ListTile(
-                title: Container(
-                  height: 40,
-                  width: 50,
-                  decoration: BoxDecoration(
+        drawer: Drawer(
+          backgroundColor: Colors.grey,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                  decoration: const BoxDecoration(
                     color: Colors.black,
-                    border: Border.all(color: Colors.red, width: 2),
                   ),
-                  child: const Text(
-                    'LOGOUT',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.red),
-                  ),
-                ),
-              ),
-            ),
-            // Add more ListTiles for additional items in the drawer
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        title: _isSearching
-            ? TextField(
-          onChanged: (query) {
-            setState(() {
-              _searchQuery = query;
-            });
-          },
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
-          decoration: const InputDecoration(
-            hintText: 'Search...',
-            hintStyle: TextStyle(color: Colors.white),
-          ),
-        )
-            : const Center(child: Text('Home Page',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
-        actions: [
-          IconButton(
-            icon: Icon(_isSearching ? Icons.close : Icons.search),
-            onPressed: () {
-              setState(() {
-                _isSearching = !_isSearching;
-                if (!_isSearching) {
-                  _searchQuery = "";
-                }
-              });
-            },
-          ),
-        ],
-        backgroundColor: Colors.black,
-      ),
-      backgroundColor: Colors.grey,
-      body: Subscription == 'Free'
-          ?Stack(children: [
-        Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('Images/bgimg1.png'), // Your background image
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-            Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-
-          // Card(
-          //   elevation: 5,
-          //   color: Colors.white,
-          //   child: Text('Discover',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-          // ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ViewFreeMovieSummaryScreen( )));
-                },
-                child: Container(
-
-                  height: 270,
-                  width: 300,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 4,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(ReaderImage.toString()),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Column(
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                             'Free Daily',
-                              style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontFamily: 'Rye'),
-                            ),
+                          Text(
+                            ReaderName.toString(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontFamily: 'Jura'),
                           ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(   FreeWriter_ID: FreeWriter_ID,
-                                    MovieID: movieID,
-                                    moviename: movieName,
-                                    FreeWriterName:FreeWriterName)));
-                              },
-                              child: Container(
-                                height: 150,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    color: Colors.white),
-                                child:movieImage != null
-                                    ? Image.network(movieImage!,fit: BoxFit.cover)
-
-                                    : Container(),
-
-
-                              ),
-                            ),
-                          ),
+                          Text(
+                            'Balance:$ReaderBalance',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )
                         ],
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10),border: Border.all(
-                            color: Colors.black,
-                            width: 4,
-                          ),),
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context); // Close the drawer
+                        },
+                        child: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ],
+                  )),
 
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                Text(
-                                  movieName.toString(),
-                                  style: const TextStyle(color: Colors.black,fontSize:15,fontWeight: FontWeight.bold,fontFamily:'BigshotOne'),
+              ListTile(
+                title: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderBottomNavScreen()));
+                  },
+                  child: const Text(
+                    'Home',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSubcriptionScreen()));
+                  },
+                  child: const Text(
+                    'Subscription:Free',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderSelectInterestsScreen()));
+                  },
+                  child: const Text(
+                    'Update Interest',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                title: const Text(
+                  'Recharge Balance',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
+                onTap: _showRechargeDialog, // Show the alert dialog on tap
+              ),
+              ListTile(
+                title: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const WriterAccountSettingScreen1()));
+                  },
+                  child: const Text(
+                    'Account Setting',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                ),
+                onTap: () {
+                  // Add your action when the item is tapped
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ReaderLoginScreen()));
+                },
+                child: ListTile(
+                  title: Container(
+                    height: 40,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border.all(color: Colors.red, width: 2),
+                    ),
+                    child: const Text(
+                      'LOGOUT',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.red),
+                    ),
+                  ),
+                ),
+              ),
+              // Add more ListTiles for additional items in the drawer
+            ],
+          ),
+        ),
+        appBar: AppBar(
+          title: _isSearching
+              ? TextField(
+            onChanged: (query) {
+              setState(() {
+                _searchQuery = query;
+              });
+            },
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),
+            decoration: const InputDecoration(
+              hintText: 'Search...',
+              hintStyle: TextStyle(color: Colors.white),
+            ),
+          )
+              : const Center(child: Text('Home Page',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro',color: Colors.white),)),
+          actions: [
+            IconButton(
+              icon: Icon(_isSearching ? Icons.close : Icons.search),
+              onPressed: () {
+                setState(() {
+                  _isSearching = !_isSearching;
+                  if (!_isSearching) {
+                    _searchQuery = "";
+                  }
+                });
+              },
+            ),
+          ],
+          backgroundColor: Colors.black,
+        ),
+        backgroundColor: Colors.grey,
+        body: Subscription == 'Free'
+            ?Stack(children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('Images/bgimg1.png'), // Your background image
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              // Card(
+              //   elevation: 5,
+              //   color: Colors.white,
+              //   child: Text('Discover',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const ViewFreeMovieSummaryScreen( )));
+                    },
+                    child: Container(
+
+                      height: 270,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20.0),
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 4,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Free Daily',
+                                  style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontFamily: 'Rye'),
                                 ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewFreeMovieSummaryScreen(   FreeWriter_ID: FreeWriter_ID,
+                                        MovieID: movieID,
+                                        moviename: movieName,
+                                        FreeWriterName:FreeWriterName)));
+                                  },
+                                  child: Container(
+                                    height: 150,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20.0),
+                                        color: Colors.white),
+                                    child:movieImage != null
+                                        ? Image.network(movieImage!,fit: BoxFit.cover)
+
+                                        : Container(),
+
+
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10),border: Border.all(
+                                color: Colors.black,
+                                width: 4,
+                              ),),
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        movieName.toString(),
+                                        style: const TextStyle(color: Colors.black,fontSize:15,fontWeight: FontWeight.bold,fontFamily:'BigshotOne'),
+                                      ),
 //                                 InkWell
 //                                   (
 //                                     onTap: (){
@@ -558,539 +562,539 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 //                                       addReaderFavorites(userId1, FreeWriter_ID1, movieID1);
 //                                     },
 //                                     child: Icon(Icons.favorite,color: Colors.red,size: 30,))
-                              ],),
-                              Text(
-                                '                 Type: ${movieType.toString()}',
-                                style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'BigshotOne'),
+                                    ],),
+                                  Text(
+                                    '                 Type: ${movieType.toString()}',
+                                    style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'BigshotOne'),
+                                  ),
+
+                                ],
                               ),
-
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Card(
-                elevation: 5,
-                color: Colors.white,
-                shape: RoundedRectangleBorder( // Define border shape
-                  side: const BorderSide(color: Colors.black,width: 4), // Border color
-                  borderRadius: BorderRadius.circular(20.0), // Border radius
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'TOP PICK',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro'),
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Card(
-                  elevation: 5,
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder( // Define border shape
-                    side: const BorderSide(color: Colors.black,width: 4), // Border color
-                    borderRadius: BorderRadius.circular(20.0), // Border radius
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'SEE ALL',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro'),
                     ),
                   ),
                 ),
-
               ),
-            ],),
-          const SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      // Show alert dialog here
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Theme(
-                              data: ThemeData( // Define custom theme data
-                                dialogBackgroundColor: Colors.grey, // Background color
-                                dialogTheme: DialogTheme( // Define dialog theme
-                                  shape: RoundedRectangleBorder( // Define border shape
-                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
-                                    borderRadius: BorderRadius.circular(20.0), // Border radius
-                                  ),
-                                ),
-                              ),
-                              child: AlertDialog(
-                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
-                                  ),
-                                ],
-                              ));
-                        },
-                      );
-                    },
-                    child: Container(
-                        height: 160,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2,
-                            ),
-                            color: Colors.black),
-                        child: Column(children: [
-                          Image.asset(
+                  Card(
+                    elevation: 5,
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder( // Define border shape
+                      side: const BorderSide(color: Colors.black,width: 4), // Border color
+                      borderRadius: BorderRadius.circular(20.0), // Border radius
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'TOP PICK',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro'),
+                      ),
+                    ),
+                  ),
 
-                            'Images/parwaz2.jpg',
-                            height: 100,
-                            width: 70,
-                            fit: BoxFit.cover,),
-                          Container(
-                            height: 50,
-                            width: 150,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 5,
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder( // Define border shape
+                        side: const BorderSide(color: Colors.black,width: 4), // Border color
+                        borderRadius: BorderRadius.circular(20.0), // Border radius
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'SEE ALL',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Jaro'),
+                        ),
+                      ),
+                    ),
+
+                  ),
+                ],),
+              const SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          // Show alert dialog here
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Theme(
+                                  data: ThemeData( // Define custom theme data
+                                    dialogBackgroundColor: Colors.grey, // Background color
+                                    dialogTheme: DialogTheme( // Define dialog theme
+                                      shape: RoundedRectangleBorder( // Define border shape
+                                        side: const BorderSide(color: Colors.black,width: 4), // Border color
+                                        borderRadius: BorderRadius.circular(20.0), // Border radius
+                                      ),
+                                    ),
+                                  ),
+                                  child: AlertDialog(
+                                    title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                    content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                      ),
+                                    ],
+                                  ));
+                            },
+                          );
+                        },
+                        child: Container(
+                            height: 160,
+                            width: 100,
                             decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(20.0),
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
+                                ),
+                                color: Colors.black),
+                            child: Column(children: [
+                              Image.asset(
+
+                                'Images/parwaz2.jpg',
+                                height: 100,
+                                width: 70,
+                                fit: BoxFit.cover,),
+                              Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 2,
+                                  ),
+
+                                ),
+                                child: const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Maula Jutt',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                      ),
+                                      Text(
+                                        'Paid',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                      ),]),
+                              )
+                            ],)
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      InkWell(
+                        onTap: () {
+                          // Show alert dialog here
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Theme(
+                                  data: ThemeData( // Define custom theme data
+                                    dialogBackgroundColor: Colors.grey, // Background color
+                                    dialogTheme: DialogTheme( // Define dialog theme
+                                      shape: RoundedRectangleBorder( // Define border shape
+                                        side: const BorderSide(color: Colors.black,width: 4), // Border color
+                                        borderRadius: BorderRadius.circular(20.0), // Border radius
+                                      ),
+                                    ),
+                                  ),
+                                  child: AlertDialog(
+                                    title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                    content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                      ),
+                                    ],
+                                  ));
+                            },
+                          );
+                        },
+                        child: Container(
+                            height: 160,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Colors.black,
                               border: Border.all(
                                 color: Colors.black,
                                 width: 2,
-                              ),
+                              ),),
+                            child: Column(children: [
+                              Image.asset(
 
-                            ),
-                            child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Maula Jutt',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
-                                  ),
-                                  Text(
-                                    'Paid',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
-                                  ),]),
-                          )
-                        ],)
-                    ),
-                  ),
-                  const SizedBox(width: 10,),
-                  InkWell(
-                    onTap: () {
-                      // Show alert dialog here
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Theme(
-                              data: ThemeData( // Define custom theme data
-                                dialogBackgroundColor: Colors.grey, // Background color
-                                dialogTheme: DialogTheme( // Define dialog theme
-                                  shape: RoundedRectangleBorder( // Define border shape
-                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
-                                    borderRadius: BorderRadius.circular(20.0), // Border radius
-                                  ),
+                                'Images/manm2.jpg',
+                                height: 100,
+                                width: 70,
+                                fit: BoxFit.cover,),
+                              Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10)
+
                                 ),
-                              ),
-                              child: AlertDialog(
-                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                child: const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Man Mayal',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                      ),
+                                      Text(
+                                        'Paid',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                      ),]),
+                              )
+                            ],)
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      InkWell(
+                        onTap: () {
+                          // Show alert dialog here
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Theme(
+                                  data: ThemeData( // Define custom theme data
+                                    dialogBackgroundColor: Colors.grey, // Background color
+                                    dialogTheme: DialogTheme( // Define dialog theme
+                                      shape: RoundedRectangleBorder( // Define border shape
+                                        side: const BorderSide(color: Colors.black,width: 4), // Border color
+                                        borderRadius: BorderRadius.circular(20.0), // Border radius
+                                      ),
+                                    ),
                                   ),
-                                ],
-                              ));
+                                  child: AlertDialog(
+                                    title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                    content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                      ),
+                                    ],
+                                  ));
+                            },
+                          );
                         },
-                      );
-                    },
-                    child: Container(
-                        height: 160,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.black,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                          ),),
-                        child: Column(children: [
-                          Image.asset(
-
-                            'Images/manm2.jpg',
-                            height: 100,
-                            width: 70,
-                            fit: BoxFit.cover,),
-                          Container(
-                            height: 50,
-                            width: 150,
+                        child: Container(
+                            height: 160,
+                            width: 100,
                             decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(10)
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Colors.black,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),),
+                            child: Column(children: [
+                              Image.asset(
 
-                            ),
-                            child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Man Mayal',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
-                                  ),
-                                  Text(
-                                    'Paid',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
-                                  ),]),
-                          )
-                        ],)
-                    ),
-                  ),
-                  const SizedBox(width: 10,),
-                  InkWell(
-                    onTap: () {
-                      // Show alert dialog here
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Theme(
-                              data: ThemeData( // Define custom theme data
-                                dialogBackgroundColor: Colors.grey, // Background color
-                                dialogTheme: DialogTheme( // Define dialog theme
-                                  shape: RoundedRectangleBorder( // Define border shape
-                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
-                                    borderRadius: BorderRadius.circular(20.0), // Border radius
-                                  ),
+                                'Images/waar1.jpg',
+                                height: 100,
+                                width: 70,
+                                fit: BoxFit.cover,),
+                              Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(10),
+                                  // border: Border.all(
+                                  //   color: Colors.black,
+                                  //   width: 2,
+                                  //
+                                  // ),
+
                                 ),
-                              ),
-                              child: AlertDialog(
-                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                child: const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Waar',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                      ),
+                                      Text(
+                                        'Paid',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                      ),]),
+                              )
+                            ],)
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      InkWell(
+                        onTap: () {
+                          // Show alert dialog here
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Theme(
+                                  data: ThemeData( // Define custom theme data
+                                    dialogBackgroundColor: Colors.grey, // Background color
+                                    dialogTheme: DialogTheme( // Define dialog theme
+                                      shape: RoundedRectangleBorder( // Define border shape
+                                        side: const BorderSide(color: Colors.black,width: 4), // Border color
+                                        borderRadius: BorderRadius.circular(20.0), // Border radius
+                                      ),
+                                    ),
                                   ),
-                                ],
-                              ));
+                                  child: AlertDialog(
+                                    title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                    content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                      ),
+                                    ],
+                                  ));
+                            },
+                          );
                         },
-                      );
-                    },
-                    child: Container(
-                        height: 160,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.black,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                          ),),
-                        child: Column(children: [
-                          Image.asset(
-
-                            'Images/waar1.jpg',
-                            height: 100,
-                            width: 70,
-                            fit: BoxFit.cover,),
-                          Container(
-                            height: 50,
-                            width: 150,
+                        child: Container(
+                            height: 160,
+                            width: 100,
                             decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(10),
-                              // border: Border.all(
-                              //   color: Colors.black,
-                              //   width: 2,
-                              //
-                              // ),
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Colors.black,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),),
+                            child: Column(children: [
+                              Image.asset(
 
-                            ),
-                            child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Waar',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
-                                  ),
-                                  Text(
-                                    'Paid',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
-                                  ),]),
-                          )
-                        ],)
-                    ),
-                  ),
-                  const SizedBox(width: 10,),
-                  InkWell(
-                    onTap: () {
-                      // Show alert dialog here
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Theme(
-                              data: ThemeData( // Define custom theme data
-                                dialogBackgroundColor: Colors.grey, // Background color
-                                dialogTheme: DialogTheme( // Define dialog theme
-                                  shape: RoundedRectangleBorder( // Define border shape
-                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
-                                    borderRadius: BorderRadius.circular(20.0), // Border radius
-                                  ),
+                                'Images/Dukhtar1.png',
+                                height: 100,
+                                width: 70,
+                                fit: BoxFit.cover,),
+                              Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10)
+
                                 ),
-                              ),
-                              child: AlertDialog(
-                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                child: const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Dukhtar',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                      ),
+                                      Text(
+                                        'Paid',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                      ),]),
+                              )
+                            ],)
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      InkWell(
+                        onTap: () {
+                          // Show alert dialog here
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Theme(
+                                  data: ThemeData( // Define custom theme data
+                                    dialogBackgroundColor: Colors.grey, // Background color
+                                    dialogTheme: DialogTheme( // Define dialog theme
+                                      shape: RoundedRectangleBorder( // Define border shape
+                                        side: const BorderSide(color: Colors.black,width: 4), // Border color
+                                        borderRadius: BorderRadius.circular(20.0), // Border radius
+                                      ),
+                                    ),
                                   ),
-                                ],
-                              ));
+                                  child: AlertDialog(
+                                    title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                    content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                      ),
+                                    ],
+                                  ));
+                            },
+                          );
                         },
-                      );
-                    },
-                    child: Container(
-                        height: 160,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.black,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                          ),),
-                        child: Column(children: [
-                          Image.asset(
-
-                            'Images/Dukhtar1.png',
-                            height: 100,
-                            width: 70,
-                            fit: BoxFit.cover,),
-                          Container(
-                            height: 50,
-                            width: 150,
+                        child: Container(
+                            height: 160,
+                            width: 100,
                             decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(10)
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Colors.black,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),),
+                            child: Column(children: [
+                              Image.asset(
 
-                            ),
-                            child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Dukhtar',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
-                                  ),
-                                  Text(
-                                    'Paid',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
-                                  ),]),
-                          )
-                        ],)
-                    ),
-                  ),
-                  const SizedBox(width: 10,),
-                  InkWell(
-                    onTap: () {
-                      // Show alert dialog here
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Theme(
-                              data: ThemeData( // Define custom theme data
-                                dialogBackgroundColor: Colors.grey, // Background color
-                                dialogTheme: DialogTheme( // Define dialog theme
-                                  shape: RoundedRectangleBorder( // Define border shape
-                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
-                                    borderRadius: BorderRadius.circular(20.0), // Border radius
-                                  ),
+                                'Images/snge2.jpg',
+                                height: 100,
+                                width: 70,
+                                fit: BoxFit.cover,),
+                              Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10)
+
                                 ),
-                              ),
-                              child: AlertDialog(
-                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                child: const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Sangemarmar',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                      ),
+                                      Text(
+                                        'Paid',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                      ),]),
+                              )
+                            ],)
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      InkWell(
+                        onTap: () {
+                          // Show alert dialog here
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Theme(
+                                  data: ThemeData( // Define custom theme data
+                                    dialogBackgroundColor: Colors.grey, // Background color
+                                    dialogTheme: DialogTheme( // Define dialog theme
+                                      shape: RoundedRectangleBorder( // Define border shape
+                                        side: const BorderSide(color: Colors.black,width: 4), // Border color
+                                        borderRadius: BorderRadius.circular(20.0), // Border radius
+                                      ),
+                                    ),
                                   ),
-                                ],
-                              ));
+                                  child: AlertDialog(
+                                    title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+                                    content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+                                      ),
+                                    ],
+                                  ));
+                            },
+                          );
                         },
-                      );
-                    },
-                    child: Container(
-                        height: 160,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.black,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                          ),),
-                        child: Column(children: [
-                          Image.asset(
-
-                            'Images/snge2.jpg',
-                            height: 100,
-                            width: 70,
-                            fit: BoxFit.cover,),
-                          Container(
-                            height: 50,
-                            width: 150,
+                        child: Container(
+                            height: 160,
+                            width: 100,
                             decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(10)
+                              borderRadius: BorderRadius.circular(20.0),
+                              color: Colors.black,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),),
+                            child: Column(children: [
+                              Image.asset(
 
-                            ),
-                            child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Sangemarmar',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
-                                  ),
-                                  Text(
-                                    'Paid',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
-                                  ),]),
-                          )
-                        ],)
-                    ),
-                  ),
-                  const SizedBox(width: 10,),
-                  InkWell(
-                    onTap: () {
-                      // Show alert dialog here
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Theme(
-                              data: ThemeData( // Define custom theme data
-                                dialogBackgroundColor: Colors.grey, // Background color
-                                dialogTheme: DialogTheme( // Define dialog theme
-                                  shape: RoundedRectangleBorder( // Define border shape
-                                    side: const BorderSide(color: Colors.black,width: 4), // Border color
-                                    borderRadius: BorderRadius.circular(20.0), // Border radius
-                                  ),
+                                'Images/actorinlaw1.jpg',
+                                height: 100,
+                                width: 70,
+                                fit: BoxFit.cover,),
+                              Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10)
+
                                 ),
-                              ),
-                              child: AlertDialog(
-                                title: const Text('Alert',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
-                                content: const Text('You are on free mode',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20),),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('OK',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
-                                  ),
-                                ],
-                              ));
-                        },
-                      );
-                    },
-                    child: Container(
-                        height: 160,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.black,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                          ),),
-                        child: Column(children: [
-                          Image.asset(
+                                child: const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Actor in Law',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
+                                      ),
+                                      Text(
+                                        'Paid',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
+                                      ),]),
+                              )
+                            ],)
+                        ),
+                      ),
+                    ],),
+                ),
+              )
 
-                            'Images/actorinlaw1.jpg',
-                            height: 100,
-                            width: 70,
-                            fit: BoxFit.cover,),
-                          Container(
-                            height: 50,
-                            width: 150,
-                            decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(10)
-
-                            ),
-                            child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Actor in Law',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontFamily: 'Jaro'),
-                                  ),
-                                  Text(
-                                    'Paid',
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'Jaro'),
-                                  ),]),
-                          )
-                        ],)
-                    ),
-                  ),
-                ],),
-            ),
-          )
-
-        ],
-      )],)
-          :
-      Stack(children: [
-        Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('Images/SplashScreen45.png'), // Your background image
-              fit: BoxFit.cover,
+            ],
+          )],)
+            :
+        Stack(children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('Images/SplashScreen45.png'), // Your background image
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
 
 
-        SingleChildScrollView(child:
+          SingleChildScrollView(child:
 
-        SafeArea(child: Column(
-          children: [
-            Column(
-              children: filteredNotifications.map((notification) {
-                return buildNotificationCard2(notification);
-              }).toList(),
-            ),
-          ],
-        ))),
-      ],)
+          SafeArea(child: Column(
+            children: [
+              Column(
+                children: filteredNotifications.map((notification) {
+                  return buildNotificationCard2(notification);
+                }).toList(),
+              ),
+            ],
+          ))),
+        ],)
     );
   }
   Widget buildNotificationCard2(Map<String, dynamic> notification2) {
@@ -1101,6 +1105,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     final String UserName=notification2['UserName']?? '';
     final String director = notification2['director'] ?? '';
     final String status = notification2['status'] ?? '';
+    final String genre=notification2['genre']??'';
     final String type = notification2['type'] ?? '';
 
 
@@ -1143,15 +1148,15 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'BigshotOne'
+                        Text(
+                          title,
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'BigshotOne'
+                          ),
                         ),
-                      ),
 //                       InkWell
 //                         (
 //                           onTap: (){
@@ -1166,7 +1171,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 //                             addReaderFavorites(userId1, Writer_ID1, movieID1);
 //                           },
 //                           child: Icon(Icons.favorite,color: Colors.red,size: 30,)),
-                    ],),
+                      ],),
                     const SizedBox(height: 10),
 
 
@@ -1197,7 +1202,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                     Row(
                       children: [
                         const Text(
-                          'Type:',
+                          'genre:',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
@@ -1207,7 +1212,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          type,
+                          genre,
                           style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
