@@ -27,7 +27,8 @@ class _DashboardState extends State<Dashboard> {
          backgroundColor: Colors.black,
          centerTitle: true,
        ),
-        body: Container(
+        body:
+        Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [Colors.lightBlue.shade100, Colors.lightBlue.shade300],
@@ -38,7 +39,7 @@ class _DashboardState extends State<Dashboard> {
           child: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('Images/SplashScreen46.png'), // Provide the correct image path here
+                image: AssetImage('Images/dashboard6.jpg'), // Provide the correct image path here
                 fit: BoxFit.cover,
               ),
             ),
@@ -66,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
                           child: Text(
                             '    WELCOME TO BLINK \n DRAMA AND MOVIE APP',
                             style: TextStyle(
-                              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'BigshotOne',
+                              fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'BigshotOne',
                               shadows: [
                                 Shadow(
                                   blurRadius: 10.0,
@@ -185,13 +186,15 @@ class _DashboardState extends State<Dashboard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, color: Colors.white),
+                Icon(icon, color: Colors.greenAccent),
                 const SizedBox(width: 10),
                 Text(
                   buttonText,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Bigshotone'
                   ),
                 ),
               ],

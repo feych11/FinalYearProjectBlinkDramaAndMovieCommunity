@@ -11,6 +11,7 @@ import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ReaderHomePageScreen extends StatefulWidget {
   const ReaderHomePageScreen({super.key});
@@ -205,6 +206,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
               'type': project['ProposalData']['Type'],
               'rating': 4,
               'UserName':project['WriterData']['UserName'],
+              'averageRating':project['MovieData']['AverageRating'],
               'imagePath': '$baseUrl3/Images/${project['ProposalData']['Image']}',
               'status': project['Status'],
             };
@@ -548,20 +550,20 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                                         movieName.toString(),
                                         style: const TextStyle(color: Colors.black,fontSize:15,fontWeight: FontWeight.bold,fontFamily:'BigshotOne'),
                                       ),
-//                                 InkWell
-//                                   (
-//                                     onTap: (){
-//                                       // Assuming userId, FreeWriter_ID, and movieID are nullable types
-//
-// // Check for nullability and convert to non-nullable types if possible
-//                                       int userId1 = userId != null ? int.parse(userId.toString()) : 0;
-//                                       int FreeWriter_ID1 = FreeWriter_ID != null ? int.parse(FreeWriter_ID.toString()) : 0;
-//                                       int movieID1 = movieID != null ? int.parse(movieID.toString()) : 0;
-//
-// // Call the addReaderFavorites function with non-nullable integer arguments
-//                                       addReaderFavorites(userId1, FreeWriter_ID1, movieID1);
-//                                     },
-//                                     child: Icon(Icons.favorite,color: Colors.red,size: 30,))
+                                InkWell
+                                  (
+                                    onTap: (){
+                                      // Assuming userId, FreeWriter_ID, and movieID are nullable types
+
+// Check for nullability and convert to non-nullable types if possible
+                                      int userId1 = userId != null ? int.parse(userId.toString()) : 0;
+                                      int FreeWriter_ID1 = FreeWriter_ID != null ? int.parse(FreeWriter_ID.toString()) : 0;
+                                      int movieID1 = movieID != null ? int.parse(movieID.toString()) : 0;
+
+// Call the addReaderFavorites function with non-nullable integer arguments
+                                      addReaderFavorites(userId1, FreeWriter_ID1, movieID1);
+                                    },
+                                    child: Icon(Icons.favorite,color: Colors.red,size: 30,))
                                     ],),
                                   Text(
                                     '                 Type: ${movieType.toString()}',
@@ -1106,6 +1108,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     final String director = notification2['director'] ?? '';
     final String status = notification2['status'] ?? '';
     final String genre=notification2['genre']??'';
+    final double averageRating=notification2['averageRating']?? 0;
     final String type = notification2['type'] ?? '';
 
 
@@ -1157,20 +1160,20 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               fontFamily: 'BigshotOne'
                           ),
                         ),
-//                       InkWell
-//                         (
-//                           onTap: (){
-//                             // Assuming userId, FreeWriter_ID, and movieID are nullable types
-//
-// // Check for nullability and convert to non-nullable types if possible
-//                             int userId1 = userId != null ? int.parse(userId.toString()) : 0;
-//                             int Writer_ID1 = WriterId != null ? int.parse(WriterId.toString()) : 0;
-//                             int movieID1 = Movieid != null ? int.parse(Movieid.toString()) : 0;
-//
-// // Call the addReaderFavorites function with non-nullable integer arguments
-//                             addReaderFavorites(userId1, Writer_ID1, movieID1);
-//                           },
-//                           child: Icon(Icons.favorite,color: Colors.red,size: 30,)),
+                      InkWell
+                        (
+                          onTap: (){
+                            // Assuming userId, FreeWriter_ID, and movieID are nullable types
+
+// Check for nullability and convert to non-nullable types if possible
+                            int userId1 = userId != null ? int.parse(userId.toString()) : 0;
+                            int Writer_ID1 = WriterId != null ? int.parse(WriterId.toString()) : 0;
+                            int movieID1 = Movieid != null ? int.parse(Movieid.toString()) : 0;
+
+// Call the addReaderFavorites function with non-nullable integer arguments
+                            addReaderFavorites(userId1, Writer_ID1, movieID1);
+                          },
+                          child: Icon(Icons.favorite,color: Colors.red,size: 30,)),
                       ],),
                     const SizedBox(height: 10),
 
@@ -1178,23 +1181,25 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                     Row(
                       children: [
                         const Text(
-                          'Director:',
+                          '  Movie Rating:',
                           style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Rye',
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Text(
-                          director,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                        RatingBarIndicator(
+                          rating: averageRating,
+
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star,
+                            color: Colors.yellow,
                           ),
+                          itemCount: 5,
+                          itemSize: 15.0,
+                          direction: Axis.horizontal,
                         ),
                       ],
                     ),
@@ -1202,9 +1207,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                     Row(
                       children: [
                         const Text(
-                          'genre:',
+                          '  Genre:',
                           style: TextStyle(
-                              fontSize: 10,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontFamily: 'Rye'
@@ -1227,9 +1232,9 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                     Row(
                       children: [
                         const Text(
-                          'Writer:',
+                          '  Writer:',
                           style: TextStyle(
-                              fontSize: 10,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontFamily: 'Rye'
@@ -1239,7 +1244,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                         Text(
                           UserName,
                           style: const TextStyle(
-                              fontSize: 10,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               fontFamily: 'Rye'

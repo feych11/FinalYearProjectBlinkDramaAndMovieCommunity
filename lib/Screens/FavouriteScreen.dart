@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:finalsemproject/API.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dart:convert';
 
 
@@ -277,28 +278,27 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     final String MovieTitle = notification2['MovieTitle'] ?? '';
     final String Director = notification2['Director'] ?? '';
     final double WriterRating = notification2['WriterRating'] ?? 0;
-    final double MovieRating=notification2['MovieRating']??0;
+    final double MovieRating = notification2['MovieRating'] ?? 0;
     final String imagePath = notification2['imagePath'] ?? '';
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AnimatedContainer(
-        duration:const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         height: 200,
-        width: 420,
+        width: 370,
         decoration: BoxDecoration(
           color: Colors.amber,
           border: Border.all(
             color: Colors.black,
             width: 2,
           ),
-          //borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimatedContainer(
-              duration:const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               height: 150,
               width: 100,
               decoration: BoxDecoration(
@@ -310,24 +310,24 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             const SizedBox(width: 10),
             Container(
               height: 210,
-              width: 300,
-
+              width: 240,
               decoration: BoxDecoration(
-
-                color:mateBlack,
-
+                color: const Color(0xFF242424), // Using mateBlack
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      MovieTitle,
-                      style: const TextStyle(
+                    Center(
+                      child: Text(
+                        MovieTitle,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          fontFamily: 'Rye'
+                          fontFamily: 'Rye',
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -336,19 +336,19 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         const Text(
                           '  Writer Name:   ',
                           style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Rye',
                           ),
                         ),
                         Text(
                           WriterName,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontFamily: 'Rye',
                           ),
                         ),
                       ],
@@ -359,20 +359,20 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         const Text(
                           '  Director:',
                           style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Rye',
                           ),
                         ),
                         const SizedBox(width: 10),
                         Text(
                           Director,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: Colors.white,
+                            fontFamily: 'Rye',
                           ),
                         ),
                       ],
@@ -383,21 +383,22 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         const Text(
                           '  Writer Rating:',
                           style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Rye',
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Text(
-                          WriterRating.toString(),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                        RatingBarIndicator(
+                          rating: WriterRating,
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
                           ),
+                          itemCount: 5,
+                          itemSize: 20.0,
+                          direction: Axis.horizontal,
                         ),
                       ],
                     ),
@@ -407,27 +408,25 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         const Text(
                           '  Movie Rating:',
                           style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Rye',
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Text(
-                          MovieRating.toString(),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                              color: Colors.white,
-                              fontFamily: 'Rye'
+                        RatingBarIndicator(
+                          rating: MovieRating,
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
                           ),
+                          itemCount: 5,
+                          itemSize: 20.0,
+                          direction: Axis.horizontal,
                         ),
                       ],
                     ),
-
-
-
                   ],
                 ),
               ),
@@ -437,4 +436,5 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
       ),
     );
   }
+
 }

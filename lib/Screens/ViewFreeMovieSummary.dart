@@ -480,111 +480,111 @@ class _ViewFreeMovieSummaryScreenState
                         const SizedBox(
                           height: 10,
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     Text(
-                        //       'Writer Rate:',
-                        //       style: TextStyle(
-                        //         fontSize: 17,
-                        //         color: Colors.white,
-                        //         fontFamily: 'BigshotOne',
-                        //         fontWeight: FontWeight.bold,
-                        //       ),
-                        //     ),
-                        //     SizedBox(width: 8),
-                        //     Row(
-                        //       mainAxisSize: MainAxisSize.min,
-                        //       children: List.generate(5, (index) {
-                        //         return GestureDetector(
-                        //           onTap: () {
-                        //             _handleRating(index + 1, true);
-                        //           },
-                        //           child: Icon(
-                        //             Icons.star,
-                        //             color: index < _rating1
-                        //                 ? Colors.yellow
-                        //                 : Colors.grey,
-                        //             size: 30.0, // Adjust the size of the stars if needed
-                        //           ),
-                        //         );
-                        //       }),
-                        //     ) // Add the star rating widget here
-                        //   ],
-                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Writer Rate:',
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontFamily: 'BigshotOne',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(5, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    _handleRating(index + 1, true);
+                                  },
+                                  child: Icon(
+                                    Icons.star,
+                                    color: index < _rating1
+                                        ? Colors.yellow
+                                        : Colors.grey,
+                                    size: 30.0, // Adjust the size of the stars if needed
+                                  ),
+                                );
+                              }),
+                            ) // Add the star rating widget here
+                          ],
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     Text(
-                        //       'Summary Rate:',
-                        //       style: TextStyle(
-                        //         fontSize: 17,
-                        //         color: Colors.white,
-                        //         fontFamily: 'BigshotOne',
-                        //         fontWeight: FontWeight.bold,
-                        //       ),
-                        //     ),
-                        //     SizedBox(width: 8),
-                        //     Row(
-                        //       mainAxisSize: MainAxisSize.min,
-                        //       children: List.generate(5, (index) {
-                        //         return GestureDetector(
-                        //           onTap: () {
-                        //             _handleRating(index + 1, false);
-                        //           },
-                        //           child: Icon(
-                        //             Icons.star,
-                        //             color: index < _rating
-                        //                 ? Colors.yellow
-                        //                 : Colors.grey,
-                        //             size: 30.0, // Adjust the size of the stars if needed
-                        //           ),
-                        //         );
-                        //       }),
-                        //     ) // Add the star rating widget here
-                        //   ],
-                        // ),
-                        // SizedBox(height: 100,),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //   children: [
-                        //     Padding(
-                        //       padding: const EdgeInsets.all(8.0),
-                        //       child: Container(
-                        //         height: 35,
-                        //         width: 80,
-                        //         decoration: BoxDecoration(
-                        //           color: Colors.yellow,
-                        //           border: Border.all(
-                        //             color: Colors.white,
-                        //             width: 4,
-                        //           ),
-                        //           borderRadius: BorderRadius.circular(10),
-                        //         ),
-                        //         child: Center(child: Text('READ',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
-                        //       ),
-                        //     ),
-                        //     Padding(
-                        //       padding: const EdgeInsets.all(8.0),
-                        //       child: Container(
-                        //         height: 35,
-                        //         width: 100,
-                        //         decoration: BoxDecoration(
-                        //           color: Colors.yellow,
-                        //           border: Border.all(
-                        //             color: Colors.white,
-                        //             width: 4,
-                        //           ),
-                        //           borderRadius: BorderRadius.circular(10),
-                        //         ),
-                        //         child: Center(child: Text('BOOKMARK',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
-                        //       ),
-                        //     ),
-                        //
-                        //   ],)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Summary Rate:',
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontFamily: 'BigshotOne',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(5, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    _handleRating(index + 1, false);
+                                  },
+                                  child: Icon(
+                                    Icons.star,
+                                    color: index < _rating
+                                        ? Colors.yellow
+                                        : Colors.grey,
+                                    size: 30.0, // Adjust the size of the stars if needed
+                                  ),
+                                );
+                              }),
+                            ) // Add the star rating widget here
+                          ],
+                        ),
+                        SizedBox(height: 100,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 35,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  color: Colors.yellow,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 4,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(child: Text('READ',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 35,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  color: Colors.yellow,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 4,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(child: Text('BOOKMARK',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
+                              ),
+                            ),
+
+                          ],)
 
 
                       ],

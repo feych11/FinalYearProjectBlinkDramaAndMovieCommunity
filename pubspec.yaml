@@ -53,7 +53,7 @@ dependencies:
   video_editor: ^3.0.0
   flutter_xlider: ^3.5.0
   device_info_plus: ^10.1.0
-
+  flutter_rating_bar: ^4.0.1
 
 
 

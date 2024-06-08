@@ -1,3 +1,4 @@
+import 'package:finalsemproject/Screens/FavouriteScreen.dart';
 import 'package:finalsemproject/Screens/HistoryScreen.dart';
 import 'package:finalsemproject/Screens/MoviesandDarama.dart';
 import 'package:finalsemproject/Screens/ReaderHomePageScreen.dart';
@@ -17,7 +18,7 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen> {
     const ReaderHomePageScreen(),
     const MoviesAndDarama(),
     const HistoryScreen(),
-    // FavouriteScreen(),
+    const FavouriteScreen(),
 
   ];
 
@@ -46,10 +47,10 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen> {
             icon: Icon(Icons.history),
             label: 'History',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.favorite),
-          //   label: 'Favourite',
-          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favourite',
+          ),
         ],
       ),
 
