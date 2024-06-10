@@ -4,6 +4,7 @@ import 'package:finalsemproject/Screens/WatchingScreen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewPaidMovieSummaryScreen extends StatefulWidget {
   final int? MovieID;
@@ -28,6 +29,11 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
   String? writerName = '';
   Duration? endtime;
   Duration? startTime;
+  String ?userId;
+  String? ReaderName;
+  String ?Subscription;
+  String? ReaderBalance;
+  String? ReaderImage;
   final Color Green = const Color(0xFF4FAA6D);
   late final Map<String, dynamic> data;
   List<Map<String, dynamic>> clipsData = [];
@@ -77,13 +83,35 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
       print('Error viewing sent project: $e');
     }
   }
+  Future<void> getUserIdFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString('Reader_ID');
+    final username=prefs.getString('Username1');
+    final Subscription1=prefs.getString('Subscription');
+    final userbalance=prefs.getString('Balance');
+    final userImage=prefs.getString('UserImage1');
+    setState(() {
+      userId = user;
+      ReaderName=username;
+      Subscription=Subscription1;
+      ReaderBalance=userbalance;
+      ReaderImage=userImage;
+      print('jskksd: $userId');
+      print('ReaderName: $ReaderName');
+      print('Subscription::: $Subscription');
+      print('Reader Balance: $ReaderBalance');
+      print('ReaderImageL $ReaderImage');
+    });
 
-  Future<void> UpdateWriterRating(int WriterID, int Rating) async {
+  }
+
+  Future<void> UpdateWriterRating(int WriterID, double Rating,String ReaderID) async {
     const String BaseUrl = APIHandler.baseUrl1;
-    final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateWriterRating?writerId=$WriterID&rating=$Rating'));
+    final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateWriterRating?Reader_ID=$ReaderID&writerId=$WriterID&rating=$Rating'));
     final Map<String, dynamic> Data = {
       'writerId': WriterID,
       'rating': Rating,
+      'Reader_ID':ReaderID
     };
     body: jsonEncode(Data);
     try {
@@ -94,16 +122,17 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
         print('Unable To Update Writer Rating: ${responseBody['Message']}');
       }
     } catch (ex) {
-      print('Unable To Upadte Writer Rating $ex');
+      print('Unable To Update Writer Rating $ex');
     }
   }
 
-  Future<void> UpdateMovieRating(int Movieid, int Rating) async {
+  Future<void> UpdateMovieRating(int Movieid, double Rating,String ReaderID) async {
     const String BaseUrl = APIHandler.baseUrl1;
-    final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateMovieRating?movieId=$Movieid&rating=$Rating'));
+    final Responce = await http.post(Uri.parse('$BaseUrl/Writer/UpdateMovieRating?Reader_ID=$ReaderID&movieId=$Movieid&rating=$Rating'));
     final Map<String, dynamic> Data = {
       'movieId': Movieid,
       'rating': Rating,
+      'Reader_ID':ReaderID,
     };
     body: jsonEncode(Data);
     try {
@@ -114,13 +143,14 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
         print('Unable To Update Movie Rating: ${responseBody['Message']}');
       }
     } catch (ex) {
-      print('Unable To Upadte Movie Rating $ex');
+      print('Unable To Update Movie Rating $ex');
     }
   }
 
   @override
   void initState() {
     super.initState();
+    getUserIdFromSharedPreferences();
     viewSentProject(widget.MovieID!,widget.FreeWriter_ID!);
     print('Movie ID: ${widget.MovieID}');
     print('Title::${widget.moviename}');
@@ -128,19 +158,17 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
     print('Free Writer_Name::::: ${widget.FreeWriterName}');
   }
 
-  int _rating = 0;
-  int _rating1 = 0;
-  bool hasRatedWriter = false; // Flag to track if the user has already rated the writer
-  bool hasRatedMovie = false;  // Flag to track if the user has already rated the movie
+  double _rating = 0;
+  double _rating1 = 0;
 
-  void _setRating(int rating) {
+  void _setRating(double rating) {
     setState(() {
       _rating = rating;
       print('RATING:: $_rating');
     });
   }
 
-  void _setRating1(int rating) {
+  void _setRating1(double rating) {
     setState(() {
       _rating1 = rating;
       print('RATING:: $_rating1');
@@ -153,23 +181,15 @@ class _ViewPaidMovieSummaryScreenState extends State<ViewPaidMovieSummaryScreen>
     });
   }
 
-  Future<void> _handleRating(int rating, bool isWriter) async {
-    if (isWriter) {
-      if (hasRatedWriter) {
-        _showAlertDialog();
-      } else {
-        _setRating1(rating);
-        await UpdateWriterRating(widget.FreeWriter_ID!, _rating1);
-        hasRatedWriter = true;
-      }
-    } else {
-      if (hasRatedMovie) {
-        _showAlertDialog();
-      } else {
-        _setRating(rating);
-        await UpdateMovieRating(widget.MovieID!, _rating);
-        hasRatedMovie = true;
-      }
+  void _handleRating(double rating, bool isWriterRating) {
+    if (isWriterRating ) {
+      _setRating1(rating);
+      UpdateWriterRating(widget.FreeWriter_ID!, _rating1,userId.toString());
+    }
+    else {
+      _setRating(rating);
+      UpdateMovieRating(widget.MovieID!, _rating,userId.toString());
+
     }
   }
 
