@@ -37,6 +37,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   final Color mateBlack = const Color(0xFF242424);
   bool _isSearching = false;
   String _searchQuery = "";
+  bool favourite=false;
   List<Map<String,dynamic>>notifications2=[];
   List<dynamic> movieDetails = [];
   String _searchQueryTitle = "";
@@ -1171,7 +1172,14 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                             int movieID1 = Movieid != null ? int.parse(Movieid.toString()) : 0;
 
 // Call the addReaderFavorites function with non-nullable integer arguments
-                            addReaderFavorites(userId1, Writer_ID1, movieID1);
+                            if(!favourite){
+                              addReaderFavorites(userId1, Writer_ID1, movieID1);
+                              favourite=true;
+                            }
+                            else if(favourite)
+                            {
+                              print('First Unfavourite This From Favourite Screen ');
+                            }
                           },
                           child: Icon(Icons.favorite,color: Colors.red,size: 30,)),
                       ],),

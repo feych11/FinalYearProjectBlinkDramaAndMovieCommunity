@@ -25,6 +25,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   String ?Subscription;
   String? ReaderBalance;
   String? ReaderImage;
+  int? FavID;
   bool _isSearching = false;
   String _searchQuery = "";
   List<Map<String,dynamic>>notifications2=[];
@@ -63,21 +64,22 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   Future<void> fetchProposals() async {
     const String baseurl2=APIHandler.baseUrl1;
     const String baseurl3=APIHandler.baseUrl2;
-    final url = Uri.parse('$baseurl2/Reader/GetFavoriteDetails?Reader_ID=$userId');
+    final url = Uri.parse('$baseurl2/Reader/GetReaderFavoriteMovies?readerId=$userId');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
           notifications2 = data.map((proposal) {
+            FavID = proposal['Favorites_ID'];
             return {
-              'ReaderId': proposal['ReaderId'],
+
               'MovieId': proposal['MovieId'],
-              'WriterId': proposal['WriterId'],
+              'WriterId': proposal['Writer_ID'],
               'WriterName': proposal['WriterName'],
-              'MovieTitle':proposal['MovieTitle'],
-              'Director': proposal['Director'],
-              'imagePath': '$baseurl3/Images/${proposal['Image']}',
+              'MovieTitle':proposal['MovieName'],
+
+              'imagePath': '$baseurl3/Images/${proposal['MovieImage']}',
               'WriterRating': proposal['WriterRating'],
               'MovieRating':proposal['MovieRating'],
             };
@@ -91,6 +93,35 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     }
   }
 
+
+  Future<void> Unfavourites(int FavoutritesID)async
+  {
+    String BaseURl=APIHandler.baseUrl1;
+    try{
+
+      final Responce=await http.post(Uri.parse('$BaseURl/Reader/RemovefromFavorites?Favorites_ID=$FavoutritesID'),
+      headers: <String,String>{
+        'Content-Type':'application/json; charset=UTF-8',
+      },
+        body: jsonEncode(<String,int>{
+
+          'Favorites_ID':FavoutritesID
+                  }),
+
+      );
+      if (Responce.statusCode == 200) {
+        print('Removed from Favorites');
+      } else {
+        print('Failed to remove from favorites: ${Responce.statusCode}');
+      }
+
+    }
+        catch(error)
+    {
+      print('Error: $error');
+    }
+
+  }
 
   @override
   void initState() {
@@ -272,11 +303,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     );
   }
   Widget buildNotificationCard2(Map<String, dynamic> notification2) {
-    final int ReaderId = notification2['ReaderId'] ?? '';
+
     final int WriterId = notification2['WriterId'] ?? '';
     final String WriterName = notification2['WriterName'] ?? '';
     final String MovieTitle = notification2['MovieTitle'] ?? '';
-    final String Director = notification2['Director'] ?? '';
+
     final double WriterRating = notification2['WriterRating'] ?? 0;
     final double MovieRating = notification2['MovieRating'] ?? 0;
     final String imagePath = notification2['imagePath'] ?? '';
@@ -319,8 +350,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Text(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                      Text(
                         MovieTitle,
                         style: const TextStyle(
                           fontSize: 15,
@@ -329,7 +362,13 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           fontFamily: 'Rye',
                         ),
                       ),
-                    ),
+                      InkWell(
+                          onTap: (){
+                            int FavID1 = FavID != null ? int.parse(FavID.toString()) : 0;
+                            Unfavourites(FavID1);
+                          },
+                          child: Icon(Icons.favorite,size: 30,color: Colors.white))
+                    ],),
                     const SizedBox(height: 10),
                     Row(
                       children: [
@@ -354,30 +393,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                       ],
                     ),
                     const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        const Text(
-                          '  Director:',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Rye',
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          Director,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontFamily: 'Rye',
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
+
                     Row(
                       children: [
                         const Text(
