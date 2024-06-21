@@ -6,6 +6,7 @@ import 'package:finalsemproject/Screens/EditorNotificationScreen.dart';
 import 'package:finalsemproject/Screens/EditorPerposalHistoryScreen.dart';
 import 'package:finalsemproject/Screens/SendPerposal.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart'as http;
 class EditorBottomNavScreen extends StatefulWidget {
   const EditorBottomNavScreen({super.key});
@@ -16,8 +17,9 @@ class EditorBottomNavScreen extends StatefulWidget {
 int _notificationCount=0;
 class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
   int _currentIndex = 0;
+  String? userId;
 
-  Future<void> getEditorNotificationsSentProject(int editorId) async {
+  Future<void> getEditorNotificationsSentProject(String editorId) async {
     try {
       const String baseurl2=APIHandler.baseUrl1;// Replace with your API base URL
       final response = await http.get(
@@ -44,27 +46,11 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
       print('Error fetching editor notifications: $error');
     }
   }
-  Future<void> updateAllEditorNotificationsToFalseSentProject(int editorId) async {
-    try {
-      const String baseUrl = 'http://192.168.43.218/BlinkBackend/api'; // Replace with your API base URL
-      final response = await http.post(
-        Uri.parse('$baseUrl/Editor/UpdateAllEditorNotificationstoFalseSentProject?editorId=$editorId'),
-      );
-
-      if (response.statusCode == 200) {
-        print('All Editor notifications updated to false for the specified editor');
-      } else if (response.statusCode == 404) {
-        print('No SentProject records found for the specified editor');
-      } else {
-        print('Failed to update Editor notifications: ${response.reasonPhrase}');
-      }
-    } catch (error) {
-      print('Error updating Editor notifications: $error');
-    }
-  }
 
 
-  Future<void> getSentProposalsIdsWithEditorNotification(int editorId) async {
+
+
+  Future<void> getSentProposalsIdsWithEditorNotification(String editorId) async {
     try {
       const String baseurl2=APIHandler.baseUrl1; // Replace with your API base URL
       final response = await http.get(
@@ -93,11 +79,25 @@ class _EditorBottomNavScreenState extends State<EditorBottomNavScreen> {
 
 
   ];
+  Future<void> getEditorId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString('Editor_ID');
+    setState(() {
+      userId = user;
+      print('EditorIDDDDDD: $userId');
+      if(userId!=null){
+        getSentProposalsIdsWithEditorNotification(userId.toString());
+        getEditorNotificationsSentProject(userId.toString());
+      }
+    });
+  }
+
+
   @override
   void initState() {
     super.initState();
-    getSentProposalsIdsWithEditorNotification(2);
-    getEditorNotificationsSentProject(2);
+
+    getEditorId();
 
   }
   @override

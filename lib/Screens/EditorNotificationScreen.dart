@@ -28,8 +28,29 @@ class _EditorNotificationScreenState extends State<EditorNotificationScreen> {
     if(userId!=null)
     {
       fetchProjects(userId.toString());
+      updateAllEditorNotificationsToFalseSentProject(userId.toString());
     }
   }
+  Future<void> updateAllEditorNotificationsToFalseSentProject(String editorId) async {
+    try {
+       String baseUrl = APIHandler.baseUrl1 ;// Replace with your API base URL
+      final response = await http.post(
+        Uri.parse('$baseUrl/Editor/UpdateAllEditorNotificationstoFalseSentProject?editorId=$editorId'),
+      );
+
+      if (response.statusCode == 200) {
+        print('All Editor notifications updated to false for the specified editor');
+      } else if (response.statusCode == 404) {
+        print('No SentProject records found for the specified editor');
+      } else {
+        print('Failed to update Editor notifications: ${response.reasonPhrase}');
+      }
+    } catch (error) {
+      print('Error updating Editor notifications: $error');
+    }
+  }
+
+
 
   Future<void> fetchProjects(String editorid) async {
     const String baseurl2 = APIHandler.baseUrl1;

@@ -103,6 +103,7 @@ class _SendPerposalState extends State<SendPerposal> {
   //   }
   // }
 
+
   // Future<void> updateAllEditorNotificationsToFalseSentProject(int editorId) async {
   //   try {
   //     const String baseUrl = 'http://192.168.43.218/BlinkBackend/api'; // Replace with your API base URL
@@ -363,6 +364,7 @@ class _SendPerposalState extends State<SendPerposal> {
   void initState() {
     super.initState();
     getEditorId();
+
     //fetchWriters();
     //fetchWriters(_selectedCategories1.join(','));
     fetchMovies();
@@ -432,7 +434,7 @@ class _SendPerposalState extends State<SendPerposal> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Text('Movie And Drama:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
+                          const Text('Movie And Drama:',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,fontFamily: 'Rye'),),
                           const SizedBox(width: 10),
                           DropdownButton<String>(
                             value: _selectedmovie,style: const TextStyle(fontFamily: 'BigshotOne'),
