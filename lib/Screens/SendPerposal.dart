@@ -21,6 +21,7 @@ class _SendPerposalState extends State<SendPerposal> {
   TextEditingController Catcon=TextEditingController();
   TextEditingController CharCon=TextEditingController();
   TextEditingController EpiCon=TextEditingController();
+  TextEditingController CastCon=TextEditingController();
 
   File? _image;
   final Color Green  = const Color(0xFF4FAA6D);
@@ -282,6 +283,7 @@ class _SendPerposalState extends State<SendPerposal> {
         'Movie_Name': _moviesconController.text,
         'Episode': EpiCon.text.isEmpty ? '0' : EpiCon.text, // Handle empty episode input
         'Amount': CharCon.text,
+        'Cast':CastCon.text,
       });
 
       File? image = _image;
@@ -416,7 +418,7 @@ class _SendPerposalState extends State<SendPerposal> {
               children: [
                 Container(
                   width: 470,
-                  height: 820,
+                  height: 950,
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.8),
                     borderRadius: BorderRadius.circular(20),
@@ -484,6 +486,21 @@ class _SendPerposalState extends State<SendPerposal> {
                         labelText: 'Director Name',
                         labelStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
                         hintText: 'Director Name',
+                        hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+
+
+
+                      ),
+                    ),
+                    const SizedBox(height: 30,),
+                    TextFormField(
+                      controller: CastCon,style: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                      decoration: InputDecoration(
+                        prefix: const Icon(Icons.person),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: const BorderSide(color: Colors.black)),
+                        labelText: 'Enter Your Movie or Drama Cast',
+                        labelStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
+                        hintText: 'Enter Your Movie or Drama Cast',
                         hintStyle: const TextStyle(fontFamily: 'BigshotOne',color: Colors.black),
 
 
