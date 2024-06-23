@@ -92,7 +92,24 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
   //   }
   // }
 
+  Future<void> updateAllEditorNotificationsToFalseSentProject(String WriterId) async {
+    try {
+      String baseUrl = APIHandler.baseUrl1 ;// Replace with your API base URL
+      final response = await http.post(
+        Uri.parse('$baseUrl/Writer/UpdateAllWriterNotificationsToFalseSentProject?writerId=$WriterId'),
+      );
 
+      if (response.statusCode == 200) {
+        print('All Writer notifications updated to false for the specified Writer');
+      } else if (response.statusCode == 404) {
+        print('No SentProposal records found for the specified Writer');
+      } else {
+        print('Failed to update Writer notifications: ${response.reasonPhrase}');
+      }
+    } catch (error) {
+      print('Error updating Writer notifications: $error');
+    }
+  }
 
 
 
@@ -118,6 +135,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       fetchProposals();
       fetchAcceptedProject();
       getRewriteData();
+      updateAllEditorNotificationsToFalseSentProject(userId.toString());
       // print('Getrewrtedata:${getRewriteData}');
       viewRewriteProject();
       print('ghjk:$userId');

@@ -6,6 +6,7 @@ import 'package:finalsemproject/Screens/ReaderLoginScreen.dart';
 import 'package:finalsemproject/Screens/WriterAcceptedProjectsScreen.dart';
 import 'package:finalsemproject/Screens/WriterNotificationScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart'as http;
 class ReaderBottomNavScreen11 extends StatefulWidget {
   const ReaderBottomNavScreen11({super.key});
@@ -15,21 +16,55 @@ class ReaderBottomNavScreen11 extends StatefulWidget {
 }
 
 class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
+  String? userId;
+  String? WriterName;
+  String? WriterBalance;
+  String? WriterImage;
   int _currentIndex = 0;
-  final int _notificationCount=3;
-  Future<void> getWriterNotificationsSentProject(int writerId) async {
+   int _notificationCount=0;
+  Future<void> getUserIdFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final user = prefs.getString('userId');
+    final username=prefs.getString('UserName');
+    final userbalance=prefs.getString('Balance');
+    final userImage=prefs.getString('Image');
+    setState(() {
+      userId = user;
+      WriterName=username;
+      WriterBalance=userbalance;
+      WriterImage=userImage;
+      print('jskksd: $userId');
+      print('WriterName: $WriterName');
+      print('Writer Balance: $WriterBalance');
+      print('WriterImageL $WriterImage');
+    });
+    if (userId != null) {
+      getWriterNotificationsSentProject(userId.toString());
+      print('ghjk:$userId');
+      print('WriterName: $WriterName');
+      print('Writer Balance: $WriterBalance');
+      print('WriterImageL $WriterImage');
+    }
+  }
+  Future<void> getWriterNotificationsSentProject(String writerId) async {
     try {
        const String baseurl2 =APIHandler.baseUrl1;  // Replace with your API base URL
       final response = await http.get(
-        Uri.parse('$baseurl2/GetWriterNotificationsSentProject?writerId=$writerId'),
+        Uri.parse('$baseurl2/Writer/GetWriterNotificationsSentProject?writerId=$writerId'),
       );
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
+        final editorNotifications = responseData['WriterNotifications'];
+        final totalCount = responseData['TotalCount'];
+        _notificationCount =totalCount;
+        print('Total count: $totalCount');
+        print("notification count $_notificationCount");
         // Process responseData as needed
-        print('Writer notifications: $responseData');
-      } else if (response.statusCode == 404) {
-        print('No writer notifications found for the specified writer');
+        print('Writer notifications: $editorNotifications');
+      } else if (response.statusCode == 404)
+      {
+        print('No writer notifications found for the specified writer ');
       } else {
         print('Failed to fetch writer notifications: ${response.reasonPhrase}');
       }
@@ -49,6 +84,7 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
   @override
   void initState() {
     super.initState();
+    getUserIdFromSharedPreferences();
 
   }
   @override
