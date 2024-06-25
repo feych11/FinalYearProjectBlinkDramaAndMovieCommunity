@@ -95,7 +95,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
         } catch (e) {
           print('Error initializing YouTube player: $e');
         }
-        timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+        timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           if (controller.value.isReady && controller.value.isPlaying) {
             print('Current position: ${controller.value.position}');
           }
@@ -130,7 +130,7 @@ class _WatchingScreenState extends State<WatchingScreen> {
           ),
 
         );
-        timer1 = Timer.periodic(Duration(seconds: 1), (Timer t) {
+        timer1 = Timer.periodic(const Duration(seconds: 1), (Timer t) {
           if (controllerr.value.isReady && controllerr.value.isPlaying) {
             print('Current position: ${controllerr.value.position}');
           }

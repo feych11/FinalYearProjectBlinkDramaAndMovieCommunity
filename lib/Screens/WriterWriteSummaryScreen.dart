@@ -36,13 +36,13 @@ class WriterAcceptedProjectScreen extends StatefulWidget {
 }
 
 class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScreen> {
-  QuillController _controller = QuillController.basic();
 
+TextEditingController _controller=TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _controller = QuillController.basic();
+
     print('');
     print('ID: ${widget.id}');
     print('Writer ID: ${widget.Writer_ID}');
@@ -61,7 +61,7 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
     await prefs.setInt('id', widget.id ?? 0);
     await prefs.setString('Writer_ID', widget.Writer_ID ?? '');
     await prefs.setInt('Movie_ID', widget.Movie_ID ?? 0);
-    await prefs.setString('summary', _controller.document.toPlainText());
+    await prefs.setString('summary', _controller.text);
     await prefs.setString('title', widget.title ?? '');
     await prefs.setInt('Editor_ID', widget.Editor_ID ?? 0);
     await prefs.setString('Type', widget.Type ?? '');
@@ -234,56 +234,18 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
         scrollDirection: Axis.vertical,
         child: SafeArea(
           child: Column(children: [
-            const SizedBox(height: 20,),
-            Container(
-              height: 50,
-              width: 170,
-              decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(10)
+            TextFormField(
+              controller: _controller,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+                hintText: 'Summary',
+                hintStyle: const TextStyle(fontFamily: 'BigshotOne'),
+                labelText: 'Summary',
+                labelStyle: const TextStyle(fontFamily: 'BigshotOne'),
+                prefixIcon: const Icon(Icons.email),
               ),
-              child: Text('  Movie: ${widget.title}', style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontFamily: 'BigshotOne'),),
             ),
-            const SizedBox(height: 20,),
-            Container(
 
-              child: Column(children: [
-                Container(
-                  color: Colors.grey,
-                  child: QuillToolbar.simple(
-                    configurations: QuillSimpleToolbarConfigurations(
-                      controller: _controller,
-                      sharedConfigurations: const QuillSharedConfigurations(
-                        locale: Locale('de'),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.topRight,
-
-                  height: 300,
-                  width: 350,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: QuillEditor.basic(
-                    configurations: QuillEditorConfigurations(
-                      controller: _controller,
-                      //readOnly: false,
-                      sharedConfigurations: const QuillSharedConfigurations(
-                        locale: Locale('de'),
-                      ),
-                    ),
-                  ),
-                ),
-              ],),
-            ),
             const SizedBox(height: 20,),
             Row(
 
@@ -295,7 +257,7 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
                     'SentProposal_ID': widget.id,
                     'Writer_ID': widget.Writer_ID,
                     'Movie_ID': widget.Movie_ID,
-                    'Summary': _controller.document.toPlainText(),
+                    'Summary': _controller.text,
                     'Editor_ID': widget.Editor_ID,
                   };
 
@@ -319,7 +281,7 @@ class _WriterAcceptedProjectScreenState extends State<WriterAcceptedProjectScree
                   await setSharedPreferences();
                   printSharedPreferences();
 
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen(Episode: widget.Episode,id: widget.id,Writer_ID: widget.Writer_ID,Movie_ID: widget.Movie_ID,summary: _controller.document.toPlainText(),title: widget.title,Editor_ID: widget.Editor_ID,Type: widget.Type,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WriterMakingClipsScreen(Episode: widget.Episode,id: widget.id,Writer_ID: widget.Writer_ID,Movie_ID: widget.Movie_ID,summary: _controller.text,title: widget.title,Editor_ID: widget.Editor_ID,Type: widget.Type,)));
                 },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

@@ -510,7 +510,7 @@ class _ViewFreeMovieSummaryScreenState
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Writer Rate:',
                               style: TextStyle(
                                 fontSize: 17,
@@ -519,7 +519,7 @@ class _ViewFreeMovieSummaryScreenState
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: List.generate(5, (index) {
@@ -545,7 +545,7 @@ class _ViewFreeMovieSummaryScreenState
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Summary Rate:',
                               style: TextStyle(
                                 fontSize: 17,
@@ -554,7 +554,7 @@ class _ViewFreeMovieSummaryScreenState
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: List.generate(5, (index) {
@@ -574,7 +574,7 @@ class _ViewFreeMovieSummaryScreenState
                             ) // Add the star rating widget here
                           ],
                         ),
-                        SizedBox(height: 100,),
+                        const SizedBox(height: 100,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -591,7 +591,7 @@ class _ViewFreeMovieSummaryScreenState
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Center(child: Text('READ',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
+                                child: const Center(child: Text('READ',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
                               ),
                             ),
                             Padding(
@@ -607,7 +607,7 @@ class _ViewFreeMovieSummaryScreenState
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Center(child: Text('BOOKMARK',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
+                                child: const Center(child: Text('BOOKMARK',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
                               ),
                             ),
 

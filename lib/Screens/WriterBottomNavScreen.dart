@@ -39,7 +39,7 @@ class _ReaderBottomNavScreenState extends State<ReaderBottomNavScreen11> {
       print('WriterImageL $WriterImage');
     });
     if (userId != null) {
-      getWriterNotificationsSentProject(userId.toString());
+      // getWriterNotificationsSentProject(userId.toString());
       print('ghjk:$userId');
       print('WriterName: $WriterName');
       print('Writer Balance: $WriterBalance');

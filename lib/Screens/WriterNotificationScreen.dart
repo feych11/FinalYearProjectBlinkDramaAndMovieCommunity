@@ -135,7 +135,7 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
       fetchProposals();
       fetchAcceptedProject();
       getRewriteData();
-      updateAllEditorNotificationsToFalseSentProject(userId.toString());
+      //updateAllEditorNotificationsToFalseSentProject(userId.toString());
       // print('Getrewrtedata:${getRewriteData}');
       viewRewriteProject();
       print('ghjk:$userId');

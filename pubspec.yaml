@@ -54,6 +54,7 @@ dependencies:
   flutter_xlider: ^3.5.0
   device_info_plus: ^10.1.0
   flutter_rating_bar: ^4.0.1
+  rich_text_editor_controller: ^0.0.5
 
 
 

@@ -131,7 +131,7 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
           initialVideoId: YoutubePlayer.convertUrlToId(clips[currentClipIndex].videoUrl)!,
           flags: YoutubePlayerFlags(
             // autoPlay: true,
-            autoPlay: false,
+            autoPlay: true,
             startAt: clips[currentClipIndex].StartTime.inSeconds,
           ),
         )..addListener(_onControllerStateChanged);

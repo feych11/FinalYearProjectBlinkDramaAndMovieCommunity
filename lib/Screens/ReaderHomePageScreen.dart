@@ -40,8 +40,8 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   bool favourite=false;
   List<Map<String,dynamic>>notifications2=[];
   List<dynamic> movieDetails = [];
-  String _searchQueryTitle = "";
-  String _searchQueryGenre = "";
+  final String _searchQueryTitle = "";
+  final String _searchQueryGenre = "";
 
   Future<void> addReaderFavorites(int readerId, int writerId, int movieId) async {
 
@@ -270,8 +270,10 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
     final filteredNotifications = notifications2.where((notification) {
       final title = notification['title'] ?? '';
       final genre = notification['genre'] ?? '';
+      final username=notification['UserName']?? '';
       return title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-          genre.toLowerCase().contains(_searchQuery.toLowerCase());
+          genre.toLowerCase().contains(_searchQuery.toLowerCase())||
+          username.toLowerCase().contains(_searchQuery.toLowerCase());
     }).toList();
     return Scaffold(
         drawer: Drawer(
@@ -558,13 +560,13 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
 // Check for nullability and convert to non-nullable types if possible
                                       int userId1 = userId != null ? int.parse(userId.toString()) : 0;
-                                      int FreeWriter_ID1 = FreeWriter_ID != null ? int.parse(FreeWriter_ID.toString()) : 0;
+                                      int freewriterId1 = FreeWriter_ID != null ? int.parse(FreeWriter_ID.toString()) : 0;
                                       int movieID1 = movieID != null ? int.parse(movieID.toString()) : 0;
 
 // Call the addReaderFavorites function with non-nullable integer arguments
-                                      addReaderFavorites(userId1, FreeWriter_ID1, movieID1);
+                                      addReaderFavorites(userId1, freewriterId1, movieID1);
                                     },
-                                    child: Icon(Icons.favorite,color: Colors.red,size: 30,))
+                                    child: const Icon(Icons.favorite,color: Colors.red,size: 30,))
                                     ],),
                                   Text(
                                     '                 Type: ${movieType.toString()}',
@@ -1168,12 +1170,12 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
 
 // Check for nullability and convert to non-nullable types if possible
                             int userId1 = userId != null ? int.parse(userId.toString()) : 0;
-                            int Writer_ID1 = WriterId != null ? int.parse(WriterId.toString()) : 0;
+                            int writerId1 = WriterId != null ? int.parse(WriterId.toString()) : 0;
                             int movieID1 = Movieid != null ? int.parse(Movieid.toString()) : 0;
 
 // Call the addReaderFavorites function with non-nullable integer arguments
                             if(!favourite){
-                              addReaderFavorites(userId1, Writer_ID1, movieID1);
+                              addReaderFavorites(userId1, writerId1, movieID1);
                               favourite=true;
                             }
                             else if(favourite)
@@ -1181,7 +1183,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
                               print('First Unfavourite This From Favourite Screen ');
                             }
                           },
-                          child: Icon(Icons.favorite,color: Colors.red,size: 30,)),
+                          child: const Icon(Icons.favorite,color: Colors.red,size: 30,)),
                       ],),
                     const SizedBox(height: 10),
 

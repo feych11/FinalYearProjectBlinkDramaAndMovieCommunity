@@ -342,8 +342,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             Container(
               height: 210,
               width: 240,
-              decoration: BoxDecoration(
-                color: const Color(0xFF242424), // Using mateBlack
+              decoration: const BoxDecoration(
+                color: Color(0xFF242424), // Using mateBlack
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
@@ -367,7 +367,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                             int FavID1 = FavID != null ? int.parse(FavID.toString()) : 0;
                             Unfavourites(FavID1);
                           },
-                          child: Icon(Icons.favorite,size: 30,color: Colors.white))
+                          child: const Icon(Icons.favorite,size: 30,color: Colors.white))
                     ],),
                     const SizedBox(height: 10),
                     Row(
