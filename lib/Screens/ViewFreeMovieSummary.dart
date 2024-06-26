@@ -575,43 +575,43 @@ class _ViewFreeMovieSummaryScreenState
                           ],
                         ),
                         const SizedBox(height: 100,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 35,
-                                width: 80,
-                                decoration: BoxDecoration(
-                                  color: Colors.yellow,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 4,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Center(child: Text('READ',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 35,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  color: Colors.yellow,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 4,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Center(child: Text('BOOKMARK',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
-                              ),
-                            ),
-
-                          ],)
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: Container(
+                        //         height: 35,
+                        //         width: 80,
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.yellow,
+                        //           border: Border.all(
+                        //             color: Colors.white,
+                        //             width: 4,
+                        //           ),
+                        //           borderRadius: BorderRadius.circular(10),
+                        //         ),
+                        //         child: const Center(child: Text('READ',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
+                        //       ),
+                        //     ),
+                        //     Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: Container(
+                        //         height: 35,
+                        //         width: 100,
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.yellow,
+                        //           border: Border.all(
+                        //             color: Colors.white,
+                        //             width: 4,
+                        //           ),
+                        //           borderRadius: BorderRadius.circular(10),
+                        //         ),
+                        //         child: const Center(child: Text('BOOKMARK',style: TextStyle(fontFamily: 'Jaro',fontSize: 15,color: Colors.black),)),
+                        //       ),
+                        //     ),
+                        //
+                        //   ],)
 
 
                       ],

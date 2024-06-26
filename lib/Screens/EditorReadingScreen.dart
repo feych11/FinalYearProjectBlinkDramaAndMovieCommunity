@@ -558,56 +558,59 @@ class _EditorReadingScreenState extends State<EditorReadingScreen> {
                           width: 4,
                         ),
                         borderRadius: BorderRadius.circular(10)),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            summaryText ?? 'Loading summary...',
-                            style: const TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'BigshotOne',fontWeight: FontWeight.bold),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              summaryText ?? 'Loading summary...',
+                              style: const TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'BigshotOne',fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.yellow,),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.yellow,),
 
-                              onPressed: () {
-                                AcceptSentProject(widget.sentProjectID.toString());
-                              },
-                              child: const Text(
-                                'Upload',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.black,fontFamily: 'BigshotOne'),
+                                onPressed: () {
+                                  AcceptSentProject(widget.sentProjectID.toString());
+                                },
+                                child: const Text(
+                                  'Upload',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.black,fontFamily: 'BigshotOne'),
+                                ),
                               ),
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.yellow),
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorAddCommentsFroWriterScreen(MovieID: widget.MovieID,sentProjectID: widget.sentProjectID,)));
-                              },
-                              child: const Text(
-                                'Rewrite',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.black,fontFamily: 'BigshotOne'),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.yellow),
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>EditorAddCommentsFroWriterScreen(MovieID: widget.MovieID,sentProjectID: widget.sentProjectID,)));
+                                },
+                                child: const Text(
+                                  'Rewrite',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.black,fontFamily: 'BigshotOne'),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 )

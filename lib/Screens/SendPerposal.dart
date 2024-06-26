@@ -386,7 +386,7 @@ class _SendPerposalState extends State<SendPerposal> {
       appBar: AppBar(title:Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Text('SEND PERPOSAL',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),
+          const Text('SEND PROPOSAL',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'BigshotOne'),
           ),
           InkWell(
               onTap: (){

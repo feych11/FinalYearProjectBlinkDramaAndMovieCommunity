@@ -287,7 +287,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>CoumpundAndSimpleClipsScreen(Episode: widget.Episode,ClipsInfoList:clipsInfoList,videoId: widget.videoId,videoClips: videoClips,id: widget.id,Movie_ID: widget.Movie_ID,Writer_ID: widget.Writer_ID,Editor_ID: widget.Editor_ID,title1: widget.title1,Type: widget.Type,summary: widget.summary,)));
                 },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.black)),
-                    child: const Text('Clips Screen',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.white),))
+                    child: const Text('View Clips Screen',style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Rye',color: Colors.white),))
               ],
             ),
           ),
