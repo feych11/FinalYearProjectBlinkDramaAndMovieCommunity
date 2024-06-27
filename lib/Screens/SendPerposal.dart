@@ -28,10 +28,11 @@ class _SendPerposalState extends State<SendPerposal> {
   List<dynamic> _writers = [];
   String? _selectedWriter;
   List<dynamic> _movies = [];
+  int?count;
   List<dynamic>_dramas=[];
   String? _selectedmovie;
   String? userId;
-
+  List<dynamic>Exwritername=[];
   bool IsSelected = false;
   String imagePath = '';
   bool _chargesEnabled = false;
@@ -222,6 +223,7 @@ class _SendPerposalState extends State<SendPerposal> {
   Future<void> fetchMovieDetails(String movieid) async {
     try {
       const String baseUrl2 = APIHandler.baseUrl1;
+      const String baseurl3=APIHandler.baseUrl2;
       final response = await http.get(Uri.parse('$baseUrl2/Reader/GetSpecificMovie?Movie_ID=$movieid'));
       print('Movie id$movieid');
       print('IDJSJSSN:$userId');
@@ -231,27 +233,35 @@ class _SendPerposalState extends State<SendPerposal> {
 
         // Update text fields with fetched data
         setState(() {
-          Dircon.text = responseData['Director'];
+          Dircon.text = responseData['movies']['Director'];
+
+          Exwritername = responseData['Writers'];
+          for (var writer in Exwritername) {
+            print('Writerrrr: ${writer['Writer_ID']}');
+          }
+          count=responseData['count'];
+          print('Count or length: ${count}');
+
           //Deadcon.text = responseData['DueDate'];
           //_selectedCategories = responseData['Category'].split(',');
-          _selectedCategories1=responseData['Category'].split(',');
-          _selectedType = responseData['Type'];
+          _selectedCategories1=responseData['movies']['Category'].split(',');
+          _selectedType = responseData['movies']['Type'];
           print(_selectedCategories1.join(','));
           print(_selectedType);
           // print('Selectedcategories: '+_selectedCategories.join(','),);
-          imagePath =responseData['Image'];
-          imagePath= 'http://192.168.0.104/BlinkBackend/Images/${responseData['Image']}';
+          imagePath =responseData['movies']['Image'];
+          imagePath= 'http://192.168.0.104/BlinkBackend/Images/${responseData['movies']['Image']}';
           IsSelected= true;
 
-          if(responseData['Type'] == "Movie"){
+          if(responseData['movies']['Type'] == "Movie"){
             _chargesEnabled = true;
           }
-          else if(responseData['Type'] == "Drama"){
+          else if(responseData['movies']['Type'] == "Drama"){
             _chargesEnabled = true;
             _episodeEnabled = true;
           }
           //_image = imagePath;
-          print(responseData['Image']);// Assuming you receive image URL
+          print(responseData['movies']['Image']);// Assuming you receive image URL
           fetchWriters(_selectedCategories1.join(','));
         });
       } else {
@@ -260,6 +270,49 @@ class _SendPerposalState extends State<SendPerposal> {
     } catch (error) {
       print(error);
     }
+  }
+
+  void showWritersDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return
+          Theme(
+            data: ThemeData( // Define custom theme data
+            dialogBackgroundColor: Colors.grey, // Background color
+            dialogTheme: DialogTheme( // Define dialog theme
+            shape: RoundedRectangleBorder( // Define border shape
+            side: const BorderSide(color: Colors.black,width: 4), // Border color
+        borderRadius: BorderRadius.circular(20.0), // Border radius
+        ),
+        ),
+        ),
+        child:
+          AlertDialog(
+          title: Text('Ex Writers',style: TextStyle(fontSize: 25,fontFamily: 'BigshotOne'),),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: Exwritername.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(Exwritername[index]['WriterUserName'],style: TextStyle(fontSize: 23,fontFamily: 'BigshotOne')),
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text('Close',style: TextStyle(fontFamily: 'BigshotOne',fontSize: 20,color: Colors.black),),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ));
+      },
+    );
   }
 
 
@@ -418,7 +471,7 @@ class _SendPerposalState extends State<SendPerposal> {
               children: [
                 Container(
                   width: 470,
-                  height: 950,
+                  height: 952,
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.8),
                     borderRadius: BorderRadius.circular(20),
@@ -596,7 +649,18 @@ class _SendPerposalState extends State<SendPerposal> {
                       ),
                     ),
                     const SizedBox(height: 30),
-
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black, // Background color
+                      ),
+                      onPressed: () {
+                        showWritersDialog(context);
+                      },
+                      child: Text(
+                        'Ex Writer',
+                        style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: 'BigshotOne'), // Text color
+                      ),
+                    ),
 
 
                     const SizedBox(height: 30),
