@@ -190,11 +190,13 @@ class _CoumpundAndSimpleClipsScreenState extends State<CoumpundAndSimpleClipsScr
     required int?episode1,
 
     required List<Map<String, dynamic>> clips, // Directly accept the list of clips
-  }) async {
+  })
+  async {
     const String baseUrl2 = APIHandler.baseUrl1; // Replace with your API base URL
     const String endpoint = '$baseUrl2/Writer/SentProject'; // Replace with your API endpoint
 
-    try {
+    try
+    {
       final Uri url = Uri.parse(endpoint);
       final Map<String, dynamic> data = {
         'SentProposal_ID': id1,

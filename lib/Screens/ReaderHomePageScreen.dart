@@ -89,6 +89,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   }
 
 
+
   Future<void> issueFreeMovie() async {
     const String baseUrl = APIHandler.baseUrl1;
 
@@ -262,6 +263,7 @@ class _ReaderHomePageScreenState extends State<ReaderHomePageScreen> {
   void initState(){
     super.initState();
     getUserIdFromSharedPreferences();
+
 
   }
 

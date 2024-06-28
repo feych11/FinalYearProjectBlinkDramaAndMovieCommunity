@@ -5,6 +5,10 @@ import 'package:finalsemproject/Screens/ReaderSubcriptionScreen.dart';
 import 'package:finalsemproject/Screens/WriterAccountSettingScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'dart:convert';
+import 'package:http/http.dart'as http;
+
+import 'package:finalsemproject/API.dart';
 import 'dart:async';
 class VideoClip {
   final String videoUrl;
@@ -13,6 +17,29 @@ class VideoClip {
 
   VideoClip({required this.videoUrl, required this.StartTime, required this.EndTime});
 }
+
+
+
+
+
+
+
+
+// void Addingclipinfo(){
+//
+//   for(var clip in )
+//   {
+//     if(clip.isCompoundClip)
+//     {
+//       clipsInfoList.add(
+//           {
+//             'Start_time':clip.start_time.toString(),
+//             'End_time':clip.end_time.toString(),
+//             'Url':widget.videoId
+//           });
+//     }
+//   }
+// }
 
 class WatchingScreen extends StatefulWidget {
   String?moviename;
@@ -40,9 +67,69 @@ class _WatchingScreenState extends State<WatchingScreen> {
   Timer?timer1;
   bool init=false;
   List<VideoClip> clips = [];
+  int ?ad_ID;
+  String ?Url;
+  int?companyid;
+  int?count;
+  int?clipid;
+  double ?starttime;
+  double?Endtime;
+  List<Map<String, String>> clipsInfoList = [];
+
+  int?b;
+  Future<void>GetRandomAdver() async{
+    const String baseUrl = APIHandler.baseUrl1;
+    final response = await http.get(Uri.parse('$baseUrl/Admin/GetRandomAdvertisement'));
+    try{
+
+      if(response.statusCode==200)
+      {
+        final jsonData = json.decode(response.body);
+        ad_ID = jsonData['randomAdver']['Ad_ID'];
+        Url = jsonData['randomAdver']['Url'];
+        companyid=jsonData['randomAdver']['Company_ID'];
+        count=jsonData['randomAdver']['count'];
+        clipid=jsonData['Clips_id'];
+        starttime=jsonData['Starttime'];
+        Endtime=jsonData['EndTime'];
+        print('AdID: ${ad_ID}');
+        print('Url: ${Url}');
+        print('CompanyID: ${companyid}');
+        print('Count: ${count}');
+        print('Clipid: ${clipid}');
+        print('Starttime: ${starttime}');
+        print('Endtime: ${Endtime}');
+
+
+        Addingclipinfo();
+
+
+      }
+    }catch (e) {
+      print('Error issuing free movie: $e');
+
+    }
+  }
+  void Addingclipinfo(){
+
+
+        clipsInfoList.add(
+            {
+              'Start_time':starttime.toString(),
+              'End_time':Endtime.toString(),
+              'Url':Url.toString(),
+            });
+        print('hsjjdn: $clipsInfoList');
+
+
+
+
+  }
+
   @override
   void initState() {
     super.initState();
+    GetRandomAdver();
     print('ISCompoundCLips Info:${widget.ClipsInfoList}');
     print('MovieName::: ${widget.moviename}');
     nonCompoundVideoWidgets = _buildNonCompoundVideos();
@@ -83,6 +170,13 @@ class _WatchingScreenState extends State<WatchingScreen> {
       //    VideoClip(videoUrl: 'https://www.youtube.com/watch?v=72eQ0seOP1k', StartTime: Duration(seconds: 50), EndTime: Duration(seconds: 70)),
       //    // Add more clips as needed
       //  ];
+      String a=clips.length.toString();
+      String c=a.split('.')[0];
+      b=int.parse(c);
+
+
+      // clips.insert(b!, element)
+      print('Kegnth: ${b}');
       if (clips.isNotEmpty) {
         try {
           controller = YoutubePlayerController(
@@ -490,10 +584,11 @@ class _WatchingScreenState extends State<WatchingScreen> {
     final currentTime = controller.value.position;
     final endTime = clips[currentClipIndex].EndTime;
 
+
     if (currentTime >= endTime && !isClipInitialized) {
       isClipInitialized = true;
 
-      if (currentClipIndex < clips.length - 1) {
+      if (currentClipIndex < clips.length - 1 ) {
         currentClipIndex++;
       } else {
         currentClipIndex = 0;

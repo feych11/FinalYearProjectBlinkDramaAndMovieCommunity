@@ -27,6 +27,37 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   String _searchQuery = "";
   List<Map<String,dynamic>>notifications2=[];
   List<Map<String,dynamic>>notifications3=[];
+  List<Map<String,dynamic>>notifications4=[];
+
+  Future<void>FetchcompanyData()async{
+    const String baseurl2=APIHandler.baseUrl1;
+    const String baseurl3=APIHandler.baseUrl2;
+    final url = Uri.parse('$baseurl2/Admin/ShowAllComopany');
+    try{
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List<dynamic> data= json.decode(response.body);
+        setState(() {
+          notifications4 = data.map((proposal) {
+            return {
+              'Company_ID': proposal['Company_ID'],
+              'Balance': proposal['Balance'],
+              'Name': proposal['Name'],
+              'Email': proposal['Email'],
+
+
+            };
+          }).toList();
+        });
+      } else {
+        throw Exception('Failed to load Company');
+      }
+
+    }
+    catch (error) {
+      print('Error fetching Company Data: $error');
+    }
+  }
 
 
   Future<void> fetchProposals() async {
@@ -94,6 +125,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     super.initState();
     fetchProposals();
     fetchWriters();
+    FetchcompanyData();
 
     //getSentProposalsIdsWithEditorNotification(2);
 
@@ -287,6 +319,24 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                               Row(
                                 children:  notifications3.map((notification3) {
                                   return buildNotificationCard3(notification3);
+                                }).toList(),
+                              ),
+
+                            ],)
+                      ),
+
+                      Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child:
+                          Column(
+
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Company Data',style: TextStyle(fontSize: 20,fontFamily: 'BigshotOne',color: Colors.white),),
+                              const SizedBox(height: 10,),
+                              Row(
+                                children:  notifications4.map((notification4) {
+                                  return buildNotificationCard4(notification4);
                                 }).toList(),
                               ),
 
@@ -543,6 +593,128 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         const SizedBox(width: 10),
                         Text(
                           Balance.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+
+
+
+
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget buildNotificationCard4(Map<String, dynamic> notification4) {
+
+
+    final int Company_ID = notification4['Company_ID'] ?? 0;
+
+    final String Name = notification4['Name'] ?? '';
+    final int Balance = notification4['Balance'] ?? '';
+
+    final String imagePath = notification4['Image'] ?? '';
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AnimatedContainer(
+        duration:const Duration(milliseconds: 500),
+        height: 200,
+        width: 420,
+        decoration: BoxDecoration(
+          color: Colors.amber,
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+          //borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration:const Duration(milliseconds: 500),
+              height: 150,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child:Text('Hr Consultant'), // Use Image.network for remote images
+            ),
+            const SizedBox(width: 10),
+            Container(
+              height: 210,
+              width: 300,
+
+              decoration: BoxDecoration(
+
+                color:mateBlack,
+
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Column(
+                  children: [
+                    Text(
+                      Name,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'Rye'
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        const Text(
+                          '   Balance:   ',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        Text(
+                          Balance.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+
+                    Row(
+                      children: [
+                        const Text(
+                          '  Comapny ID:',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Rye'
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          Company_ID.toString(),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,

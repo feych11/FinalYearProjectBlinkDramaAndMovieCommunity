@@ -580,8 +580,10 @@ class _WriterNotificationScreenState extends State<WriterNotificationScreen> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
+      child:
+      Container(
         height: 200,
+
         width: 320,
         decoration: BoxDecoration(
           border: Border.all(

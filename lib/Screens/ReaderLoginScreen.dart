@@ -1,3 +1,4 @@
+import 'package:finalsemproject/Screens/AddAdvertisment.dart';
 import 'package:finalsemproject/Screens/EditorBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderBottomNavScreen.dart';
 import 'package:finalsemproject/Screens/ReaderSignUpScreen.dart';
@@ -63,9 +64,14 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
         String? Balance;
 
         String? readerId;
+        String ?companyid;
         String? Username1;
         String? UserImage1;
         String? Subscription;
+        String?Email;
+        String?Name;
+        String?Image1;
+        String?Password;
 
         String? editorId;
 
@@ -85,6 +91,12 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
           Subscription = userData['Subscription']?.toString();
           Balance = userData['Balance']?.toString();
           await saveReaderId(readerId, Username1, UserImage1, Subscription, Balance);
+        }else if(role=='Company'){
+          companyid=userData['Company_ID']?.toString();
+          Email=userData['Email']?.toString();
+          Name=userData['Name']?.toString();
+          Password=userData['Password'].toString();
+          Image1='$baseurl3/Images/${userData['Image']}';
         }
 
         // Navigate to the appropriate screen based on the role
@@ -94,6 +106,8 @@ class _ReaderLoginScreenState extends State<ReaderLoginScreen> {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const EditorBottomNavScreen()));
         } else if (role == 'Reader') {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const ReaderBottomNavScreen()));
+        }else if(role=='Company'){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const AddAddvertisment()));
         }
 
         islogin = true;
